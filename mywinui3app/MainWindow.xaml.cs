@@ -1,4 +1,5 @@
-﻿using mywinui3app.Helpers;
+﻿using Microsoft.UI.Windowing;
+using mywinui3app.Helpers;
 
 using Windows.UI.ViewManagement;
 
@@ -14,6 +15,7 @@ public sealed partial class MainWindow : WindowEx
     {
         InitializeComponent();
 
+        ((OverlappedPresenter)AppWindow.Presenter).Maximize();
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
         Content = null;
         Title = "AppDisplayName".GetLocalized();
