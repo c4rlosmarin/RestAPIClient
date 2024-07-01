@@ -2,9 +2,9 @@
 
 namespace mywinui3app.ViewModels;
 
-public partial class MainViewModel : ObservableRecipient
+public partial class CollectionsViewModel : ObservableRecipient
 {
-    public MainViewModel()
+    public CollectionsViewModel()
     {
     }
 }

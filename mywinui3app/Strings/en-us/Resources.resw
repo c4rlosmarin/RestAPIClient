@@ -123,29 +123,11 @@
   <data name="AppDescription" xml:space="preserve">
     <value>mywinui3app</value>
   </data>
-  <data name="Shell_Main.Content" xml:space="preserve">
-    <value>Main</value>
-  </data>
-  <data name="Shell_Blank.Content" xml:space="preserve">
-    <value>Blank</value>
-  </data>
-  <data name="Shell_Blank1.Content" xml:space="preserve">
-    <value>Blank1</value>
-  </data>
-  <data name="Shell_Blank2.Content" xml:space="preserve">
-    <value>Blank2</value>
+  <data name="Shell_Collections.Content" xml:space="preserve">
+    <value>Collections</value>
   </data>
   <data name="ListDetails_NoSelection.Text" xml:space="preserve">
     <value>Select an item from the list.</value>
-  </data>
-  <data name="Shell_ListDetails.Content" xml:space="preserve">
-    <value>ListDetails</value>
-  </data>
-  <data name="Shell_ContentGrid.Content" xml:space="preserve">
-    <value>ContentGrid</value>
-  </data>
-  <data name="Shell_DataGrid.Content" xml:space="preserve">
-    <value>DataGrid</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
