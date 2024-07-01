@@ -4,9 +4,91 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:mywinui3app.Views"
+    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea">
-        
+    <Grid x:Name="ContentArea" Margin="0,30">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <DataTemplate x:Key="CollectionMenuItemTemplate" x:DataType="local:Collection">
+                    <NavigationViewItem MenuItemsSource="{x:Bind Requests}">
+                        <TextBlock Text="{x:Bind Title}" TextTrimming="CharacterEllipsis"/>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{x:Bind Title}"/>
+                        </ToolTipService.ToolTip>
+                        <NavigationViewItem.Icon>
+                            <SymbolIcon Symbol="Folder" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </DataTemplate>
+
+                <DataTemplate x:Key="RequestMenuItemTemplate" x:DataType="local:Request">
+                    <NavigationViewItem>
+                        <TextBlock Text="{x:Bind Title}" TextTrimming="CharacterEllipsis"/>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{x:Bind Title}"/>
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+                </DataTemplate>
+                <local:MenuItemDataTemplateSelector x:Key="ItemTemplateSelector" RequestTemplate="{StaticResource RequestMenuItemTemplate}" CollectionTemplate="{StaticResource CollectionMenuItemTemplate}" />
+
+                <DataTemplate x:Name="TabViewItemHeaderTemplate" x:Key="TabViewItemHeaderTemplate">
+                    <Grid Width="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="GET" Grid.Column="0" Foreground="Green"/>
+                        <TextBlock Text="{Binding}" Grid.Column="2" />
+                    </Grid>
+                </DataTemplate>
+
+                <DataTemplate x:Key="CollectionTemplate" x:DataType="local:Collection">
+                    <TreeViewItem AutomationProperties.Name="{x:Bind Title}" ItemsSource="{x:Bind Requests}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE8A5;" />
+                            <TextBlock Margin="0,0,10,0"/>
+                            <TextBlock Text="{x:Bind Title}" TextTrimming="CharacterEllipsis" Width="245"/>
+                        </StackPanel>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{x:Bind Title}"/>
+                        </ToolTipService.ToolTip>
+                    </TreeViewItem>
+                </DataTemplate>
+
+                <DataTemplate x:Key="RequestTemplate" x:DataType="local:Request">
+                    <TreeViewItem AutomationProperties.Name="{x:Bind Title}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,10,0"/>
+                            <TextBlock Text="{x:Bind Title}" TextTrimming="CharacterEllipsis"  Width="248"/>
+                        </StackPanel>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{x:Bind Title}"/>
+                        </ToolTipService.ToolTip>
+                    </TreeViewItem>
+                </DataTemplate>
+
+                <local:ExplorerItemTemplateSelector x:Key="ExplorerItemTemplateSelector" RequestTemplate="{StaticResource RequestTemplate}" CollectionTemplate="{StaticResource CollectionTemplate}" />
+
+            </Grid.Resources>
+
+            <!--<NavigationView Grid.Column="0" MenuItemTemplateSelector="{StaticResource ItemTemplateSelector}" MenuItemsSource="{x:Bind Collections}" ItemInvoked="NavView_ItemInvoked" IsBackButtonVisible="Collapsed" AlwaysShowHeader="False" IsSettingsVisible="False" >
+            <TabView Grid.Column="1" Name="tabView" Margin="0" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+            </NavigationView>-->
+
+            <TreeView Grid.Column="0" Grid.Row="1" ItemsSource="{x:Bind Collections}" ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}" Width="324"/>
+
+            <TabView Grid.Column="1" Grid.Row ="1" Name="tabView" Margin="0,-11" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+        </Grid>
     </Grid>
 </Page>
