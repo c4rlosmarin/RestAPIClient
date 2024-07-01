@@ -15,14 +15,8 @@ public class PageService : IPageService
     public PageService()
     {
         Configure<MainViewModel, MainPage>();
-        Configure<BlankViewModel, BlankPage>();
-        Configure<Blank1ViewModel, Blank1Page>();
-        Configure<Blank2ViewModel, Blank2Page>();
-        Configure<ListDetailsViewModel, ListDetailsPage>();
-        Configure<ContentGridViewModel, ContentGridPage>();
-        Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
-        Configure<DataGridViewModel, DataGridPage>();
         Configure<SettingsViewModel, SettingsPage>();
+        Configure<EnvironmentsViewModel, EnvironmentsPage>();
     }
 
     public Type GetPageType(string key)

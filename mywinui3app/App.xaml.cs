@@ -72,20 +72,8 @@ public partial class App : Application
             // Views and ViewModels
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
-            services.AddTransient<DataGridViewModel>();
-            services.AddTransient<DataGridPage>();
-            services.AddTransient<ContentGridDetailViewModel>();
-            services.AddTransient<ContentGridDetailPage>();
-            services.AddTransient<ContentGridViewModel>();
-            services.AddTransient<ContentGridPage>();
-            services.AddTransient<ListDetailsViewModel>();
-            services.AddTransient<ListDetailsPage>();
-            services.AddTransient<Blank2ViewModel>();
-            services.AddTransient<Blank2Page>();
-            services.AddTransient<Blank1ViewModel>();
-            services.AddTransient<Blank1Page>();
-            services.AddTransient<BlankViewModel>();
-            services.AddTransient<BlankPage>();
+            services.AddTransient<EnvironmentsViewModel>();
+            services.AddTransient<EnvironmentsPage>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<MainPage>();
             services.AddTransient<ShellPage>();
