@@ -63,12 +63,12 @@ public sealed partial class CollectionsPage : Page
     private TabViewItem CreateNewTab()
     {
         TabViewItem newItem = new TabViewItem();
-        newItem.HeaderTemplate = TabViewItemHeaderTemplate;
+        newItem.HeaderTemplate = newTabViewItemHeaderTemplate;        
         newItem.Header = "Untitled request";
 
-        newItem.IconSource = new FontIconSource() { FontFamily = new FontFamily("Segoe Fluent Icons"), Glyph = "\ue915" };
-        SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 57, 170, 246));
-        newItem.IconSource.Foreground = myBrush;
+        //newItem.IconSource = new FontIconSource() { FontFamily = new FontFamily("Segoe Fluent Icons"), Glyph = "\ue915" };
+        //SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 57, 170, 246));
+        //newItem.IconSource.Foreground = myBrush;
 
 
         Frame frame = new Frame();

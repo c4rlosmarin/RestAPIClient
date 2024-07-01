@@ -83,7 +83,7 @@ public sealed partial class RequestPage : Page
 
     }
 
-    private static void RemoveTabUnsavedRequestIcon(object sender)
+    private void RemoveTabUnsavedRequestIcon(object sender)
     {
         TabView? myTabView = null;
         DependencyObject parent = VisualTreeHelper.GetParent((Button)sender);
@@ -103,7 +103,10 @@ public sealed partial class RequestPage : Page
             var myTabViewItem = myTabView.SelectedItem as TabViewItem;
 
             if (myTabViewItem != null)
-                myTabViewItem.IconSource = null;
+            {
+                myTabViewItem.HeaderTemplate = savedTabViewItemHeaderTemplate;
+            }
+            
         }
     }
 

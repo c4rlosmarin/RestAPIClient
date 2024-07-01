@@ -13,6 +13,19 @@
     <Grid RowDefinitions="Auto,Auto,Auto" Padding="15">
         <Grid x:Name="mainGrid" Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+                <Grid.Resources>
+                    <DataTemplate x:Name="savedTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="GET" Grid.Column="0" Foreground="Green"/>
+                            <TextBlock Text="{Binding}" Grid.Column="2" />
+                        </Grid>
+                    </DataTemplate>
+                </Grid.Resources>
                 <TextBlock Grid.Column="0" Margin="0,20,0,0">Untitled request</TextBlock>
                 <AppBarButton Name="SaveButton" Grid.Column="1" Padding="0" Margin="0,0,-6,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="SaveButton_Click">
                     <AppBarButton.KeyboardAccelerators>

@@ -19,7 +19,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.Resources>
-                <DataTemplate x:Key="CollectionMenuItemTemplate" x:DataType="local:Collection">
+                <!--<DataTemplate x:Key="CollectionMenuItemTemplate" x:DataType="local:Collection">
                     <NavigationViewItem MenuItemsSource="{x:Bind Requests}">
                         <TextBlock Text="{x:Bind Title}" TextTrimming="CharacterEllipsis"/>
                         <ToolTipService.ToolTip>
@@ -39,19 +39,21 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
                 </DataTemplate>
-                <local:MenuItemDataTemplateSelector x:Key="ItemTemplateSelector" RequestTemplate="{StaticResource RequestMenuItemTemplate}" CollectionTemplate="{StaticResource CollectionMenuItemTemplate}" />
+                <local:MenuItemDataTemplateSelector x:Key="ItemTemplateSelector" RequestTemplate="{StaticResource RequestMenuItemTemplate}" CollectionTemplate="{StaticResource CollectionMenuItemTemplate}" />-->
 
-                <DataTemplate x:Name="TabViewItemHeaderTemplate" x:Key="TabViewItemHeaderTemplate">
+                <DataTemplate x:Name="newTabViewItemHeaderTemplate">
                     <Grid Width="Auto">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="5" />
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="GET" Grid.Column="0" Foreground="Green"/>
-                        <TextBlock Text="{Binding}" Grid.Column="2" />
+                        <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                        <TextBlock Text="GET" Grid.Column="1" Foreground="Green"/>
+                        <TextBlock Text="{Binding}" Grid.Column="3" />
                     </Grid>
-                </DataTemplate>
+                </DataTemplate>                
 
                 <DataTemplate x:Key="CollectionTemplate" x:DataType="local:Collection">
                     <TreeViewItem AutomationProperties.Name="{x:Bind Title}" ItemsSource="{x:Bind Requests}">

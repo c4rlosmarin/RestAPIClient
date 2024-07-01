@@ -18,6 +18,7 @@
     <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Views\RequestPage.xaml" />
   </ItemGroup>
 
@@ -46,6 +47,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Styles\FontIcon.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\RequestPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
