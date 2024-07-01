@@ -79,7 +79,7 @@
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
             <Grid>
-                <Frame x:Name="NavigationFrame"/>
+                <Frame x:Name="NavigationFrame" Margin="{StaticResource NavigationViewPageContentMargin}"/>
             </Grid>
         </NavigationView>
     </Grid>

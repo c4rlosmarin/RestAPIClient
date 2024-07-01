@@ -10,18 +10,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid RowDefinitions="Auto,Auto,Auto">
-        <Grid x:Name="mainGrid" Grid.Row="0" Padding="15" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+    <Grid RowDefinitions="Auto,Auto,Auto" Padding="15">
+        <Grid x:Name="mainGrid" Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
-                <TextBlock Grid.Column="0">Untitled request</TextBlock>
-                <AppBarButton Name="SaveButton" Grid.Column="1" Padding="0" Margin="0,-20,-10,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="SaveButton_Click">
+                <TextBlock Grid.Column="0" Margin="0,20,0,0">Untitled request</TextBlock>
+                <AppBarButton Name="SaveButton" Grid.Column="1" Padding="0" Margin="0,0,-6,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="SaveButton_Click">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="S"/>
                     </AppBarButton.KeyboardAccelerators>
                 </AppBarButton>
 
             </Grid>
-            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*,Auto">
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*,Auto" Margin="0">
                 <ComboBox Grid.Column="0" Width="100" SelectedIndex="0">
                     <x:String>GET</x:String>
                     <x:String>POST</x:String>

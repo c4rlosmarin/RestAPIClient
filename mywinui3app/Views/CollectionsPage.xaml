@@ -8,7 +8,7 @@
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea" Margin="0,30">
+    <Grid x:Name="ContentArea">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
