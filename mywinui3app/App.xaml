@@ -14,7 +14,7 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <Style x:Key="MyFontIconStyle" TargetType="FontIcon">
-                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColor}" />
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}" />
                     </Style>
                 </ResourceDictionary>
 
