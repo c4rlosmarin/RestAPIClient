@@ -17,7 +17,6 @@ public sealed partial class RequestPage : Page
 
     #region << Variables >>
 
-    int previousSelectedIndex = 0;
     public ObservableCollection<DatagridRow>? Parameters
     {
         get; private set;
