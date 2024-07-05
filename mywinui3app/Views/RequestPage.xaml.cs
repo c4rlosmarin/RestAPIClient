@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.WinUI.UI.Controls;
 using CommunityToolkit.WinUI.UI.Controls.Primitives;
+using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -33,6 +34,11 @@ public sealed partial class RequestPage : Page
         get; private set;
     }
 
+    public ObservableCollection<Method>? Methods
+    {
+        get; private set;
+    }
+
     #endregion
 
     #region << Constructor >>
@@ -42,6 +48,21 @@ public sealed partial class RequestPage : Page
         this.InitializeComponent();
         //Parameters = new ObservableCollection<DatagridRow>();
         this.InitializeParameters();
+        this.InitializeMethods();
+    }
+
+    private void InitializeMethods()
+    {
+        Methods =
+        [
+            new Method() { Name = "GET" },
+            new Method() { Name = "POST" },
+            new Method() { Name = "PUT" },
+            new Method() { Name = "PATCH" },
+            new Method() { Name = "DELETE" },
+            new Method() { Name = "HEAD" },
+            new Method() { Name = "OPTIONS" },
+        ];
     }
 
     #endregion
@@ -226,5 +247,14 @@ public class DatagridRow
     }
 
 }
+
+public class Method
+{
+    public string Name
+    {
+        get; set;
+    }
+}
+
 
 #endregion
