@@ -1,9 +1,12 @@
-using CommunityToolkit.WinUI.UI.Controls;
 using System.Collections.ObjectModel;
+using CommunityToolkit.WinUI.UI.Controls;
+using CommunityToolkit.WinUI.UI.Controls.Primitives;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml;
+using Windows.System;
+using Windows.UI.Input.Preview.Injection;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -105,7 +108,7 @@ public sealed partial class RequestPage : Page
             {
                 myTabViewItem.HeaderTemplate = savedTabViewItemHeaderTemplate;
             }
-            
+
         }
     }
 
@@ -174,16 +177,30 @@ public sealed partial class RequestPage : Page
 
     #endregion
 
-    private void myDataGrid_LoadingRow(object sender, CommunityToolkit.WinUI.UI.Controls.DataGridRowEventArgs e)
-    {
-
-    }
-
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
-        var selectedItem = myDataGrid.SelectedIndex;
+        if (Parameters.Count > 1)
+        {
+            var button = sender as Button;
+            var dataGridRow = (DatagridRow)button.DataContext;
 
+            myDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+            Parameters.Remove(dataGridRow);
+        }
+    }
 
+    private void myDataGrid_CurrentCellChanged(object sender, EventArgs e)
+    {
+        if (myDataGrid.CurrentColumn != null)
+        {
+            if (myDataGrid.CurrentColumn.DisplayIndex == 0)
+            {
+                InputInjector inputInjector = InputInjector.TryCreate();
+                var info = new InjectedInputKeyboardInfo();
+                info.VirtualKey = (ushort)(VirtualKey.Tab);
+                inputInjector.InjectKeyboardInput(new[] { info });
+            }
+        }
     }
 }
 
