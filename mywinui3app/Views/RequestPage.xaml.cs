@@ -4,6 +4,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using mywinui3app.Models;
+using mywinui3app.ViewModels;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 
@@ -18,6 +20,11 @@ public sealed partial class RequestPage : Page
 {
 
     #region << Variables >>
+
+    public ObservableCollection<RequestModel>? Request
+    {
+        get; private set;
+    }
 
     public ObservableCollection<DatagridRow>? Parameters
     {
@@ -40,6 +47,11 @@ public sealed partial class RequestPage : Page
     public Method? SelectedMethod
     {
         get; set;
+    }
+
+    public RequestViewModel ViewModel
+    {
+        get;
     }
 
     #endregion
@@ -187,6 +199,24 @@ public sealed partial class RequestPage : Page
         }
     }
 
+    public async Task<string> SendPostRequestAsync()
+    {
+        using HttpClient client = new HttpClient();
+        using MultipartFormDataContent form = new MultipartFormDataContent();
+
+        form.Add(new StringContent("client_credentials"), "grant_type");
+        form.Add(new StringContent("eaf45b7f-2560-44c3-bda7-ebd8270e70f6"), "client_id");
+        form.Add(new StringContent("-bj8Q~XqBcdF6E7AzwCeN020gyfknq1wKr6knaQr"), "client_secret");
+        form.Add(new StringContent("https://management.azure.com"), "resource");
+
+
+
+
+        HttpResponseMessage response = await client.PostAsync("https://login.microsoftonline.com/16b3c013-d300-468d-ac64-7eda0820b6d3/oauth2/token", form);
+        response.EnsureSuccessStatusCode();
+        string responseBody = await response.Content.ReadAsStringAsync();
+        return responseBody;
+    }
 
     #endregion
 
@@ -250,8 +280,6 @@ public sealed partial class RequestPage : Page
         var result = dialog.ShowAsync();
     }
 
-    #endregion
-
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         if (Parameters.Count > 1)
@@ -282,6 +310,14 @@ public sealed partial class RequestPage : Page
     {
         this.SetTabViewHeaderTemplate(sender, true);
     }
+
+    private void btnSend_Click(object sender, RoutedEventArgs e)
+    {
+        SendPostRequestAsync();
+    }
+
+    #endregion
+    
 }
 
 #region << Internal Clases >>
