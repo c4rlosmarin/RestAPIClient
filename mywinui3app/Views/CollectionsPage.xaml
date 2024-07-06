@@ -53,7 +53,7 @@
                         <TextBlock Text="GET" Grid.Column="1" Foreground="Green"/>
                         <TextBlock Text="{Binding}" Grid.Column="3" />
                     </Grid>
-                </DataTemplate>                
+                </DataTemplate>
 
                 <DataTemplate x:Key="CollectionTemplate" x:DataType="local:Collection">
                     <TreeViewItem AutomationProperties.Name="{x:Bind Title}" ItemsSource="{x:Bind Requests}">

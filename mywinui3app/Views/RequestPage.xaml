@@ -22,16 +22,228 @@
         <Grid x:Name="mainGrid" Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
                 <Grid.Resources>
-                    <DataTemplate x:Name="savedTabViewItemHeaderTemplate">
+                    <DataTemplate x:Name="GETTabViewItemHeaderTemplate">
                         <Grid Width="Auto">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding ElementName=myMethodComboBox,Path=SelectedItem}" Grid.Column="0" Foreground="Green" />
+                            <TextBlock Text="GET" Grid.Column="0" Foreground="#22B14C" />
                             <TextBlock Text="{Binding}" Grid.Column="2" />
                         </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="EditingGETTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                            <TextBlock Text="GET" Grid.Column="1" Foreground="#22B14C"/>
+                            <TextBlock Text="{Binding}" Grid.Column="3" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="POSTTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="POST" Grid.Column="0" Foreground="#218BEB" />
+                            <TextBlock Text="{Binding}" Grid.Column="2" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="EditingPOSTTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                            <TextBlock Text="POST" Grid.Column="1" Foreground="#218BEB"/>
+                            <TextBlock Text="{Binding}" Grid.Column="3" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="PUTTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="PUT" Grid.Column="0" Foreground="#D1750A" />
+                            <TextBlock Text="{Binding}" Grid.Column="2" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="EditingPUTTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                            <TextBlock Text="PUT" Grid.Column="1" Foreground="#D1750A"/>
+                            <TextBlock Text="{Binding}" Grid.Column="3" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="PATCHTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="PATCH" Grid.Column="0" Foreground="#A347D1" />
+                            <TextBlock Text="{Binding}" Grid.Column="2" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="EditingPATCHTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                            <TextBlock Text="PATCH" Grid.Column="1" Foreground="#A347D1"/>
+                            <TextBlock Text="{Binding}" Grid.Column="3" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="DELETETabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="DELETE" Grid.Column="0" Foreground="#FF0000" />
+                            <TextBlock Text="{Binding}" Grid.Column="2" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="EditingDELETETabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                            <TextBlock Text="DELETE" Grid.Column="1" Foreground="#FF0000"/>
+                            <TextBlock Text="{Binding}" Grid.Column="3" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="HEADTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="HEAD" Grid.Column="0" Foreground="#FF6593" />
+                            <TextBlock Text="{Binding}" Grid.Column="2" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="EditingHEADTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                            <TextBlock Text="HEAD" Grid.Column="1" Foreground="#FF6593"/>
+                            <TextBlock Text="{Binding}" Grid.Column="3" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="OPTIONSTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="OPTIONS" Grid.Column="0" Foreground="#0051D1" />
+                            <TextBlock Text="{Binding}" Grid.Column="2" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
+                    </DataTemplate>
+
+                    <DataTemplate x:Name="EditingOPTIONSTabViewItemHeaderTemplate">
+                        <Grid Width="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
+                            <TextBlock Text="OPTIONS" Grid.Column="1" Foreground="#0051D1"/>
+                            <TextBlock Text="{Binding}" Grid.Column="3" />
+                        </Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding}"/>
+                        </ToolTipService.ToolTip>
                     </DataTemplate>
                 </Grid.Resources>
                 <TextBlock Grid.Column="0" Margin="0,20,0,0">Untitled request</TextBlock>
@@ -43,7 +255,7 @@
 
             </Grid>
             <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,*,Auto" Margin="0">
-                <ComboBox x:Name="myMethodComboBox" Grid.Column="0" Width="100" SelectedIndex="0" ItemsSource="{x:Bind Methods}">
+                <ComboBox x:Name="myMethodComboBox" Grid.Column="0" Width="100" SelectedIndex="0" ItemsSource="{x:Bind Methods}" SelectedItem="{Binding SelectedMethod, Mode=TwoWay}" SelectionChanged="myMethodComboBox_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="local:Method">
                             <TextBlock Text="{x:Bind Name}" />

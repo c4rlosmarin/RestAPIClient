@@ -1,7 +1,5 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.WinUI.UI.Controls;
-using CommunityToolkit.WinUI.UI.Controls.Primitives;
-using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -39,6 +37,11 @@ public sealed partial class RequestPage : Page
         get; private set;
     }
 
+    public Method? SelectedMethod
+    {
+        get; set;
+    }
+
     #endregion
 
     #region << Constructor >>
@@ -55,13 +58,13 @@ public sealed partial class RequestPage : Page
     {
         Methods =
         [
-            new Method() { Name = "GET" },
-            new Method() { Name = "POST" },
-            new Method() { Name = "PUT" },
-            new Method() { Name = "PATCH" },
-            new Method() { Name = "DELETE" },
-            new Method() { Name = "HEAD" },
-            new Method() { Name = "OPTIONS" },
+            new Method() { Name = "GET", Foreground = "Green" },
+            new Method() { Name = "POST", Foreground = "Blue" },
+            new Method() { Name = "PUT", Foreground = "Blue" },
+            new Method() { Name = "PATCH", Foreground = "Blue" },
+            new Method() { Name = "DELETE", Foreground = "Blue" },
+            new Method() { Name = "HEAD", Foreground = "Blue" },
+            new Method() { Name = "OPTIONS", Foreground = "Blue" },
         ];
     }
 
@@ -106,10 +109,17 @@ public sealed partial class RequestPage : Page
 
     }
 
-    private void RemoveTabUnsavedRequestIcon(object sender)
+    private void SetTabViewHeaderTemplate(object sender, bool IsEditing)
     {
         TabView? myTabView = null;
-        DependencyObject parent = VisualTreeHelper.GetParent((Button)sender);
+
+        DependencyObject parent = null;
+
+        if (sender is Button)
+            parent = VisualTreeHelper.GetParent((Button)sender);
+        else if (sender is ComboBox)
+            parent = VisualTreeHelper.GetParent((ComboBox)sender);
+
         while (parent != null)
         {
             if (parent is TabView tabView)
@@ -127,9 +137,53 @@ public sealed partial class RequestPage : Page
 
             if (myTabViewItem != null)
             {
-                myTabViewItem.HeaderTemplate = savedTabViewItemHeaderTemplate;
-            }
+                switch (((Method)myMethodComboBox.SelectedValue).Name)
+                {
+                    case "GET":
+                        if (IsEditing)
+                            myTabViewItem.HeaderTemplate = EditingGETTabViewItemHeaderTemplate;
+                        else
+                            myTabViewItem.HeaderTemplate = GETTabViewItemHeaderTemplate;
+                        break;
+                    case "POST":
+                        if (IsEditing)
+                            myTabViewItem.HeaderTemplate = EditingPOSTTabViewItemHeaderTemplate;
+                        else
+                            myTabViewItem.HeaderTemplate = POSTTabViewItemHeaderTemplate;
+                        break;
+                    case "PUT":
+                        if (IsEditing)
+                            myTabViewItem.HeaderTemplate = EditingPUTTabViewItemHeaderTemplate;
+                        else
+                            myTabViewItem.HeaderTemplate = PUTTabViewItemHeaderTemplate;
+                        break;
+                    case "PATCH":
+                        if (IsEditing)
+                            myTabViewItem.HeaderTemplate = EditingPATCHTabViewItemHeaderTemplate;
+                        else
+                            myTabViewItem.HeaderTemplate = PATCHTabViewItemHeaderTemplate;
+                        break;
+                    case "DELETE":
+                        if (IsEditing)
+                            myTabViewItem.HeaderTemplate = EditingDELETETabViewItemHeaderTemplate;
+                        else
+                            myTabViewItem.HeaderTemplate = DELETETabViewItemHeaderTemplate;
+                        break;
+                    case "HEAD":
+                        if (IsEditing)
+                            myTabViewItem.HeaderTemplate = EditingHEADTabViewItemHeaderTemplate;
+                        else
+                            myTabViewItem.HeaderTemplate = HEADTabViewItemHeaderTemplate;
+                        break;
+                    default:
+                        if (IsEditing)
+                            myTabViewItem.HeaderTemplate = EditingOPTIONSTabViewItemHeaderTemplate;
+                        else
+                            myTabViewItem.HeaderTemplate = OPTIONSTabViewItemHeaderTemplate;
+                        break;
 
+                }
+            }
         }
     }
 
@@ -180,7 +234,7 @@ public sealed partial class RequestPage : Page
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-        RemoveTabUnsavedRequestIcon(sender);
+        SetTabViewHeaderTemplate(sender, false);
 
         ContentDialog dialog = new ContentDialog();
 
@@ -223,6 +277,11 @@ public sealed partial class RequestPage : Page
             }
         }
     }
+
+    private void myMethodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        this.SetTabViewHeaderTemplate(sender, true);
+    }
 }
 
 #region << Internal Clases >>
@@ -251,6 +310,11 @@ public class DatagridRow
 public class Method
 {
     public string Name
+    {
+        get; set;
+    }
+
+    public string Foreground
     {
         get; set;
     }
