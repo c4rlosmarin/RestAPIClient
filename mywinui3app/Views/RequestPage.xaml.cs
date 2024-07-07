@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using mywinui3app.Models;
-using mywinui3app.ViewModels;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 
@@ -21,37 +20,15 @@ public sealed partial class RequestPage : Page
 
     #region << Variables >>
 
-    public ObservableCollection<RequestModel>? Request
-    {
-        get; private set;
-    }
-
-    public ObservableCollection<DatagridRow>? Parameters
-    {
-        get; private set;
-    }
-    public ObservableCollection<DatagridRow>? Headers
-    {
-        get; private set;
-    }
-    public ObservableCollection<DatagridRow>? Body
-    {
-        get; private set;
-    }
-
-    public ObservableCollection<Method>? Methods
-    {
-        get; private set;
-    }
-
-    public Method? SelectedMethod
+    public RequestModel? Request
     {
         get; set;
     }
 
-    public RequestViewModel ViewModel
+
+    public ObservableCollection<Method>? Methods
     {
-        get;
+        get; private set;
     }
 
     #endregion
@@ -86,39 +63,18 @@ public sealed partial class RequestPage : Page
 
     public void InitializeParameters()
     {
-        Parameters = new ObservableCollection<DatagridRow> { new DatagridRow() { IsSelected = true, Name = "", Value = "", Description = "" } };
+        Request = new RequestModel();
+        Request.Parameters = new ObservableCollection<FormData>();
+        var Parameter = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+        Request.Parameters.Add(Parameter);
 
-        Headers = new ObservableCollection<DatagridRow>
-            {
-                new DatagridRow() { IsSelected = true, Name = "Header1", Value = "Value1", Description = "Description1" },
-                new DatagridRow() { IsSelected = true, Name = "Header2", Value = "Value2", Description = "Description2" }
-            };
+        Request.Headers = new ObservableCollection<FormData>();
+        var Header = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+        Request.Headers.Add(Header);
 
-        Body = new ObservableCollection<DatagridRow>
-            {
-                new DatagridRow() { IsSelected = true, Name = "Body1", Value = "Value1", Description = "Description1" },
-                new DatagridRow() { IsSelected = true, Name = "Body2", Value = "Value2", Description = "Description2" }
-            };
-    }
-
-    private void AddNewDatagridRow()
-    {
-        SelectorBarItem selectedItem = SelectorBar.SelectedItem;
-        int currentSelectedIndex = SelectorBar.Items.IndexOf(selectedItem);
-
-        switch (currentSelectedIndex)
-        {
-            case 0:
-                Parameters.Add(new DatagridRow() { IsSelected = true, Name = "", Value = "", Description = "" });
-                break;
-            case 1:
-                Headers.Add(new DatagridRow() { IsSelected = true, Name = "", Value = "", Description = "" });
-                break;
-            default:
-                Body.Add(new DatagridRow() { IsSelected = true, Name = "", Value = "", Description = "" });
-                break;
-        }
-
+        Request.Body = new ObservableCollection<FormData>();
+        var Body = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+        Request.Body.Add(Body);
     }
 
     private void SetTabViewHeaderTemplate(object sender, bool IsEditing)
@@ -199,6 +155,38 @@ public sealed partial class RequestPage : Page
         }
     }
 
+    private void AddNewDatagridRow()
+    {
+        SelectorBarItem selectedItem = SelectorBar.SelectedItem;
+        int currentSelectedIndex = SelectorBar.Items.IndexOf(selectedItem);
+
+        switch (currentSelectedIndex)
+        {
+            case 0:
+                if (myDataGrid.SelectedIndex == Request.Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
+                {
+                    var Parameter = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+                    Request.Parameters.Add(Parameter);
+                }
+                break;
+            case 1:
+                if (myDataGrid.SelectedIndex == Request.Headers.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
+                {
+                    var Header = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+                    Request.Headers.Add(Header);
+                }
+                break;
+            default:
+                if (myDataGrid.SelectedIndex == Request.Body.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
+                {
+                    var Body = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+                    Request.Body.Add(Body);
+                }
+                break;
+        }
+
+    }
+
     public async Task<string> SendPostRequestAsync()
     {
         using HttpClient client = new HttpClient();
@@ -208,9 +196,6 @@ public sealed partial class RequestPage : Page
         form.Add(new StringContent("eaf45b7f-2560-44c3-bda7-ebd8270e70f6"), "client_id");
         form.Add(new StringContent("-bj8Q~XqBcdF6E7AzwCeN020gyfknq1wKr6knaQr"), "client_secret");
         form.Add(new StringContent("https://management.azure.com"), "resource");
-
-
-
 
         HttpResponseMessage response = await client.PostAsync("https://login.microsoftonline.com/16b3c013-d300-468d-ac64-7eda0820b6d3/oauth2/token", form);
         response.EnsureSuccessStatusCode();
@@ -230,15 +215,15 @@ public sealed partial class RequestPage : Page
         switch (currentSelectedIndex)
         {
             case 0:
-                myDataGrid.ItemsSource = Parameters;
+                myDataGrid.ItemsSource = Request.Parameters;
                 myDataGrid.Columns[1].Header = "Parameter";
                 break;
             case 1:
-                myDataGrid.ItemsSource = Headers;
+                myDataGrid.ItemsSource = Request.Headers;
                 myDataGrid.Columns[1].Header = "Header";
                 break;
             default:
-                myDataGrid.ItemsSource = Body;
+                myDataGrid.ItemsSource = Request.Body;
                 myDataGrid.Columns[1].Header = "Key";
                 break;
         }
@@ -256,40 +241,7 @@ public sealed partial class RequestPage : Page
 
     private void EditingControl_KeyDown(object sender, KeyRoutedEventArgs e)
     {
-        if (myDataGrid.SelectedIndex == Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
-        {
-            this.AddNewDatagridRow();
-        }
-    }
-
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        SetTabViewHeaderTemplate(sender, false);
-
-        ContentDialog dialog = new ContentDialog();
-
-        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
-        dialog.XamlRoot = this.XamlRoot;
-        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = "Save your work?";
-        dialog.PrimaryButtonText = "Save";
-        dialog.SecondaryButtonText = "Don't Save";
-        dialog.CloseButtonText = "Cancel";
-        dialog.DefaultButton = ContentDialogButton.Primary;
-
-        var result = dialog.ShowAsync();
-    }
-
-    private void btnDelete_Click(object sender, RoutedEventArgs e)
-    {
-        if (Parameters.Count > 1)
-        {
-            var button = sender as Button;
-            var dataGridRow = (DatagridRow)button.DataContext;
-
-            myDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
-            Parameters.Remove(dataGridRow);
-        }
+        this.AddNewDatagridRow();
     }
 
     private void myDataGrid_CurrentCellChanged(object sender, EventArgs e)
@@ -311,13 +263,58 @@ public sealed partial class RequestPage : Page
         this.SetTabViewHeaderTemplate(sender, true);
     }
 
+    private void btnSave_Click(object sender, RoutedEventArgs e)
+    {
+        SetTabViewHeaderTemplate(sender, false);
+
+        ContentDialog dialog = new ContentDialog();
+
+        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = "Save your work?";
+        dialog.PrimaryButtonText = "Save";
+        dialog.SecondaryButtonText = "Don't Save";
+        dialog.CloseButtonText = "Cancel";
+        dialog.DefaultButton = ContentDialogButton.Primary;
+
+        var result = dialog.ShowAsync();
+    }
+
     private void btnSend_Click(object sender, RoutedEventArgs e)
     {
         SendPostRequestAsync();
     }
 
+    private void btnDelete_Click(object sender, RoutedEventArgs e)
+    {
+        var button = sender as Button;
+        var dataGridRow = (FormData)button.DataContext;
+
+        myDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+
+        SelectorBarItem selectedItem = SelectorBar.SelectedItem;
+        int currentSelectedIndex = SelectorBar.Items.IndexOf(selectedItem);
+
+        switch (currentSelectedIndex)
+        {
+            case 0:
+                if (Request.Parameters.Count > 1)
+                    Request.Parameters.Remove(dataGridRow);
+                break;
+            case 1:
+                if (Request.Headers.Count > 1)
+                    Request.Headers.Remove(dataGridRow);
+                break;
+            default:
+                if (Request.Body.Count > 1)
+                    Request.Body.Remove(dataGridRow);
+                break;
+        }
+    }
+
     #endregion
-    
+
 }
 
 #region << Internal Clases >>
@@ -349,7 +346,6 @@ public class Method
     {
         get; set;
     }
-
     public string Foreground
     {
         get; set;

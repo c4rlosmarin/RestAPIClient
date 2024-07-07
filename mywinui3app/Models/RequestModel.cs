@@ -1,15 +1,19 @@
-﻿namespace mywinui3app.Models;
+﻿using System.Collections.ObjectModel;
+
+namespace mywinui3app.Models;
 public class RequestModel
 {
     public string RequestId { get; set; }
     public string Name { get; set; }
     public string Method { get; set; }
     public URL URL { get; set; }
-    public Parameters Parameters { get; set; }
-    public Parameters Headers { get; set; }
-    public Body Body { get; set; }
+    public ObservableCollection<FormData> Parameters { get; set; }
+    public ObservableCollection<FormData> Headers { get; set; }
+    public ObservableCollection<FormData> Body { get; set; }
 
 }
+
+
 
 public class URL
 {
@@ -39,6 +43,7 @@ public class Body
 
 public class FormData
 {
+    public bool IsSelected { get; set; }
     public string Key { get; set; }
     public string Value { get; set; }
     public string Description { get; set; }
