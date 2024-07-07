@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
+using ABI.Windows.ApplicationModel.Activation;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -25,7 +27,6 @@ public sealed partial class RequestPage : Page
         get; set;
     }
 
-
     public ObservableCollection<Method>? Methods
     {
         get; private set;
@@ -38,7 +39,6 @@ public sealed partial class RequestPage : Page
     public RequestPage()
     {
         this.InitializeComponent();
-        //Parameters = new ObservableCollection<DatagridRow>();
         this.InitializeParameters();
         this.InitializeMethods();
     }
@@ -191,13 +191,39 @@ public sealed partial class RequestPage : Page
     {
         using HttpClient client = new HttpClient();
         using MultipartFormDataContent form = new MultipartFormDataContent();
+        HttpResponseMessage response;
 
-        form.Add(new StringContent("client_credentials"), "grant_type");
-        form.Add(new StringContent("eaf45b7f-2560-44c3-bda7-ebd8270e70f6"), "client_id");
-        form.Add(new StringContent("-bj8Q~XqBcdF6E7AzwCeN020gyfknq1wKr6knaQr"), "client_secret");
-        form.Add(new StringContent("https://management.azure.com"), "resource");
+        int i;
 
-        HttpResponseMessage response = await client.PostAsync("https://login.microsoftonline.com/16b3c013-d300-468d-ac64-7eda0820b6d3/oauth2/token", form);
+        for (i = 0; i <= Request.Parameters.Count - 1; i++)
+        {
+            if (Request.Parameters[i].IsSelected)
+            {
+                if (i == 0)
+                    Request.URL.RawURL += "?";
+                else
+                    Request.URL.RawURL += "&";
+
+                Request.URL.RawURL += Request.Parameters[i].Key + "=" + Request.Parameters[i].Value;
+            }
+        }
+
+        var request = new HttpRequestMessage(new HttpMethod(((Method)myMethodComboBox.SelectedItem).Name), Request.URL.RawURL);
+
+        foreach (FormData item in Request.Headers)
+        {
+            if (item.IsSelected)
+                client.DefaultRequestHeaders.Add(item.Key, item.Value);
+        }
+
+        foreach (FormData item in Request.Body)
+        {
+            if (item.IsSelected)
+                form.Add(new StringContent(item.Value), item.Key);
+        }
+
+        request.Content = form;
+        response = await client.SendAsync(request);
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
         return responseBody;
@@ -283,6 +309,9 @@ public sealed partial class RequestPage : Page
 
     private void btnSend_Click(object sender, RoutedEventArgs e)
     {
+        Request.Name = this.txtName.Text;
+        Request.Method = ((Method)myMethodComboBox.SelectedValue).Name;
+        Request.URL = new URL() { RawURL = this.txtUrl.Text };
         SendPostRequestAsync();
     }
 
@@ -316,41 +345,3 @@ public sealed partial class RequestPage : Page
     #endregion
 
 }
-
-#region << Internal Clases >>
-
-public class DatagridRow
-{
-    public bool IsSelected
-    {
-        get; set;
-    }
-    public string Name
-    {
-        get; set;
-    }
-    public string Value
-    {
-        get; set;
-    }
-    public string Description
-    {
-        get; set;
-    }
-
-}
-
-public class Method
-{
-    public string Name
-    {
-        get; set;
-    }
-    public string Foreground
-    {
-        get; set;
-    }
-}
-
-
-#endregion

@@ -10,10 +10,7 @@ public class RequestModel
     public ObservableCollection<FormData> Parameters { get; set; }
     public ObservableCollection<FormData> Headers { get; set; }
     public ObservableCollection<FormData> Body { get; set; }
-
 }
-
-
 
 public class URL
 {
@@ -47,4 +44,10 @@ public class FormData
     public string Key { get; set; }
     public string Value { get; set; }
     public string Description { get; set; }
+}
+
+public class Method
+{
+    public string Name { get; set; }
+    public string Foreground { get; set; }
 }
