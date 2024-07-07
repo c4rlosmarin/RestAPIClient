@@ -9,6 +9,10 @@ using Microsoft.UI.Xaml.Media;
 using mywinui3app.Models;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
+using Microsoft.UI.Xaml.Documents;
+using mywinui3app.Core.Helpers;
+using System.Text.Json;
+using System.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,6 +35,8 @@ public sealed partial class RequestPage : Page
     {
         get; private set;
     }
+
+    private double CurrentDatagridSize = 275;
 
     #endregion
 
@@ -187,7 +193,7 @@ public sealed partial class RequestPage : Page
 
     }
 
-    public async Task<string> SendPostRequestAsync()
+    public async Task<string> SendRequestAsync()
     {
         using HttpClient client = new HttpClient();
         using MultipartFormDataContent form = new MultipartFormDataContent();
@@ -226,6 +232,20 @@ public sealed partial class RequestPage : Page
         response = await client.SendAsync(request);
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
+
+        JsonDocument document = JsonDocument.Parse(responseBody);
+        var stream = new MemoryStream();
+        var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
+        document.WriteTo(writer);
+        writer.Flush();
+        var formattedResponse = Encoding.UTF8.GetString(stream.ToArray());
+        var paragraph = new Paragraph();
+        var run = new Run();
+        run.Text = formattedResponse;
+        paragraph.Inlines.Add(run);
+        this.txtJson.Blocks.Clear();
+        this.txtJson.Blocks.Add(paragraph);
+
         return responseBody;
     }
 
@@ -312,7 +332,7 @@ public sealed partial class RequestPage : Page
         Request.Name = this.txtName.Text;
         Request.Method = ((Method)myMethodComboBox.SelectedValue).Name;
         Request.URL = new URL() { RawURL = this.txtUrl.Text };
-        SendPostRequestAsync();
+        var response = SendRequestAsync();
     }
 
     private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -344,4 +364,20 @@ public sealed partial class RequestPage : Page
 
     #endregion
 
+    private void myDataGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        var newSize = e.NewSize.Height;
+        double newHeight;
+
+        if (newSize > CurrentDatagridSize)
+        {
+            newHeight = myJsonPanel.Height - (newSize - CurrentDatagridSize);
+            if (newHeight >= 0)
+                myJsonPanel.Height = myJsonPanel.Height - (newSize - CurrentDatagridSize);
+        }
+        else if (newSize < CurrentDatagridSize)
+            myJsonPanel.Height = myJsonPanel.Height + (CurrentDatagridSize - newSize);
+
+        CurrentDatagridSize = newSize;
+    }
 }
