@@ -72,15 +72,15 @@ public sealed partial class RequestPage : Page
     {
         Request = new RequestModel();
         Request.Parameters = new ObservableCollection<FormData>();
-        var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
+        var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility="Collapsed" };
         Request.Parameters.Add(Parameter);
 
         Request.Headers = new ObservableCollection<FormData>();
-        var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
+        var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Request.Headers.Add(Header);
 
         Request.Body = new ObservableCollection<FormData>();
-        var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
+        var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Request.Body.Add(Body);
     }
 
@@ -172,25 +172,28 @@ public sealed partial class RequestPage : Page
             case 0:
                 if (myDataGrid.SelectedIndex == Request.Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
-                    var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
+                    var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility="Collapsed" };
                     Request.Parameters.Add(Parameter);
                     Request.Parameters[myDataGrid.SelectedIndex].IsSelected=true;
+                    Request.Parameters[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
                 }
                 break;
             case 1:
                 if (myDataGrid.SelectedIndex == Request.Headers.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
-                    var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
+                    var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
                     Request.Headers.Add(Header);
                     Request.Headers[myDataGrid.SelectedIndex].IsSelected = true;
+                    Request.Headers[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
                 }
                 break;
             default:
                 if (myDataGrid.SelectedIndex == Request.Body.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
-                    var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
+                    var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
                     Request.Body.Add(Body);
                     Request.Body[myDataGrid.SelectedIndex].IsSelected = true;
+                    Request.Body[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
                 }
                 break;
         }

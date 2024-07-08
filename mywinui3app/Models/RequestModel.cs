@@ -44,6 +44,8 @@ public partial class FormData: ObservableObject
     public string value;
     [ObservableProperty]
     public string description;
+    [ObservableProperty]
+    public string deleteButtonVisibility;
 }
 
 public partial class Method: ObservableObject

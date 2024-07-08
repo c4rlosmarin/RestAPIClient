@@ -275,7 +275,7 @@
             </Grid>
             <controls:DataGrid Grid.Row="3" x:Name="myDataGrid" Margin="0,15" AutoGenerateColumns="False" PreparingCellForEdit="dataGrid_PreparingCellForEdit" CurrentCellChanged="myDataGrid_CurrentCellChanged" SizeChanged="myDataGrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="555" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
                 <controls:DataGrid.Columns>
-                    <controls:DataGridCheckBoxColumn Header="" Width="40" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False" />
+                    <controls:DataGridCheckBoxColumn Header="" Width="40" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResize="False"  />
                     <controls:DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                     <controls:DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
                     <controls:DataGridTextColumn Header="Description" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
@@ -283,7 +283,7 @@
                     <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnDelete" HorizontalAlignment="Center" Click="btnDelete_Click">
+                                <Button x:Name="btnDelete" HorizontalAlignment="Center" Visibility="{Binding DeleteButtonVisibility, Mode=OneWay}" Click="btnDelete_Click">
                                     <FontIcon Glyph="&#xe74d;" FontSize="12"/>
                                     <ToolTipService.ToolTip>
                                         <ToolTip>Delete</ToolTip>
