@@ -1,36 +1,55 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace mywinui3app.Models;
-public class RequestModel
+public partial class RequestModel: ObservableObject
 {
-    public string RequestId { get; set; }
-    public string Name { get; set; }
-    public string Method { get; set; }
-    public URL URL { get; set; }
-    public ObservableCollection<FormData> Parameters { get; set; }
-    public ObservableCollection<FormData> Headers { get; set; }
-    public ObservableCollection<FormData> Body { get; set; }
+    [ObservableProperty]
+    public string requestId;
+    [ObservableProperty]
+    public string name;
+    [ObservableProperty]
+    public string method;
+    [ObservableProperty]
+    public URL uRL;
+    [ObservableProperty]
+    public ObservableCollection<FormData> parameters;
+    [ObservableProperty]
+    public ObservableCollection<FormData> headers;
+    [ObservableProperty]
+    public ObservableCollection<FormData> body;
 }
 
-public class URL
+public partial class URL: ObservableObject
 {
-    public string RawURL { get; set; }
-    public string Protocol { get; set; }
-    public ICollection<string> Host { get; set; }
-    public ICollection<string> Path { get; set; }
-    public IDictionary<string, string> Variables { get; set; }
+    [ObservableProperty]
+    public string rawURL;
+    [ObservableProperty]
+    public string protocol;
+    [ObservableProperty]
+    public ICollection<string> host;
+    [ObservableProperty]
+    public ICollection<string> path;
+    [ObservableProperty]
+    public IDictionary<string, string> variables;
  }
 
-public class FormData
+public partial class FormData: ObservableObject
 {
-    public bool IsSelected { get; set; }
-    public string Key { get; set; }
-    public string Value { get; set; }
-    public string Description { get; set; }
+    [ObservableProperty]
+    public bool isSelected;
+    [ObservableProperty]
+    public string key;
+    [ObservableProperty]
+    public string value;
+    [ObservableProperty]
+    public string description;
 }
 
-public class Method
+public partial class Method: ObservableObject
 {
-    public string Name { get; set; }
-    public string Foreground { get; set; }
+    [ObservableProperty]
+    public string name;
+    [ObservableProperty]
+    public string foreground;
 }

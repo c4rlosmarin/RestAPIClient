@@ -11,13 +11,7 @@ using mywinui3app.Models;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace mywinui3app.Views;
-/// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
-/// </summary>
 public sealed partial class RequestPage : Page
 {
 
@@ -47,8 +41,7 @@ public sealed partial class RequestPage : Page
     public RequestPage()
     {
         this.InitializeComponent();
-        this.InitializeParameters();
-        this.InitializeMethods();
+        this.InitializeRequest();        
     }
 
     private void InitializeMethods()
@@ -69,19 +62,25 @@ public sealed partial class RequestPage : Page
 
     #region << Methods >>
 
-    public void InitializeParameters()
+    public void InitializeRequest()
+    {
+        this.InitializeMethods();
+        this.InitializeForms();
+    }
+
+    private void InitializeForms()
     {
         Request = new RequestModel();
         Request.Parameters = new ObservableCollection<FormData>();
-        var Parameter = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+        var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
         Request.Parameters.Add(Parameter);
 
         Request.Headers = new ObservableCollection<FormData>();
-        var Header = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+        var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
         Request.Headers.Add(Header);
 
         Request.Body = new ObservableCollection<FormData>();
-        var Body = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+        var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
         Request.Body.Add(Body);
     }
 
@@ -173,22 +172,25 @@ public sealed partial class RequestPage : Page
             case 0:
                 if (myDataGrid.SelectedIndex == Request.Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
-                    var Parameter = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+                    var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
                     Request.Parameters.Add(Parameter);
+                    Request.Parameters[myDataGrid.SelectedIndex].IsSelected=true;
                 }
                 break;
             case 1:
                 if (myDataGrid.SelectedIndex == Request.Headers.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
-                    var Header = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+                    var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
                     Request.Headers.Add(Header);
+                    Request.Headers[myDataGrid.SelectedIndex].IsSelected = true;
                 }
                 break;
             default:
                 if (myDataGrid.SelectedIndex == Request.Body.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
-                    var Body = new FormData() { IsSelected = true, Key = "", Value = "", Description = "" };
+                    var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "" };
                     Request.Body.Add(Body);
+                    Request.Body[myDataGrid.SelectedIndex].IsSelected = true;
                 }
                 break;
         }
