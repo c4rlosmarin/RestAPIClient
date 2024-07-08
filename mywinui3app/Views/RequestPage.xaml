@@ -264,7 +264,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <TextBox x:Name="txtUrl" Grid.Column="1" Margin="10,0" PlaceholderText="Enter URL"/>
-                <Button x:Name="btnSend" Grid.Column="2" Margin="10,0,-5,0" Content="Send" Style="{StaticResource AccentButtonStyle}" Click="btnSend_Click"/>
+                <Button x:Name="btnSend" Grid.Column="2" Margin="10,0,-5,0" Content="Send" Style="{StaticResource AccentButtonStyle}" Click="btnSend_Click" FontSize="13"/>
             </Grid>
             <Grid Grid.Row="2">
                 <SelectorBar x:Name="SelectorBar" Margin="-10,10,0,0" SelectionChanged="SelectorBar_SelectionChanged">
@@ -307,34 +307,21 @@
             <Grid x:Name="myJsonPanel" Grid.Row="1" Height="250">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" VerticalAlignment="Stretch">
                     <Border VerticalAlignment="Stretch">
-                        <RichTextBlock x:Name="txtJson" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Stretch">
-                            <Paragraph>
-                                <Run>
-                                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                                </Run>
-                            </Paragraph>
-                        </RichTextBlock>
+                        <RichTextBlock x:Name="txtJson" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Stretch"/>
                     </Border>
                 </ScrollViewer>
             </Grid>
 
             <Grid x:Name="myHeadersPanel" Grid.Row="1" Height="250" Visibility="Collapsed">
-                    <Border VerticalAlignment="Stretch">
-                        <controls:DataGrid x:Name="myResponseHeadersDataGrid" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" IsReadOnly="True" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
-                            <controls:DataGrid.Columns>
-                                <controls:DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=OneWay}" Width="*" />
-                                <controls:DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=OneWay}" Width="*"/>
-                            </controls:DataGrid.Columns>
-                        </controls:DataGrid>
-                    </Border>
+                <Border VerticalAlignment="Stretch">
+                    <controls:DataGrid x:Name="myResponseHeadersDataGrid" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" IsReadOnly="True" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=OneWay}" Width="*" />
+                            <controls:DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=OneWay}" Width="*"/>
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
+                </Border>
             </Grid>
-        </Grid>        
+        </Grid>
     </Grid>
 </Page>

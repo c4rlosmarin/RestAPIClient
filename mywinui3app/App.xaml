@@ -24,6 +24,35 @@
                     </Style>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
+
+            <Style TargetType="TreeViewItem">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+            
+            <Style TargetType="RichTextBlock">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="ComboBox">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
