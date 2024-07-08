@@ -299,7 +299,7 @@
         <controls2:ContentSizer Grid.Row="1" TargetControl="{x:Bind myDataGrid}" Orientation="Horizontal" />
 
         <Grid Grid.Row="2" RowDefinitions="Auto,Auto">
-            <SelectorBar x:Name="SelectorBar2" Grid.Row="0" Margin="-10,0,0,0">
+            <SelectorBar x:Name="myResponseSelectorBar" Grid.Row="0" Margin="-10,0,0,0" SelectionChanged="myResponseSelectorBar_SelectionChanged">
                 <SelectorBarItem x:Name="SelectorBarItemPage4" Text="Body" IsSelected="True" />
                 <SelectorBarItem x:Name="SelectorBarItemPage5" Text="Headers" />
             </SelectorBar>
@@ -323,6 +323,17 @@
                         </RichTextBlock>
                     </Border>
                 </ScrollViewer>
+            </Grid>
+
+            <Grid x:Name="myHeadersPanel" Grid.Row="1" Height="250" Visibility="Collapsed">
+                    <Border VerticalAlignment="Stretch">
+                        <controls:DataGrid x:Name="myResponseHeadersDataGrid" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" IsReadOnly="True" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
+                            <controls:DataGrid.Columns>
+                                <controls:DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=OneWay}" Width="*" />
+                                <controls:DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=OneWay}" Width="*"/>
+                            </controls:DataGrid.Columns>
+                        </controls:DataGrid>
+                    </Border>
             </Grid>
         </Grid>        
     </Grid>

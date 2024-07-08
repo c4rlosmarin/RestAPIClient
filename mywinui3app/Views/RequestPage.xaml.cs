@@ -1,18 +1,15 @@
 using System.Collections.ObjectModel;
-using System.Reflection.Metadata;
-using ABI.Windows.ApplicationModel.Activation;
+using System.Text;
+using System.Text.Json;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using mywinui3app.Models;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
-using Microsoft.UI.Xaml.Documents;
-using mywinui3app.Core.Helpers;
-using System.Text.Json;
-using System.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,12 +28,17 @@ public sealed partial class RequestPage : Page
         get; set;
     }
 
+    public ResponseModel? Response
+    {
+        get; set;
+    }
+
     public ObservableCollection<Method>? Methods
     {
         get; private set;
     }
 
-    private double CurrentDatagridSize = 275;
+    private double CurrentRequestDatagridHeight = 275;
 
     #endregion
 
@@ -238,15 +240,31 @@ public sealed partial class RequestPage : Page
         var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
         document.WriteTo(writer);
         writer.Flush();
-        var formattedResponse = Encoding.UTF8.GetString(stream.ToArray());
+        
+        
+        Response = new ResponseModel();
+        Response.Body = Encoding.UTF8.GetString(stream.ToArray()); ;
+        
         var paragraph = new Paragraph();
         var run = new Run();
-        run.Text = formattedResponse;
+        run.Text = Response.Body;
         paragraph.Inlines.Add(run);
         this.txtJson.Blocks.Clear();
         this.txtJson.Blocks.Add(paragraph);
 
-        return responseBody;
+        Response.Headers = new ObservableCollection<ResponseData>();
+
+        foreach (var item in response.Headers)
+        {
+            foreach (var subitem in item.Value)
+            {
+                Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
+            }    
+        }
+
+        myResponseHeadersDataGrid.ItemsSource = Response.Headers;
+
+        return Response.Body;
     }
 
     #endregion
@@ -366,18 +384,46 @@ public sealed partial class RequestPage : Page
 
     private void myDataGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        var newSize = e.NewSize.Height;
-        double newHeight;
+        var newRequestDataGridHeight = e.NewSize.Height;
+        double newJsonPanelHeight;
+        double newHeadersPanelHeight;
 
-        if (newSize > CurrentDatagridSize)
+        if (newRequestDataGridHeight > CurrentRequestDatagridHeight)
         {
-            newHeight = myJsonPanel.Height - (newSize - CurrentDatagridSize);
-            if (newHeight >= 0)
-                myJsonPanel.Height = myJsonPanel.Height - (newSize - CurrentDatagridSize);
+            newJsonPanelHeight = myJsonPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            if (newJsonPanelHeight >= 0)
+                myJsonPanel.Height = myJsonPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
         }
-        else if (newSize < CurrentDatagridSize)
-            myJsonPanel.Height = myJsonPanel.Height + (CurrentDatagridSize - newSize);
+        else if (newRequestDataGridHeight < CurrentRequestDatagridHeight)
+            myJsonPanel.Height = myJsonPanel.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
 
-        CurrentDatagridSize = newSize;
+        if (newRequestDataGridHeight > CurrentRequestDatagridHeight)
+        {
+            newHeadersPanelHeight = myHeadersPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            if (newHeadersPanelHeight >= 0)
+                myHeadersPanel.Height = myHeadersPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+        }
+        else if (newRequestDataGridHeight < CurrentRequestDatagridHeight)
+            myHeadersPanel.Height = myHeadersPanel.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
+
+        CurrentRequestDatagridHeight = newRequestDataGridHeight;
+    }
+
+    private void myResponseSelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+    {
+        SelectorBarItem selectedItem = sender.SelectedItem;
+        int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
+
+        switch (currentSelectedIndex)
+        {
+            case 0:
+                myJsonPanel.Visibility = Visibility.Visible;
+                myHeadersPanel.Visibility = Visibility.Collapsed;
+                break;
+            case 1:
+                myJsonPanel.Visibility = Visibility.Collapsed;
+                myHeadersPanel.Visibility = Visibility.Visible;
+                break;
+        }
     }
 }

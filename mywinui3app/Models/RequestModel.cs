@@ -21,23 +21,6 @@ public class URL
     public IDictionary<string, string> Variables { get; set; }
  }
 
-public class Parameters
-{
-    public ICollection<FormData> Items { get; set; }
-}
-
-public class Headers
-{
-    public ICollection<FormData> Items { get; set; }
-}
-
-
-public class Body
-{
-    public string Mode { get; set; }
-    public ICollection<FormData> Items { get; set; }
-}
-
 public class FormData
 {
     public bool IsSelected { get; set; }
