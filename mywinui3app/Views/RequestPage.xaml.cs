@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using CommunityToolkit.WinUI.UI.Controls;
@@ -41,7 +42,7 @@ public sealed partial class RequestPage : Page
     public RequestPage()
     {
         this.InitializeComponent();
-        this.InitializeRequest();        
+        this.InitializeRequest();
     }
 
     private void InitializeMethods()
@@ -72,7 +73,7 @@ public sealed partial class RequestPage : Page
     {
         Request = new RequestModel();
         Request.Parameters = new ObservableCollection<FormData>();
-        var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility="Collapsed" };
+        var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Request.Parameters.Add(Parameter);
 
         Request.Headers = new ObservableCollection<FormData>();
@@ -164,17 +165,17 @@ public sealed partial class RequestPage : Page
 
     private void AddNewDatagridRow()
     {
-        SelectorBarItem selectedItem = SelectorBar.SelectedItem;
-        int currentSelectedIndex = SelectorBar.Items.IndexOf(selectedItem);
+        SelectorBarItem selectedItem = barRequest.SelectedItem;
+        int currentSelectedIndex = barRequest.Items.IndexOf(selectedItem);
 
         switch (currentSelectedIndex)
         {
             case 0:
                 if (myDataGrid.SelectedIndex == Request.Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
-                    var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility="Collapsed" };
+                    var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
                     Request.Parameters.Add(Parameter);
-                    Request.Parameters[myDataGrid.SelectedIndex].IsSelected=true;
+                    Request.Parameters[myDataGrid.SelectedIndex].IsSelected = true;
                     Request.Parameters[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
                 }
                 break;
@@ -245,11 +246,11 @@ public sealed partial class RequestPage : Page
         var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
         document.WriteTo(writer);
         writer.Flush();
-        
-        
+
+
         Response = new ResponseModel();
         Response.Body = Encoding.UTF8.GetString(stream.ToArray()); ;
-        
+
         var paragraph = new Paragraph();
         var run = new Run();
         run.Text = Response.Body;
@@ -264,10 +265,10 @@ public sealed partial class RequestPage : Page
             foreach (var subitem in item.Value)
             {
                 Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
-            }    
+            }
         }
 
-        myResponseHeadersDataGrid.ItemsSource = Response.Headers;
+        dtgridResponseHeaders.ItemsSource = Response.Headers;
 
         return Response.Body;
     }
@@ -276,7 +277,7 @@ public sealed partial class RequestPage : Page
 
     #region << Events >>
 
-    private void SelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+    private void barRequest_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
     {
         SelectorBarItem selectedItem = sender.SelectedItem;
         int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
@@ -308,9 +309,56 @@ public sealed partial class RequestPage : Page
         }
     }
 
+    private void RefreshUrlText()
+    {
+        SelectorBarItem selectedItem = barRequest.SelectedItem;
+        var currentSelectedIndex = barRequest.Items.IndexOf(selectedItem);
+
+        if (currentSelectedIndex == 0)
+        {
+            if (myDataGrid.CurrentColumn.DisplayIndex == 1)
+            {
+                var urlSplit = txtUrl.Text.Split('?');
+                var rawUrl = "";
+
+
+                if (urlSplit.Length == 1)
+                    rawUrl = urlSplit[0] + "?";
+                else
+                    rawUrl = urlSplit[0] + "&";
+
+                foreach (var item in Request.Parameters)
+                {
+                    rawUrl += "&" + item.Key + "=" + item.Value;
+                }
+
+
+
+
+
+
+
+
+                //string text = this.txtUrl.Text;
+
+                //if (!string.IsNullOrEmpty(text))
+                //{
+                //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
+
+                //    if (lastCharArray.Length == 1)
+                //    {
+                //        var algo = lastCharArray[0];
+                //    }
+
+                //}
+            }
+        }
+    }
+
     private void EditingControl_KeyDown(object sender, KeyRoutedEventArgs e)
     {
         this.AddNewDatagridRow();
+        this.RefreshUrlText();
     }
 
     private void myDataGrid_CurrentCellChanged(object sender, EventArgs e)
@@ -365,8 +413,8 @@ public sealed partial class RequestPage : Page
 
         myDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
 
-        SelectorBarItem selectedItem = SelectorBar.SelectedItem;
-        int currentSelectedIndex = SelectorBar.Items.IndexOf(selectedItem);
+        SelectorBarItem selectedItem = barRequest.SelectedItem;
+        int currentSelectedIndex = barRequest.Items.IndexOf(selectedItem);
 
         switch (currentSelectedIndex)
         {
@@ -395,26 +443,26 @@ public sealed partial class RequestPage : Page
 
         if (newRequestDataGridHeight > CurrentRequestDatagridHeight)
         {
-            newJsonPanelHeight = myJsonPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            newJsonPanelHeight = gridJson.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
             if (newJsonPanelHeight >= 0)
-                myJsonPanel.Height = myJsonPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+                gridJson.Height = gridJson.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
         }
         else if (newRequestDataGridHeight < CurrentRequestDatagridHeight)
-            myJsonPanel.Height = myJsonPanel.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
+            gridJson.Height = gridJson.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
 
         if (newRequestDataGridHeight > CurrentRequestDatagridHeight)
         {
-            newHeadersPanelHeight = myHeadersPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            newHeadersPanelHeight = gridHeaders.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
             if (newHeadersPanelHeight >= 0)
-                myHeadersPanel.Height = myHeadersPanel.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+                gridHeaders.Height = gridHeaders.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
         }
         else if (newRequestDataGridHeight < CurrentRequestDatagridHeight)
-            myHeadersPanel.Height = myHeadersPanel.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
+            gridHeaders.Height = gridHeaders.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
 
         CurrentRequestDatagridHeight = newRequestDataGridHeight;
     }
 
-    private void myResponseSelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+    private void barResponse_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
     {
         SelectorBarItem selectedItem = sender.SelectedItem;
         int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
@@ -422,13 +470,29 @@ public sealed partial class RequestPage : Page
         switch (currentSelectedIndex)
         {
             case 0:
-                myJsonPanel.Visibility = Visibility.Visible;
-                myHeadersPanel.Visibility = Visibility.Collapsed;
+                gridJson.Visibility = Visibility.Visible;
+                gridHeaders.Visibility = Visibility.Collapsed;
                 break;
             case 1:
-                myJsonPanel.Visibility = Visibility.Collapsed;
-                myHeadersPanel.Visibility = Visibility.Visible;
+                gridJson.Visibility = Visibility.Collapsed;
+                gridHeaders.Visibility = Visibility.Visible;
                 break;
         }
+    }
+
+    private void txtUrl_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        //string text = this.txtUrl.Text;
+
+        //if (!string.IsNullOrEmpty(text))
+        //{
+        //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
+
+        //    if (lastCharArray.Length == 1)
+        //    {
+        //        var algo = lastCharArray[0];
+        //    }
+            
+        //}
     }
 }
