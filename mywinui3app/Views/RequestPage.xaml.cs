@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using CommunityToolkit.WinUI.UI.Controls;
@@ -8,7 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using mywinui3app.Models;
+using mywinui3app.ViewModels;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 
@@ -18,17 +17,17 @@ public sealed partial class RequestPage : Page
 
     #region << Variables >>
 
-    public RequestModel? Request
+    public RequestViewModel? ViewModel
+    {
+        get;
+    }
+
+    public ResponseViewModel? Response
     {
         get; set;
     }
 
-    public ResponseModel? Response
-    {
-        get; set;
-    }
-
-    public ObservableCollection<Method>? Methods
+    public ObservableCollection<MethodViewModel>? Methods
     {
         get; private set;
     }
@@ -41,6 +40,7 @@ public sealed partial class RequestPage : Page
 
     public RequestPage()
     {
+        ViewModel = App.GetService<RequestViewModel>();
         this.InitializeComponent();
         this.InitializeRequest();
     }
@@ -49,13 +49,13 @@ public sealed partial class RequestPage : Page
     {
         Methods =
         [
-            new Method() { Name = "GET", Foreground = "Green" },
-            new Method() { Name = "POST", Foreground = "Blue" },
-            new Method() { Name = "PUT", Foreground = "Blue" },
-            new Method() { Name = "PATCH", Foreground = "Blue" },
-            new Method() { Name = "DELETE", Foreground = "Blue" },
-            new Method() { Name = "HEAD", Foreground = "Blue" },
-            new Method() { Name = "OPTIONS", Foreground = "Blue" },
+            new MethodViewModel() { Name = "GET", Foreground = "Green" },
+            new MethodViewModel() { Name = "POST", Foreground = "Blue" },
+            new MethodViewModel() { Name = "PUT", Foreground = "Blue" },
+            new MethodViewModel() { Name = "PATCH", Foreground = "Blue" },
+            new MethodViewModel() { Name = "DELETE", Foreground = "Blue" },
+            new MethodViewModel() { Name = "HEAD", Foreground = "Blue" },
+            new MethodViewModel() { Name = "OPTIONS", Foreground = "Blue" },
         ];
     }
 
@@ -71,18 +71,17 @@ public sealed partial class RequestPage : Page
 
     private void InitializeForms()
     {
-        Request = new RequestModel();
-        Request.Parameters = new ObservableCollection<FormData>();
+        ViewModel.Parameters = new ObservableCollection<FormData>();
         var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-        Request.Parameters.Add(Parameter);
+        ViewModel.Parameters.Add(Parameter);
 
-        Request.Headers = new ObservableCollection<FormData>();
+        ViewModel.Headers = new ObservableCollection<FormData>();
         var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-        Request.Headers.Add(Header);
+        ViewModel.Headers.Add(Header);
 
-        Request.Body = new ObservableCollection<FormData>();
+        ViewModel.Body = new ObservableCollection<FormData>();
         var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-        Request.Body.Add(Body);
+        ViewModel.Body.Add(Body);
     }
 
     private void SetTabViewHeaderTemplate(object sender, bool IsEditing)
@@ -113,7 +112,7 @@ public sealed partial class RequestPage : Page
 
             if (myTabViewItem != null)
             {
-                switch (((Method)myMethodComboBox.SelectedValue).Name)
+                switch (((MethodViewModel)myMethodComboBox.SelectedValue).Name)
                 {
                     case "GET":
                         if (IsEditing)
@@ -171,30 +170,30 @@ public sealed partial class RequestPage : Page
         switch (currentSelectedIndex)
         {
             case 0:
-                if (myDataGrid.SelectedIndex == Request.Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
+                if (myDataGrid.SelectedIndex == ViewModel.Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
                     var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-                    Request.Parameters.Add(Parameter);
-                    Request.Parameters[myDataGrid.SelectedIndex].IsSelected = true;
-                    Request.Parameters[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
+                    ViewModel.Parameters.Add(Parameter);
+                    ViewModel.Parameters[myDataGrid.SelectedIndex].IsSelected = true;
+                    ViewModel.Parameters[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
                 }
                 break;
             case 1:
-                if (myDataGrid.SelectedIndex == Request.Headers.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
+                if (myDataGrid.SelectedIndex == ViewModel.Headers.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
                     var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-                    Request.Headers.Add(Header);
-                    Request.Headers[myDataGrid.SelectedIndex].IsSelected = true;
-                    Request.Headers[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
+                    ViewModel.Headers.Add(Header);
+                    ViewModel.Headers[myDataGrid.SelectedIndex].IsSelected = true;
+                    ViewModel.Headers[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
                 }
                 break;
             default:
-                if (myDataGrid.SelectedIndex == Request.Body.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
+                if (myDataGrid.SelectedIndex == ViewModel.Body.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
                 {
                     var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-                    Request.Body.Add(Body);
-                    Request.Body[myDataGrid.SelectedIndex].IsSelected = true;
-                    Request.Body[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
+                    ViewModel.Body.Add(Body);
+                    ViewModel.Body[myDataGrid.SelectedIndex].IsSelected = true;
+                    ViewModel.Body[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
                 }
                 break;
         }
@@ -209,28 +208,28 @@ public sealed partial class RequestPage : Page
 
         int i;
 
-        for (i = 0; i <= Request.Parameters.Count - 1; i++)
+        for (i = 0; i <= ViewModel.Parameters.Count - 1; i++)
         {
-            if (Request.Parameters[i].IsSelected)
+            if (ViewModel.Parameters[i].IsSelected)
             {
                 if (i == 0)
-                    Request.URL.RawURL += "?";
+                    ViewModel.URL.RawURL += "?";
                 else
-                    Request.URL.RawURL += "&";
+                    ViewModel.URL.RawURL += "&";
 
-                Request.URL.RawURL += Request.Parameters[i].Key + "=" + Request.Parameters[i].Value;
+                ViewModel.URL.RawURL += ViewModel.Parameters[i].Key + "=" + ViewModel.Parameters[i].Value;
             }
         }
 
-        var request = new HttpRequestMessage(new HttpMethod(((Method)myMethodComboBox.SelectedItem).Name), Request.URL.RawURL);
+        var request = new HttpRequestMessage(new HttpMethod(((MethodViewModel)myMethodComboBox.SelectedItem).Name), ViewModel.URL.RawURL);
 
-        foreach (FormData item in Request.Headers)
+        foreach (FormData item in ViewModel.Headers)
         {
             if (item.IsSelected)
                 client.DefaultRequestHeaders.Add(item.Key, item.Value);
         }
 
-        foreach (FormData item in Request.Body)
+        foreach (FormData item in ViewModel.Body)
         {
             if (item.IsSelected)
                 form.Add(new StringContent(item.Value), item.Key);
@@ -248,7 +247,7 @@ public sealed partial class RequestPage : Page
         writer.Flush();
 
 
-        Response = new ResponseModel();
+        Response = new ResponseViewModel();
         Response.Body = Encoding.UTF8.GetString(stream.ToArray()); ;
 
         var paragraph = new Paragraph();
@@ -285,15 +284,15 @@ public sealed partial class RequestPage : Page
         switch (currentSelectedIndex)
         {
             case 0:
-                myDataGrid.ItemsSource = Request.Parameters;
+                myDataGrid.ItemsSource = ViewModel.Parameters;
                 myDataGrid.Columns[1].Header = "Parameter";
                 break;
             case 1:
-                myDataGrid.ItemsSource = Request.Headers;
+                myDataGrid.ItemsSource = ViewModel.Headers;
                 myDataGrid.Columns[1].Header = "Header";
                 break;
             default:
-                myDataGrid.ItemsSource = Request.Body;
+                myDataGrid.ItemsSource = ViewModel.Body;
                 myDataGrid.Columns[1].Header = "Key";
                 break;
         }
@@ -327,7 +326,7 @@ public sealed partial class RequestPage : Page
                 else
                     rawUrl = urlSplit[0] + "&";
 
-                foreach (var item in Request.Parameters)
+                foreach (var item in ViewModel.Parameters)
                 {
                     rawUrl += "&" + item.Key + "=" + item.Value;
                 }
@@ -400,9 +399,9 @@ public sealed partial class RequestPage : Page
 
     private void btnSend_Click(object sender, RoutedEventArgs e)
     {
-        Request.Name = this.txtName.Text;
-        Request.Method = ((Method)myMethodComboBox.SelectedValue).Name;
-        Request.URL = new URL() { RawURL = this.txtUrl.Text };
+        ViewModel.Name = this.txtName.Text;
+        ViewModel.Method = ((MethodViewModel)myMethodComboBox.SelectedValue).Name;
+        ViewModel.URL = new URL() { RawURL = this.txtUrl.Text };
         var response = SendRequestAsync();
     }
 
@@ -419,16 +418,16 @@ public sealed partial class RequestPage : Page
         switch (currentSelectedIndex)
         {
             case 0:
-                if (Request.Parameters.Count > 1)
-                    Request.Parameters.Remove(dataGridRow);
+                if (ViewModel.Parameters.Count > 1)
+                    ViewModel.Parameters.Remove(dataGridRow);
                 break;
             case 1:
-                if (Request.Headers.Count > 1)
-                    Request.Headers.Remove(dataGridRow);
+                if (ViewModel.Headers.Count > 1)
+                    ViewModel.Headers.Remove(dataGridRow);
                 break;
             default:
-                if (Request.Body.Count > 1)
-                    Request.Body.Remove(dataGridRow);
+                if (ViewModel.Body.Count > 1)
+                    ViewModel.Body.Remove(dataGridRow);
                 break;
         }
     }
@@ -443,22 +442,19 @@ public sealed partial class RequestPage : Page
 
         if (newRequestDataGridHeight > CurrentRequestDatagridHeight)
         {
-            newJsonPanelHeight = gridJson.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            newJsonPanelHeight = gridResponseJson.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
             if (newJsonPanelHeight >= 0)
-                gridJson.Height = gridJson.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
-        }
-        else if (newRequestDataGridHeight < CurrentRequestDatagridHeight)
-            gridJson.Height = gridJson.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
+                gridResponseJson.Height -= (newRequestDataGridHeight - CurrentRequestDatagridHeight);
 
-        if (newRequestDataGridHeight > CurrentRequestDatagridHeight)
-        {
-            newHeadersPanelHeight = gridHeaders.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            newHeadersPanelHeight = gridResponseHeaders.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
             if (newHeadersPanelHeight >= 0)
-                gridHeaders.Height = gridHeaders.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+                gridResponseHeaders.Height -= (newRequestDataGridHeight - CurrentRequestDatagridHeight);
         }
         else if (newRequestDataGridHeight < CurrentRequestDatagridHeight)
-            gridHeaders.Height = gridHeaders.Height + (CurrentRequestDatagridHeight - newRequestDataGridHeight);
-
+        {
+            gridResponseJson.Height += (CurrentRequestDatagridHeight - newRequestDataGridHeight);
+            gridResponseHeaders.Height += (CurrentRequestDatagridHeight - newRequestDataGridHeight);
+        }
         CurrentRequestDatagridHeight = newRequestDataGridHeight;
     }
 
@@ -470,12 +466,12 @@ public sealed partial class RequestPage : Page
         switch (currentSelectedIndex)
         {
             case 0:
-                gridJson.Visibility = Visibility.Visible;
-                gridHeaders.Visibility = Visibility.Collapsed;
+                gridResponseJson.Visibility = Visibility.Visible;
+                gridResponseHeaders.Visibility = Visibility.Collapsed;
                 break;
             case 1:
-                gridJson.Visibility = Visibility.Collapsed;
-                gridHeaders.Visibility = Visibility.Visible;
+                gridResponseJson.Visibility = Visibility.Collapsed;
+                gridResponseHeaders.Visibility = Visibility.Visible;
                 break;
         }
     }
@@ -492,7 +488,7 @@ public sealed partial class RequestPage : Page
         //    {
         //        var algo = lastCharArray[0];
         //    }
-            
+
         //}
     }
 }
