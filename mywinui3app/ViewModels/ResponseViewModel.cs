@@ -1,26 +1,25 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace mywinui3app.ViewModels
+namespace mywinui3app.ViewModels;
+
+public partial class ResponseViewModel : ObservableRecipient
 {
-    public partial class ResponseViewModel : ObservableRecipient
-    {
-        [ObservableProperty]
-        public string body;
+    [ObservableProperty]
+    public string body;
 
-        [ObservableProperty]
-        public ObservableCollection<ResponseData> headers;
+    [ObservableProperty]
+    public ObservableCollection<ResponseData> headers;
+
+}
+public class ResponseData
+{
+    public string Key
+    {
+        get; set;
     }
-
-    public class ResponseData
+    public string Value
     {
-        public string Key
-        {
-            get; set;
-        }
-        public string Value
-        {
-            get; set;
-        }
+        get; set;
     }
 }

@@ -1,5 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Text;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace mywinui3app.ViewModels;
 
@@ -12,6 +16,10 @@ public partial class RequestViewModel : ObservableRecipient
     [ObservableProperty]
     public string method;
     [ObservableProperty]
+    public ObservableCollection<MethodsItemViewModel> methods;
+    [ObservableProperty]
+    public string rawURL;
+    [ObservableProperty]
     public URL uRL;
     [ObservableProperty]
     public ObservableCollection<FormData> parameters;
@@ -19,16 +27,177 @@ public partial class RequestViewModel : ObservableRecipient
     public ObservableCollection<FormData> headers;
     [ObservableProperty]
     public ObservableCollection<FormData> body;
-
+    [ObservableProperty]
+    public ResponseViewModel response;
 
     public RequestViewModel()
     {
         Name = "Untitled request";
+
+        Parameters = new ObservableCollection<FormData>();
+        Headers = new ObservableCollection<FormData>();
+        Body = new ObservableCollection<FormData>();
+        Methods = new ObservableCollection<MethodsItemViewModel>();
+        URL = new URL();
+
+        this.AddNewParameter();
+        this.AddNewHeader();
+        this.AddNewBodyItem();
+        this.AddMethods();
     }
 
-    partial void OnNameChanged(string value)
+
+    public void AddMethods()
     {
-            var algo = 123; 
+        Methods.Add(new MethodsItemViewModel() { Name = "GET", Foreground = "Green" });
+        Methods.Add(new MethodsItemViewModel() { Name = "POST", Foreground = "Blue" });
+        Methods.Add(new MethodsItemViewModel() { Name = "PUT", Foreground = "Blue" });
+        Methods.Add(new MethodsItemViewModel() { Name = "PATCH", Foreground = "Blue" });
+        Methods.Add(new MethodsItemViewModel() { Name = "DELETE", Foreground = "Blue" });
+        Methods.Add(new MethodsItemViewModel() { Name = "OPTIONS", Foreground = "Blue" });
+    }
+
+    [RelayCommand]
+    public void DeleteParameter(FormData item)
+    {
+        Parameters.Remove(item);
+    }
+
+    [RelayCommand]
+    public void AddNewParameter()
+    {
+        var Parameter = new FormData() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        Parameter.PropertyChanged += Parameter_PropertyChanged;
+        Parameters.Add(Parameter);
+    }
+
+    private void Parameter_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+
+        var item = sender as FormData;
+        int index = Parameters.IndexOf(item);
+
+        if (index == Parameters.Count - 1 && e.PropertyName != "IsEnabled")
+            AddNewParameter();
+
+        item.DeleteButtonVisibility = "Visible";
+        item.IsEnabled = true;
+        RawURL = item.Key + "=" + item.value;
+    }
+    
+    [RelayCommand]
+    public void AddNewHeader()
+    {
+        var Header = new FormData() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        Header.PropertyChanged += Header_PropertyChanged;
+        Headers.Add(Header);
+    }
+
+    private void Header_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        var item = sender as FormData;
+        int index = Headers.IndexOf(item);
+
+        if (index == Headers.Count - 1 && e.PropertyName != "IsEnabled")
+            AddNewHeader();
+
+        item.DeleteButtonVisibility = "Visible";
+        item.IsEnabled = true;
+    }
+
+    [RelayCommand]
+    public void AddNewBodyItem()
+    {
+        var BodyItem = new FormData() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        BodyItem.PropertyChanged += BodyItem_PropertyChanged;
+        body.Add(BodyItem);
+    }
+
+    private void BodyItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        var item = sender as FormData;
+        int index = Body.IndexOf(item);
+
+        if (index == Body.Count - 1 && e.PropertyName != "IsEnabled")
+            AddNewBodyItem();
+
+        item.DeleteButtonVisibility = "Visible";
+        item.IsEnabled = true;
+    }
+
+    private void HeadersItemChanged(object sender, PropertyChangedEventArgs e)
+    {
+        var item = sender as FormData;
+        int index = Headers.IndexOf(item);
+    }
+
+    private void BodyItemChanged(object sender, PropertyChangedEventArgs e)
+    {
+        var item = sender as FormData;
+        int index = Body.IndexOf(item);
+    }
+
+    public async Task<string> SendRequestAsync()
+    {        
+        using HttpClient client = new HttpClient();
+        using MultipartFormDataContent form = new MultipartFormDataContent();
+        HttpResponseMessage response;
+
+        int i;
+
+        for (i = 0; i <= Parameters.Count - 1; i++)
+        {
+            if (Parameters[i].IsEnabled)
+            {
+                if (i == 0)
+                    URL.RawURL += "?";
+                else
+                    URL.RawURL += "&";
+
+                URL.RawURL += Parameters[i].Key + "=" + Parameters[i].Value;
+            }
+        }
+
+        var request = new HttpRequestMessage(new HttpMethod("GET"), URL.RawURL);
+
+        foreach (FormData item in Headers)
+        {
+            if (item.IsEnabled)
+                client.DefaultRequestHeaders.Add(item.Key, item.Value);
+        }
+
+        foreach (FormData item in Body)
+        {
+            if (item.IsEnabled)
+                form.Add(new StringContent(item.Value), item.Key);
+        }
+
+        request.Content = form;
+        response = await client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        JsonDocument document = JsonDocument.Parse(responseBody);
+        var stream = new MemoryStream();
+        var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
+        document.WriteTo(writer);
+        writer.Flush();
+
+        Response = new ResponseViewModel();
+        Response.Body = Encoding.UTF8.GetString(stream.ToArray()); ;
+
+        Response.Headers = new ObservableCollection<ResponseData>();
+
+        foreach (var item in response.Headers)
+        {
+            foreach (var subitem in item.Value)
+            {
+                Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
+            }
+        }        
+
+        return Response.Body;
     }
 }
 
@@ -49,7 +218,7 @@ public partial class URL : ObservableRecipient
 public partial class FormData : ObservableRecipient
 {
     [ObservableProperty]
-    public bool isSelected;
+    public bool isEnabled;
     [ObservableProperty]
     public string key;
     [ObservableProperty]
@@ -58,12 +227,4 @@ public partial class FormData : ObservableRecipient
     public string description;
     [ObservableProperty]
     public string deleteButtonVisibility;
-}
-
-public partial class MethodViewModel : ObservableRecipient
-{
-    [ObservableProperty]
-    public string name;
-    [ObservableProperty]
-    public string foreground;
 }

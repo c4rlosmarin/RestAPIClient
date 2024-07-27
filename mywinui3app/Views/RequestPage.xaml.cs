@@ -1,15 +1,14 @@
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Text.Json;
+using CommunityToolkit.WinUI.UI.Automation.Peers;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation.Peers;
+using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using mywinui3app.ViewModels;
 using Windows.System;
-using Windows.UI.Input.Preview.Injection;
 
 namespace mywinui3app.Views;
 public sealed partial class RequestPage : Page
@@ -27,12 +26,7 @@ public sealed partial class RequestPage : Page
         get; set;
     }
 
-    public ObservableCollection<MethodViewModel>? Methods
-    {
-        get; private set;
-    }
-
-    private double CurrentRequestDatagridHeight = 275;
+    private double ParametersDatagridHeight = 275;
 
     #endregion
 
@@ -42,47 +36,12 @@ public sealed partial class RequestPage : Page
     {
         ViewModel = App.GetService<RequestViewModel>();
         this.InitializeComponent();
-        this.InitializeRequest();
     }
 
-    private void InitializeMethods()
-    {
-        Methods =
-        [
-            new MethodViewModel() { Name = "GET", Foreground = "Green" },
-            new MethodViewModel() { Name = "POST", Foreground = "Blue" },
-            new MethodViewModel() { Name = "PUT", Foreground = "Blue" },
-            new MethodViewModel() { Name = "PATCH", Foreground = "Blue" },
-            new MethodViewModel() { Name = "DELETE", Foreground = "Blue" },
-            new MethodViewModel() { Name = "HEAD", Foreground = "Blue" },
-            new MethodViewModel() { Name = "OPTIONS", Foreground = "Blue" },
-        ];
-    }
 
     #endregion
 
     #region << Methods >>
-
-    public void InitializeRequest()
-    {
-        this.InitializeMethods();
-        this.InitializeForms();
-    }
-
-    private void InitializeForms()
-    {
-        ViewModel.Parameters = new ObservableCollection<FormData>();
-        var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-        ViewModel.Parameters.Add(Parameter);
-
-        ViewModel.Headers = new ObservableCollection<FormData>();
-        var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-        ViewModel.Headers.Add(Header);
-
-        ViewModel.Body = new ObservableCollection<FormData>();
-        var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-        ViewModel.Body.Add(Body);
-    }
 
     private void SetTabViewHeaderTemplate(object sender, bool IsEditing)
     {
@@ -112,7 +71,7 @@ public sealed partial class RequestPage : Page
 
             if (myTabViewItem != null)
             {
-                switch (((MethodViewModel)myMethodComboBox.SelectedValue).Name)
+                switch (myMethodComboBox.SelectedValue)
                 {
                     case "GET":
                         if (IsEditing)
@@ -162,214 +121,170 @@ public sealed partial class RequestPage : Page
         }
     }
 
-    private void AddNewDatagridRow()
+    private async Task<string> SendRequestAsync()
     {
-        SelectorBarItem selectedItem = barRequest.SelectedItem;
-        int currentSelectedIndex = barRequest.Items.IndexOf(selectedItem);
+        return await ViewModel.SendRequestAsync();
 
-        switch (currentSelectedIndex)
-        {
-            case 0:
-                if (myDataGrid.SelectedIndex == ViewModel.Parameters.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
-                {
-                    var Parameter = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-                    ViewModel.Parameters.Add(Parameter);
-                    ViewModel.Parameters[myDataGrid.SelectedIndex].IsSelected = true;
-                    ViewModel.Parameters[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
-                }
-                break;
-            case 1:
-                if (myDataGrid.SelectedIndex == ViewModel.Headers.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
-                {
-                    var Header = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-                    ViewModel.Headers.Add(Header);
-                    ViewModel.Headers[myDataGrid.SelectedIndex].IsSelected = true;
-                    ViewModel.Headers[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
-                }
-                break;
-            default:
-                if (myDataGrid.SelectedIndex == ViewModel.Body.Count - 1 && myDataGrid.CurrentColumn.DisplayIndex != 0)
-                {
-                    var Body = new FormData() { IsSelected = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
-                    ViewModel.Body.Add(Body);
-                    ViewModel.Body[myDataGrid.SelectedIndex].IsSelected = true;
-                    ViewModel.Body[myDataGrid.SelectedIndex].DeleteButtonVisibility = "Visible";
-                }
-                break;
-        }
-
+        //var paragraph = new Paragraph();
+        //var run = new Run();
+        //run.Text = Response.Body;
+        //paragraph.Inlines.Add(run);
+        //this.txtJson.Blocks.Clear();
+        //this.txtJson.Blocks.Add(paragraph);
     }
 
-    public async Task<string> SendRequestAsync()
+    private void RefreshUrlText(string v)
     {
-        using HttpClient client = new HttpClient();
-        using MultipartFormDataContent form = new MultipartFormDataContent();
-        HttpResponseMessage response;
+        //SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
+        //var currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
 
-        int i;
+        //if (currentSelectedIndex == 0)
+        //{
+        //    if (dtgridFormData.CurrentColumn.DisplayIndex == 1)
+        //    {
+        //        var urlSplit = txtUrl.Text.Split('?');
+        //        var rawUrl = "";
 
-        for (i = 0; i <= ViewModel.Parameters.Count - 1; i++)
-        {
-            if (ViewModel.Parameters[i].IsSelected)
-            {
-                if (i == 0)
-                    ViewModel.URL.RawURL += "?";
-                else
-                    ViewModel.URL.RawURL += "&";
+        //        rawUrl = urlSplit[0] + "?";
+        //        this.txtUrl.Text = rawUrl;
+        //        foreach (var item in ViewModel.Parameters)
+        //        {
+        //            int index = ViewModel.Parameters.IndexOf(item);
 
-                ViewModel.URL.RawURL += ViewModel.Parameters[i].Key + "=" + ViewModel.Parameters[i].Value;
-            }
-        }
+        //            if (index == dtgridFormData.SelectedIndex)
+        //            {
+        //                this.txtUrl.Text += currentCellValue + v;
+        //            }
+        //            else
+        //                rawUrl += "&" + item.Key + "=" + item.Value;
+        //        }
 
-        var request = new HttpRequestMessage(new HttpMethod(((MethodViewModel)myMethodComboBox.SelectedItem).Name), ViewModel.URL.RawURL);
+        //        //var item = sender as FormData;
+        //        //int index = Parameters.IndexOf(item);
 
-        foreach (FormData item in ViewModel.Headers)
-        {
-            if (item.IsSelected)
-                client.DefaultRequestHeaders.Add(item.Key, item.Value);
-        }
+        //        currentCellValue += v;
 
-        foreach (FormData item in ViewModel.Body)
-        {
-            if (item.IsSelected)
-                form.Add(new StringContent(item.Value), item.Key);
-        }
+        //string text = this.txtUrl.Text;
 
-        request.Content = form;
-        response = await client.SendAsync(request);
-        response.EnsureSuccessStatusCode();
-        string responseBody = await response.Content.ReadAsStringAsync();
+        //if (!string.IsNullOrEmpty(text))
+        //{
+        //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
 
-        JsonDocument document = JsonDocument.Parse(responseBody);
-        var stream = new MemoryStream();
-        var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
-        document.WriteTo(writer);
-        writer.Flush();
-
-
-        Response = new ResponseViewModel();
-        Response.Body = Encoding.UTF8.GetString(stream.ToArray()); ;
-
-        var paragraph = new Paragraph();
-        var run = new Run();
-        run.Text = Response.Body;
-        paragraph.Inlines.Add(run);
-        this.txtJson.Blocks.Clear();
-        this.txtJson.Blocks.Add(paragraph);
-
-        Response.Headers = new ObservableCollection<ResponseData>();
-
-        foreach (var item in response.Headers)
-        {
-            foreach (var subitem in item.Value)
-            {
-                Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
-            }
-        }
-
-        dtgridResponseHeaders.ItemsSource = Response.Headers;
-
-        return Response.Body;
+        //    if (lastCharArray.Length == 1)
+        //    {
+        //        var algo = lastCharArray[0];
+        //    }
+        //}
+        //    }
+        //}
     }
 
     #endregion
 
     #region << Events >>
 
-    private void barRequest_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+    private void selectbarRequest_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
     {
-        SelectorBarItem selectedItem = sender.SelectedItem;
-        int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
-
-        switch (currentSelectedIndex)
+        switch (selectbarRequest.SelectedItem.Text)
         {
-            case 0:
-                myDataGrid.ItemsSource = ViewModel.Parameters;
-                myDataGrid.Columns[1].Header = "Parameter";
+            case "Parameters":
+                dtgridFormData.ItemsSource = ViewModel.Parameters;
+                dtgridFormData.Columns[1].Header = "Parameter";
                 break;
-            case 1:
-                myDataGrid.ItemsSource = ViewModel.Headers;
-                myDataGrid.Columns[1].Header = "Header";
+            case "Headers":
+                dtgridFormData.ItemsSource = ViewModel.Headers;
+                dtgridFormData.Columns[1].Header = "Header";
                 break;
             default:
-                myDataGrid.ItemsSource = ViewModel.Body;
-                myDataGrid.Columns[1].Header = "Key";
+                dtgridFormData.ItemsSource = ViewModel.Body;
+                dtgridFormData.Columns[1].Header = "Key";
                 break;
         }
     }
 
-    private void dataGrid_PreparingCellForEdit(object sender, CommunityToolkit.WinUI.UI.Controls.DataGridPreparingCellForEditEventArgs e)
+    private void dtgridFormData_LoadingRow(object sender, DataGridRowEventArgs e)
     {
-        if (e.EditingElement is TextBox t)
-        {
-            t.Focus(FocusState.Keyboard);
-
-            t.KeyDown += EditingControl_KeyDown;
-        }
+        e.Row.KeyDown += dtgridFormData_KeyDown;
     }
 
-    private void RefreshUrlText()
+    private void dtgridFormData_KeyDown(object sender, KeyRoutedEventArgs e)
     {
-        SelectorBarItem selectedItem = barRequest.SelectedItem;
-        var currentSelectedIndex = barRequest.Items.IndexOf(selectedItem);
+        var isShiftPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
 
-        if (currentSelectedIndex == 0)
+        var row = sender as DataGridRow;
+        if (row != null)
         {
-            if (myDataGrid.CurrentColumn.DisplayIndex == 1)
+            if (e.Key == VirtualKey.Tab)
             {
-                var urlSplit = txtUrl.Text.Split('?');
-                var rawUrl = "";
-
-
-                if (urlSplit.Length == 1)
-                    rawUrl = urlSplit[0] + "?";
-                else
-                    rawUrl = urlSplit[0] + "&";
-
-                foreach (var item in ViewModel.Parameters)
+                if (isShiftPressed)
                 {
-                    rawUrl += "&" + item.Key + "=" + item.Value;
+                    if (row.GetIndex() >= 0)
+                    {
+                        if (dtgridFormData.CurrentColumn.DisplayIndex > 1)
+                        {
+                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[dtgridFormData.CurrentColumn.DisplayIndex - 1];
+                            dtgridFormData.BeginEdit();
+                        }
+                        else if (row.GetIndex() > 0)
+                        {
+                            dtgridFormData.SelectedIndex = row.GetIndex() - 1;
+                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[3];
+                            dtgridFormData.BeginEdit();
+                        }
+                    }
                 }
+                else
+                {
+                    var itemCount = 0;
+                    switch (selectbarRequest.SelectedItem.Text)
+                    {
+                        case "Parameters":
+                            itemCount = ViewModel.Parameters.Count;
+                            break;
 
+                        case "Headers":
+                            itemCount = ViewModel.Headers.Count;
+                            break;
+                        
+                        default:
+                            itemCount = ViewModel.Body.Count;
+                            break;
+                    }
 
-
-
-
-
-
-
-                //string text = this.txtUrl.Text;
-
-                //if (!string.IsNullOrEmpty(text))
-                //{
-                //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
-
-                //    if (lastCharArray.Length == 1)
-                //    {
-                //        var algo = lastCharArray[0];
-                //    }
-
-                //}
+                    if (row.GetIndex() <= itemCount - 1)
+                    {
+                        if (dtgridFormData.CurrentColumn.DisplayIndex < dtgridFormData.Columns.Count - 2)
+                        {
+                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[dtgridFormData.CurrentColumn.DisplayIndex + 1];
+                            dtgridFormData.BeginEdit();
+                        }
+                        else if (itemCount - 1 > row.GetIndex())
+                        {
+                            dtgridFormData.SelectedIndex = row.GetIndex() + 1;
+                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[1];
+                            dtgridFormData.BeginEdit();
+                        }
+                        else
+                            SimulateCellClick(row, dtgridFormData.Columns[1]);
+                    }
+                }
+                e.Handled = true;
             }
         }
     }
 
-    private void EditingControl_KeyDown(object sender, KeyRoutedEventArgs e)
+    private void SimulateCellClick(DataGridRow? row, DataGridColumn? column)
     {
-        this.AddNewDatagridRow();
-        this.RefreshUrlText();
-    }
-
-    private void myDataGrid_CurrentCellChanged(object sender, EventArgs e)
-    {
-        if (myDataGrid.CurrentColumn != null)
+        var firstColumn = dtgridFormData.Columns[(column.DisplayIndex)];
+        var firstCellContent = firstColumn.GetCellContent(row);
+        if (firstCellContent != null)
         {
-            if (myDataGrid.CurrentColumn.DisplayIndex == 0)
+            var cell = firstCellContent.Parent as DataGridCell;
+            if (cell != null)
             {
-                InputInjector inputInjector = InputInjector.TryCreate();
-                var info = new InjectedInputKeyboardInfo();
-                info.VirtualKey = (ushort)(VirtualKey.Tab);
-                inputInjector.InjectKeyboardInput(new[] { info });
+                var peer = new DataGridCellAutomationPeer(cell);
+                var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProvider?.Invoke();
             }
         }
     }
@@ -399,66 +314,97 @@ public sealed partial class RequestPage : Page
 
     private void btnSend_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.Name = this.txtName.Text;
-        ViewModel.Method = ((MethodViewModel)myMethodComboBox.SelectedValue).Name;
-        ViewModel.URL = new URL() { RawURL = this.txtUrl.Text };
-        var response = SendRequestAsync();
+        //    ViewModel.Name = this.txtName.Text;
+        //    ViewModel.Method = ((MethodsItemViewModel)myMethodComboBox.SelectedValue).Name;
+        //    ViewModel.URL = new URL() { RawURL = this.txtUrl.Text };
+        //    var response = SendRequestAsync();
     }
 
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         var button = sender as Button;
-        var dataGridRow = (FormData)button.DataContext;
+        var item = (FormData)button.DataContext;
 
-        myDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+        dtgridFormData.CommitEdit(DataGridEditingUnit.Row, true);
 
-        SelectorBarItem selectedItem = barRequest.SelectedItem;
-        int currentSelectedIndex = barRequest.Items.IndexOf(selectedItem);
+        SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
+        int currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
 
         switch (currentSelectedIndex)
         {
             case 0:
                 if (ViewModel.Parameters.Count > 1)
-                    ViewModel.Parameters.Remove(dataGridRow);
+                {
+                    ViewModel.Parameters.Remove(item);
+                    var tempParameters = new ObservableCollection<FormData>();
+
+                    foreach (var item2 in ViewModel.Parameters)
+                    {
+                        tempParameters.Add(item2);
+                    }
+
+                    ViewModel.Parameters = null;
+                    ViewModel.Parameters = tempParameters;
+                }
                 break;
             case 1:
                 if (ViewModel.Headers.Count > 1)
-                    ViewModel.Headers.Remove(dataGridRow);
+                {
+                    ViewModel.Headers.Remove(item);
+                    var tempHeaders = new ObservableCollection<FormData>();
+
+                    foreach (var item2 in ViewModel.Headers)
+                    {
+                        tempHeaders.Add(item2);
+                    }
+
+                    ViewModel.Headers = null;
+                    ViewModel.Headers = tempHeaders;
+                }
                 break;
             default:
                 if (ViewModel.Body.Count > 1)
-                    ViewModel.Body.Remove(dataGridRow);
+                {
+                    ViewModel.Body.Remove(item);
+                    var tempBodyItems = new ObservableCollection<FormData>();
+
+                    foreach (var item2 in ViewModel.Body)
+                    {
+                        tempBodyItems.Add(item2);
+                    }
+
+                    ViewModel.Body = null;
+                    ViewModel.Body = tempBodyItems;
+                }
                 break;
         }
     }
 
-    #endregion
-
-    private void myDataGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    private void dtgridFormData_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         var newRequestDataGridHeight = e.NewSize.Height;
         double newJsonPanelHeight;
         double newHeadersPanelHeight;
 
-        if (newRequestDataGridHeight > CurrentRequestDatagridHeight)
+        if (newRequestDataGridHeight > ParametersDatagridHeight)
         {
-            newJsonPanelHeight = gridResponseJson.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            newJsonPanelHeight = gridResponseJson.Height - (newRequestDataGridHeight - ParametersDatagridHeight);
             if (newJsonPanelHeight >= 0)
-                gridResponseJson.Height -= (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+                gridResponseJson.Height -= (newRequestDataGridHeight - ParametersDatagridHeight);
 
-            newHeadersPanelHeight = gridResponseHeaders.Height - (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+            newHeadersPanelHeight = gridResponseHeaders.Height - (newRequestDataGridHeight - ParametersDatagridHeight);
             if (newHeadersPanelHeight >= 0)
-                gridResponseHeaders.Height -= (newRequestDataGridHeight - CurrentRequestDatagridHeight);
+                gridResponseHeaders.Height -= (newRequestDataGridHeight - ParametersDatagridHeight);
         }
-        else if (newRequestDataGridHeight < CurrentRequestDatagridHeight)
+        else if (newRequestDataGridHeight < ParametersDatagridHeight)
         {
-            gridResponseJson.Height += (CurrentRequestDatagridHeight - newRequestDataGridHeight);
-            gridResponseHeaders.Height += (CurrentRequestDatagridHeight - newRequestDataGridHeight);
+            gridResponseJson.Height += (ParametersDatagridHeight - newRequestDataGridHeight);
+            gridResponseHeaders.Height += (ParametersDatagridHeight - newRequestDataGridHeight);
         }
-        CurrentRequestDatagridHeight = newRequestDataGridHeight;
+        ParametersDatagridHeight = newRequestDataGridHeight;
     }
 
-    private void barResponse_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+    private void selectbarResponse_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
     {
         SelectorBarItem selectedItem = sender.SelectedItem;
         int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
@@ -491,4 +437,7 @@ public sealed partial class RequestPage : Page
 
         //}
     }
+
+    #endregion
+
 }
