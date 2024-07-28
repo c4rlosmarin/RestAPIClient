@@ -1,13 +1,17 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.UI.Composition.Interactions;
+using Windows.AI.MachineLearning;
 
 namespace mywinui3app.ViewModels;
 
-public partial class RequestViewModel : ObservableRecipient
+public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
 {
     [ObservableProperty]
     public string requestId;
@@ -30,6 +34,8 @@ public partial class RequestViewModel : ObservableRecipient
     [ObservableProperty]
     public ResponseViewModel response;
 
+    private bool isInitialized = false;
+
     public RequestViewModel()
     {
         Name = "Untitled request";
@@ -38,12 +44,15 @@ public partial class RequestViewModel : ObservableRecipient
         Headers = new ObservableCollection<FormData>();
         Body = new ObservableCollection<FormData>();
         Methods = new ObservableCollection<MethodsItemViewModel>();
-        URL = new URL();
+        URL = new URL() { RawURL = "" };
+
+        StrongReferenceMessenger.Default.Register<string>(this);
 
         this.AddNewParameter();
         this.AddNewHeader();
         this.AddNewBodyItem();
         this.AddMethods();
+        isInitialized = true;
     }
 
 
@@ -83,9 +92,8 @@ public partial class RequestViewModel : ObservableRecipient
 
         item.DeleteButtonVisibility = "Visible";
         item.IsEnabled = true;
-        RawURL = item.Key + "=" + item.value;
     }
-    
+
     [RelayCommand]
     public void AddNewHeader()
     {
@@ -139,7 +147,7 @@ public partial class RequestViewModel : ObservableRecipient
     }
 
     public async Task<string> SendRequestAsync()
-    {        
+    {
         using HttpClient client = new HttpClient();
         using MultipartFormDataContent form = new MultipartFormDataContent();
         HttpResponseMessage response;
@@ -195,9 +203,35 @@ public partial class RequestViewModel : ObservableRecipient
             {
                 Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
             }
-        }        
+        }
 
         return Response.Body;
+    }
+
+    public void Receive(string message)
+    {
+        if (isInitialized)
+        {
+            var urlSplit = URL.RawURL.Split('?');
+            var rawURL = urlSplit[0] + "?";
+            bool isFirstParameter = true;
+
+            foreach (var item in Parameters)
+            {
+                if (isFirstParameter)
+                {
+                    rawURL += item.Key + "=" + item.Value;
+                    isFirstParameter = false;
+                }
+                else
+                {
+                    if (Parameters.IndexOf(item) < Parameters.Count - 1)
+                        rawURL += "&" + item.Key + "=" + item.Value;
+                }
+            }
+
+            URL.RawURL = rawURL;            
+        }
     }
 }
 
@@ -227,4 +261,14 @@ public partial class FormData : ObservableRecipient
     public string description;
     [ObservableProperty]
     public string deleteButtonVisibility;
+
+    partial void OnKeyChanged(string value)
+    {
+        StrongReferenceMessenger.Default.Send("KeyChanged");
+    }
+
+    partial void OnValueChanged(string value)
+    {
+        StrongReferenceMessenger.Default.Send("ValueChanged");
+    }
 }

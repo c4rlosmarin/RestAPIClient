@@ -339,12 +339,13 @@ public sealed partial class RequestPage : Page
                     var tempParameters = new ObservableCollection<FormData>();
 
                     foreach (var item2 in ViewModel.Parameters)
-                    {
                         tempParameters.Add(item2);
-                    }
 
+                    dtgridFormData.ItemsSource = null;
                     ViewModel.Parameters = null;
                     ViewModel.Parameters = tempParameters;
+                    dtgridFormData.ItemsSource = ViewModel.Parameters;
+                    dtgridFormData.UpdateLayout();
                 }
                 break;
             case 1:
@@ -354,12 +355,13 @@ public sealed partial class RequestPage : Page
                     var tempHeaders = new ObservableCollection<FormData>();
 
                     foreach (var item2 in ViewModel.Headers)
-                    {
                         tempHeaders.Add(item2);
-                    }
 
+                    dtgridFormData.ItemsSource = null;
                     ViewModel.Headers = null;
                     ViewModel.Headers = tempHeaders;
+                    dtgridFormData.ItemsSource = ViewModel.Headers;
+                    dtgridFormData.UpdateLayout();
                 }
                 break;
             default:
@@ -369,12 +371,13 @@ public sealed partial class RequestPage : Page
                     var tempBodyItems = new ObservableCollection<FormData>();
 
                     foreach (var item2 in ViewModel.Body)
-                    {
                         tempBodyItems.Add(item2);
-                    }
 
+                    dtgridFormData.ItemsSource = null;
                     ViewModel.Body = null;
                     ViewModel.Body = tempBodyItems;
+                    dtgridFormData.ItemsSource = ViewModel.Body;
+                    dtgridFormData.UpdateLayout();
                 }
                 break;
         }
