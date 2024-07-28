@@ -133,52 +133,6 @@ public sealed partial class RequestPage : Page
         //this.txtJson.Blocks.Add(paragraph);
     }
 
-    private void RefreshUrlText(string v)
-    {
-        //SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
-        //var currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
-
-        //if (currentSelectedIndex == 0)
-        //{
-        //    if (dtgridFormData.CurrentColumn.DisplayIndex == 1)
-        //    {
-        //        var urlSplit = txtUrl.Text.Split('?');
-        //        var rawUrl = "";
-
-        //        rawUrl = urlSplit[0] + "?";
-        //        this.txtUrl.Text = rawUrl;
-        //        foreach (var item in ViewModel.Parameters)
-        //        {
-        //            int index = ViewModel.Parameters.IndexOf(item);
-
-        //            if (index == dtgridFormData.SelectedIndex)
-        //            {
-        //                this.txtUrl.Text += currentCellValue + v;
-        //            }
-        //            else
-        //                rawUrl += "&" + item.Key + "=" + item.Value;
-        //        }
-
-        //        //var item = sender as FormData;
-        //        //int index = Parameters.IndexOf(item);
-
-        //        currentCellValue += v;
-
-        //string text = this.txtUrl.Text;
-
-        //if (!string.IsNullOrEmpty(text))
-        //{
-        //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
-
-        //    if (lastCharArray.Length == 1)
-        //    {
-        //        var algo = lastCharArray[0];
-        //    }
-        //}
-        //    }
-        //}
-    }
-
     #endregion
 
     #region << Events >>

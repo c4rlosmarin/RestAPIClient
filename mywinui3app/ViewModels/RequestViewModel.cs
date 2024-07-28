@@ -1,13 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Security.AccessControl;
 using System.Text;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.UI.Composition.Interactions;
-using Windows.AI.MachineLearning;
 
 namespace mywinui3app.ViewModels;
 
@@ -225,7 +222,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
                 }
                 else
                 {
-                    if (Parameters.IndexOf(item) < Parameters.Count - 1)
+                    if (Parameters.IndexOf(item) <= Parameters.Count -1 && (item.Key != "" || item.Value != ""))
                         rawURL += "&" + item.Key + "=" + item.Value;
                 }
             }
