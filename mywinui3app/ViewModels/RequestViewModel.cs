@@ -5,6 +5,7 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Windows.Networking.NetworkOperators;
 
 namespace mywinui3app.ViewModels;
 
@@ -80,9 +81,10 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
 
         if (index == Parameters.Count - 1 && e.PropertyName != "IsEnabled")
             AddNewParameter();
+        else if (!item.IsEnabled && e.PropertyName != "IsEnabled")
+            item.IsEnabled = true;
 
         item.DeleteButtonVisibility = "Visible";
-        item.IsEnabled = true;
     }
 
     [RelayCommand]
@@ -100,9 +102,10 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
 
         if (index == Headers.Count - 1 && e.PropertyName != "IsEnabled")
             AddNewHeader();
+        else if (!item.IsEnabled && e.PropertyName != "IsEnabled")
+            item.IsEnabled = true;
 
         item.DeleteButtonVisibility = "Visible";
-        item.IsEnabled = true;
     }
 
     [RelayCommand]
@@ -120,9 +123,10 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
 
         if (index == Body.Count - 1 && e.PropertyName != "IsEnabled")
             AddNewBodyItem();
+        else if (!item.IsEnabled && e.PropertyName != "IsEnabled")
+            item.IsEnabled = true;
 
         item.DeleteButtonVisibility = "Visible";
-        item.IsEnabled = true;
     }
 
     public async Task<string> SendRequestAsync()

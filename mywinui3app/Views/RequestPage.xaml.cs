@@ -130,16 +130,19 @@ public sealed partial class RequestPage : Page
         switch (selectbarRequest.SelectedItem.Text)
         {
             case "Parameters":
-                dtgridFormData.ItemsSource = ViewModel.Parameters;
-                dtgridFormData.Columns[1].Header = "Parameter";
+                dtgridParameters.Visibility = Visibility.Visible;
+                dtgridHeaders.Visibility = Visibility.Collapsed;
+                dtgridBodyItems.Visibility = Visibility.Collapsed;
                 break;
             case "Headers":
-                dtgridFormData.ItemsSource = ViewModel.Headers;
-                dtgridFormData.Columns[1].Header = "Header";
+                dtgridParameters.Visibility = Visibility.Collapsed;
+                dtgridHeaders.Visibility = Visibility.Visible;
+                dtgridBodyItems.Visibility = Visibility.Collapsed;
                 break;
             default:
-                dtgridFormData.ItemsSource = ViewModel.Body;
-                dtgridFormData.Columns[1].Header = "Key";
+                dtgridParameters.Visibility = Visibility.Collapsed;
+                dtgridHeaders.Visibility = Visibility.Collapsed;
+                dtgridBodyItems.Visibility = Visibility.Visible;
                 break;
         }
     }
@@ -162,16 +165,16 @@ public sealed partial class RequestPage : Page
                 {
                     if (row.GetIndex() >= 0)
                     {
-                        if (dtgridFormData.CurrentColumn.DisplayIndex > 1)
+                        if (dtgridParameters.CurrentColumn.DisplayIndex > 1)
                         {
-                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[dtgridFormData.CurrentColumn.DisplayIndex - 1];
-                            dtgridFormData.BeginEdit();
+                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[dtgridParameters.CurrentColumn.DisplayIndex - 1];
+                            dtgridParameters.BeginEdit();
                         }
                         else if (row.GetIndex() > 0)
                         {
-                            dtgridFormData.SelectedIndex = row.GetIndex() - 1;
-                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[3];
-                            dtgridFormData.BeginEdit();
+                            dtgridParameters.SelectedIndex = row.GetIndex() - 1;
+                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[3];
+                            dtgridParameters.BeginEdit();
                         }
                     }
                 }
@@ -195,29 +198,33 @@ public sealed partial class RequestPage : Page
 
                     if (row.GetIndex() <= itemCount - 1)
                     {
-                        if (dtgridFormData.CurrentColumn.DisplayIndex < dtgridFormData.Columns.Count - 2)
+                        if (dtgridParameters.CurrentColumn.DisplayIndex < dtgridParameters.Columns.Count - 2)
                         {
-                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[dtgridFormData.CurrentColumn.DisplayIndex + 1];
-                            dtgridFormData.BeginEdit();
+                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[dtgridParameters.CurrentColumn.DisplayIndex + 1];
+                            dtgridParameters.BeginEdit();
                         }
                         else if (itemCount - 1 > row.GetIndex())
                         {
-                            dtgridFormData.SelectedIndex = row.GetIndex() + 1;
-                            dtgridFormData.CurrentColumn = dtgridFormData.Columns[1];
-                            dtgridFormData.BeginEdit();
+                            dtgridParameters.SelectedIndex = row.GetIndex() + 1;
+                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[1];
+                            dtgridParameters.BeginEdit();
                         }
                         else
-                            SimulateCellClick(row, dtgridFormData.Columns[1]);
+                            SimulateCellClick(row, dtgridParameters.Columns[1]);
                     }
                 }
                 e.Handled = true;
             }
         }
+
+
+        //dtgridParameters.ScrollIntoView();
+
     }
 
     private void SimulateCellClick(DataGridRow? row, DataGridColumn? column)
     {
-        var firstColumn = dtgridFormData.Columns[(column.DisplayIndex)];
+        var firstColumn = dtgridParameters.Columns[(column.DisplayIndex)];
         var firstCellContent = firstColumn.GetCellContent(row);
         if (firstCellContent != null)
         {
@@ -262,9 +269,9 @@ public sealed partial class RequestPage : Page
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         var button = sender as Button;
-        
 
-        dtgridFormData.CommitEdit(DataGridEditingUnit.Row, true);
+
+        dtgridParameters.CommitEdit(DataGridEditingUnit.Row, true);
 
         SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
         int currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
@@ -275,19 +282,7 @@ public sealed partial class RequestPage : Page
                 if (ViewModel.Parameters.Count > 1)
                 {
                     var item = (ParameterItem)button.DataContext;
-
                     ViewModel.Parameters.Remove(item);
-                    var tempParameters = new ObservableCollection<ParameterItem>();
-
-                    foreach (var item2 in ViewModel.Parameters)
-                        tempParameters.Add(item2);
-
-                    dtgridFormData.ItemsSource = null;
-                    ViewModel.Parameters = null;
-                    ViewModel.Parameters = tempParameters;
-                    dtgridFormData.ItemsSource = ViewModel.Parameters;
-                    dtgridFormData.UpdateLayout();
-
                     ViewModel.Receive("ParameterDeleted");
                 }
                 break;
@@ -296,16 +291,6 @@ public sealed partial class RequestPage : Page
                 {
                     var item = (HeaderItem)button.DataContext;
                     ViewModel.Headers.Remove(item);
-                    var tempHeaders = new ObservableCollection<HeaderItem>();
-
-                    foreach (var item2 in ViewModel.Headers)
-                        tempHeaders.Add(item2);
-
-                    dtgridFormData.ItemsSource = null;
-                    ViewModel.Headers = null;
-                    ViewModel.Headers = tempHeaders;
-                    dtgridFormData.ItemsSource = ViewModel.Headers;
-                    dtgridFormData.UpdateLayout();
                 }
                 break;
             default:
@@ -313,16 +298,6 @@ public sealed partial class RequestPage : Page
                 {
                     var item = (BodyItem)button.DataContext;
                     ViewModel.Body.Remove(item);
-                    var tempBodyItems = new ObservableCollection<BodyItem>();
-
-                    foreach (var item2 in ViewModel.Body)
-                        tempBodyItems.Add(item2);
-
-                    dtgridFormData.ItemsSource = null;
-                    ViewModel.Body = null;
-                    ViewModel.Body = tempBodyItems;
-                    dtgridFormData.ItemsSource = ViewModel.Body;
-                    dtgridFormData.UpdateLayout();
                 }
                 break;
         }
@@ -388,4 +363,8 @@ public sealed partial class RequestPage : Page
 
     #endregion
 
+    private void CheckBox_Click(object sender, RoutedEventArgs e)
+    {
+        ((CheckBox)sender).IsChecked = false;
+    }
 }
