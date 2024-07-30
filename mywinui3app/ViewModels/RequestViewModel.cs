@@ -23,11 +23,11 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
     [ObservableProperty]
     public URL uRL;
     [ObservableProperty]
-    public ObservableCollection<FormData> parameters;
+    public ObservableCollection<ParameterItem> parameters;
     [ObservableProperty]
-    public ObservableCollection<FormData> headers;
+    public ObservableCollection<HeaderItem> headers;
     [ObservableProperty]
-    public ObservableCollection<FormData> body;
+    public ObservableCollection<BodyItem> body;
     [ObservableProperty]
     public ResponseViewModel response;
 
@@ -36,12 +36,12 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
     public RequestViewModel()
     {
         Name = "Untitled request";
-
-        Parameters = new ObservableCollection<FormData>();
-        Headers = new ObservableCollection<FormData>();
-        Body = new ObservableCollection<FormData>();
-        Methods = new ObservableCollection<MethodsItemViewModel>();
         URL = new URL() { RawURL = "" };
+        Parameters = new ObservableCollection<ParameterItem>();
+        Headers = new ObservableCollection<HeaderItem>();
+        Body = new ObservableCollection<BodyItem>();
+        Methods = new ObservableCollection<MethodsItemViewModel>();
+        Response = new ResponseViewModel();
 
         StrongReferenceMessenger.Default.Register<string>(this);
 
@@ -64,15 +64,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
     }
 
     [RelayCommand]
-    public void DeleteParameter(FormData item)
-    {
-        Parameters.Remove(item);
-    }
-
-    [RelayCommand]
     public void AddNewParameter()
     {
-        var Parameter = new FormData() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var Parameter = new ParameterItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
     }
@@ -81,7 +75,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
     {
         base.OnPropertyChanged(e);
 
-        var item = sender as FormData;
+        var item = sender as ParameterItem;
         int index = Parameters.IndexOf(item);
 
         if (index == Parameters.Count - 1 && e.PropertyName != "IsEnabled")
@@ -94,14 +88,14 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
     [RelayCommand]
     public void AddNewHeader()
     {
-        var Header = new FormData() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Header.PropertyChanged += Header_PropertyChanged;
         Headers.Add(Header);
     }
 
     private void Header_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        var item = sender as FormData;
+        var item = sender as HeaderItem;
         int index = Headers.IndexOf(item);
 
         if (index == Headers.Count - 1 && e.PropertyName != "IsEnabled")
@@ -114,14 +108,14 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
     [RelayCommand]
     public void AddNewBodyItem()
     {
-        var BodyItem = new FormData() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var BodyItem = new BodyItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         BodyItem.PropertyChanged += BodyItem_PropertyChanged;
         body.Add(BodyItem);
     }
 
     private void BodyItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        var item = sender as FormData;
+        var item = sender as BodyItem;
         int index = Body.IndexOf(item);
 
         if (index == Body.Count - 1 && e.PropertyName != "IsEnabled")
@@ -131,48 +125,21 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
         item.IsEnabled = true;
     }
 
-    private void HeadersItemChanged(object sender, PropertyChangedEventArgs e)
-    {
-        var item = sender as FormData;
-        int index = Headers.IndexOf(item);
-    }
-
-    private void BodyItemChanged(object sender, PropertyChangedEventArgs e)
-    {
-        var item = sender as FormData;
-        int index = Body.IndexOf(item);
-    }
-
     public async Task<string> SendRequestAsync()
     {
         using HttpClient client = new HttpClient();
         using MultipartFormDataContent form = new MultipartFormDataContent();
         HttpResponseMessage response;
 
-        int i;
-
-        for (i = 0; i <= Parameters.Count - 1; i++)
-        {
-            if (Parameters[i].IsEnabled)
-            {
-                if (i == 0)
-                    URL.RawURL += "?";
-                else
-                    URL.RawURL += "&";
-
-                URL.RawURL += Parameters[i].Key + "=" + Parameters[i].Value;
-            }
-        }
-
         var request = new HttpRequestMessage(new HttpMethod("GET"), URL.RawURL);
 
-        foreach (FormData item in Headers)
+        foreach (HeaderItem item in Headers)
         {
             if (item.IsEnabled)
                 client.DefaultRequestHeaders.Add(item.Key, item.Value);
         }
 
-        foreach (FormData item in Body)
+        foreach (BodyItem item in Body)
         {
             if (item.IsEnabled)
                 form.Add(new StringContent(item.Value), item.Key);
@@ -189,9 +156,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
         document.WriteTo(writer);
         writer.Flush();
 
-        Response = new ResponseViewModel();
-        Response.Body = Encoding.UTF8.GetString(stream.ToArray()); ;
-
+        Response.Body = Encoding.UTF8.GetString(stream.ToArray());
         Response.Headers = new ObservableCollection<ResponseData>();
 
         foreach (var item in response.Headers)
@@ -227,7 +192,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
                 }
             }
 
-            URL.RawURL = rawURL;            
+            if (rawURL == "?=")
+                rawURL = "";
+            URL.RawURL = rawURL;
         }
     }
 }
@@ -246,7 +213,7 @@ public partial class URL : ObservableRecipient
     public IDictionary<string, string> variables;
 }
 
-public partial class FormData : ObservableRecipient
+public partial class ParameterItem : ObservableRecipient
 {
     [ObservableProperty]
     public bool isEnabled;
@@ -268,4 +235,33 @@ public partial class FormData : ObservableRecipient
     {
         StrongReferenceMessenger.Default.Send("ValueChanged");
     }
+}
+
+public partial class HeaderItem : ObservableRecipient
+{
+    [ObservableProperty]
+    public bool isEnabled;
+    [ObservableProperty]
+    public string key;
+    [ObservableProperty]
+    public string value;
+    [ObservableProperty]
+    public string description;
+    [ObservableProperty]
+    public string deleteButtonVisibility;
+}
+
+
+public partial class BodyItem : ObservableRecipient
+{
+    [ObservableProperty]
+    public bool isEnabled;
+    [ObservableProperty]
+    public string key;
+    [ObservableProperty]
+    public string value;
+    [ObservableProperty]
+    public string description;
+    [ObservableProperty]
+    public string deleteButtonVisibility;
 }

@@ -333,14 +333,19 @@
             <Grid x:Name="gridResponseJson" Grid.Row="1" Height="250">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" VerticalAlignment="Stretch">
                     <Border VerticalAlignment="Stretch">
-                        <RichTextBlock x:Name="txtJson" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Stretch"/>
+                        <RichTextBlock x:Name="txtJson" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Stretch">
+                            <Paragraph>
+                                <Run Text="{x:Bind ViewModel.Response.Body, Mode=OneWay}"/>
+                            </Paragraph>
+                        </RichTextBlock>
+
                     </Border>
                 </ScrollViewer>
             </Grid>
 
             <Grid x:Name="gridResponseHeaders" Grid.Row="1" Height="250" Visibility="Collapsed">
                 <Border VerticalAlignment="Stretch">
-                    <controls:DataGrid x:Name="dtgridResponseHeaders" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" IsReadOnly="True" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
+                    <controls:DataGrid x:Name="dtgridResponseHeaders" ItemsSource="{x:Bind ViewModel.Response.Headers}" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" IsReadOnly="True" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
                         <controls:DataGrid.Resources>
                             <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                         </controls:DataGrid.Resources>

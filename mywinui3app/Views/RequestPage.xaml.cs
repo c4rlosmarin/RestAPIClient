@@ -21,11 +21,6 @@ public sealed partial class RequestPage : Page
         get;
     }
 
-    public ResponseViewModel? Response
-    {
-        get; set;
-    }
-
     private double ParametersDatagridHeight = 275;
 
     #endregion
@@ -123,14 +118,7 @@ public sealed partial class RequestPage : Page
 
     private async Task<string> SendRequestAsync()
     {
-        return await ViewModel.SendRequestAsync();
-
-        //var paragraph = new Paragraph();
-        //var run = new Run();
-        //run.Text = Response.Body;
-        //paragraph.Inlines.Add(run);
-        //this.txtJson.Blocks.Clear();
-        //this.txtJson.Blocks.Add(paragraph);
+        return await ViewModel.SendRequestAsync();        
     }
 
     #endregion
@@ -268,16 +256,13 @@ public sealed partial class RequestPage : Page
 
     private void btnSend_Click(object sender, RoutedEventArgs e)
     {
-        //    ViewModel.Name = this.txtName.Text;
-        //    ViewModel.Method = ((MethodsItemViewModel)myMethodComboBox.SelectedValue).Name;
-        //    ViewModel.URL = new URL() { RawURL = this.txtUrl.Text };
-        //    var response = SendRequestAsync();
+        var response = SendRequestAsync();
     }
 
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         var button = sender as Button;
-        var item = (FormData)button.DataContext;
+        
 
         dtgridFormData.CommitEdit(DataGridEditingUnit.Row, true);
 
@@ -289,8 +274,10 @@ public sealed partial class RequestPage : Page
             case 0:
                 if (ViewModel.Parameters.Count > 1)
                 {
+                    var item = (ParameterItem)button.DataContext;
+
                     ViewModel.Parameters.Remove(item);
-                    var tempParameters = new ObservableCollection<FormData>();
+                    var tempParameters = new ObservableCollection<ParameterItem>();
 
                     foreach (var item2 in ViewModel.Parameters)
                         tempParameters.Add(item2);
@@ -300,13 +287,16 @@ public sealed partial class RequestPage : Page
                     ViewModel.Parameters = tempParameters;
                     dtgridFormData.ItemsSource = ViewModel.Parameters;
                     dtgridFormData.UpdateLayout();
+
+                    ViewModel.Receive("ParameterDeleted");
                 }
                 break;
             case 1:
                 if (ViewModel.Headers.Count > 1)
                 {
+                    var item = (HeaderItem)button.DataContext;
                     ViewModel.Headers.Remove(item);
-                    var tempHeaders = new ObservableCollection<FormData>();
+                    var tempHeaders = new ObservableCollection<HeaderItem>();
 
                     foreach (var item2 in ViewModel.Headers)
                         tempHeaders.Add(item2);
@@ -321,8 +311,9 @@ public sealed partial class RequestPage : Page
             default:
                 if (ViewModel.Body.Count > 1)
                 {
+                    var item = (BodyItem)button.DataContext;
                     ViewModel.Body.Remove(item);
-                    var tempBodyItems = new ObservableCollection<FormData>();
+                    var tempBodyItems = new ObservableCollection<BodyItem>();
 
                     foreach (var item2 in ViewModel.Body)
                         tempBodyItems.Add(item2);

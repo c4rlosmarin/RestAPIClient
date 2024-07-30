@@ -7,19 +7,14 @@ public partial class ResponseViewModel : ObservableRecipient
 {
     [ObservableProperty]
     public string body;
-
     [ObservableProperty]
     public ObservableCollection<ResponseData> headers;
 
 }
-public class ResponseData
+public partial class ResponseData: ObservableRecipient
 {
-    public string Key
-    {
-        get; set;
-    }
-    public string Value
-    {
-        get; set;
-    }
+    [ObservableProperty]
+    public string key;
+    [ObservableProperty]
+    public string value;
 }
