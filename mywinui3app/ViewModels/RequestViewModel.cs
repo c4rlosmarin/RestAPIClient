@@ -144,6 +144,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>,
         item.DeleteButtonVisibility = "Visible";
     }
 
+    [RelayCommand]
     public async Task<string> SendRequestAsync()
     {
         using HttpClient client = new HttpClient();

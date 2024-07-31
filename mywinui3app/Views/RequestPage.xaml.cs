@@ -138,11 +138,6 @@ public sealed partial class RequestPage : Page
         }
     }
 
-    private async Task<string> SendRequestAsync()
-    {
-        return await ViewModel.SendRequestAsync();        
-    }
-
     #endregion
 
     #region << Events >>
@@ -297,11 +292,6 @@ public sealed partial class RequestPage : Page
         dialog.DefaultButton = ContentDialogButton.Primary;
 
         var result = dialog.ShowAsync();
-    }
-
-    private void btnSend_Click(object sender, RoutedEventArgs e)
-    {
-        var response = SendRequestAsync();
     }
 
     private void dtgridFormData_SizeChanged(object sender, SizeChangedEventArgs e)

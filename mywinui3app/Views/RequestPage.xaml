@@ -266,7 +266,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <TextBox x:Name="txtUrl" Grid.Column="1" Margin="10,0" PlaceholderText="Enter URL" Text="{x:Bind ViewModel.URL.RawURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Button x:Name="btnSend" Grid.Column="2" Margin="10,0,-5,0" Content="Send" Style="{StaticResource AccentButtonStyle}" Click="btnSend_Click" FontSize="13"/>
+                <Button x:Name="btnSend" Grid.Column="2" Margin="10,0,-5,0" Content="Send" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.SendRequestCommand}" FontSize="13"/>
             </Grid>
             <Grid Grid.Row="2">
                 <SelectorBar x:Name="selectbarRequest" Margin="-10,10,0,0" SelectionChanged="selectbarRequest_SelectionChanged">
