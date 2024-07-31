@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using CommunityToolkit.WinUI.UI.Automation.Peers;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
@@ -22,6 +21,7 @@ public sealed partial class RequestPage : Page
     }
 
     private double ParametersDatagridHeight = 275;
+    DataGrid currentDataGrid;
 
     #endregion
 
@@ -32,7 +32,6 @@ public sealed partial class RequestPage : Page
         ViewModel = App.GetService<RequestViewModel>();
         this.InitializeComponent();
     }
-
 
     #endregion
 
@@ -159,32 +158,46 @@ public sealed partial class RequestPage : Page
         var selectedRowIndex = 0;
         var selectedColumnIndex = 0;
 
-
         var row = sender as DataGridRow;
         if (row != null)
         {
             if (e.Key == VirtualKey.Tab)
             {
+                var currentSelectedIndex = GetCurrentlySelectedRequestTab();
+
+                switch (currentSelectedIndex)
+                {
+                    case 0:
+                        currentDataGrid = dtgridParameters;
+                        break;
+                    case 1:
+                        currentDataGrid = dtgridHeaders;
+                        break;
+                    default:
+                        currentDataGrid = dtgridBodyItems;
+                        break;
+                }
+
                 if (isShiftPressed)
                 {
                     if (row.GetIndex() >= 0)
                     {
-                        if (dtgridParameters.CurrentColumn.DisplayIndex > 1)
+                        if (currentDataGrid.CurrentColumn.DisplayIndex > 1)
                         {
-                            selectedColumnIndex = dtgridParameters.CurrentColumn.DisplayIndex - 1;
+                            selectedColumnIndex = currentDataGrid.CurrentColumn.DisplayIndex - 1;
                             selectedRowIndex = row.GetIndex();
-                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
-                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[dtgridParameters.CurrentColumn.DisplayIndex - 1];
-                            dtgridParameters.BeginEdit();
+                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[selectedColumnIndex];
+                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
+                            currentDataGrid.BeginEdit();
                         }
                         else if (row.GetIndex() > 0)
                         {
                             selectedColumnIndex = 3;
                             selectedRowIndex = row.GetIndex() - 1;
-                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
-                            dtgridParameters.SelectedIndex = selectedRowIndex;
-                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[3];
-                            dtgridParameters.BeginEdit();
+                            currentDataGrid.SelectedIndex = selectedRowIndex;
+                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[3];
+                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
+                            currentDataGrid.BeginEdit();
                         }
                     }
                 }
@@ -200,7 +213,7 @@ public sealed partial class RequestPage : Page
                         case "Headers":
                             itemCount = ViewModel.Headers.Count;
                             break;
-                        
+
                         default:
                             itemCount = ViewModel.Body.Count;
                             break;
@@ -208,41 +221,48 @@ public sealed partial class RequestPage : Page
 
                     if (row.GetIndex() <= itemCount - 1)
                     {
-                        if (dtgridParameters.CurrentColumn.DisplayIndex < dtgridParameters.Columns.Count - 2)
+                        if (currentDataGrid.CurrentColumn.DisplayIndex < currentDataGrid.Columns.Count - 2)
                         {
-                            selectedColumnIndex = dtgridParameters.CurrentColumn.DisplayIndex + 1;
+                            selectedColumnIndex = currentDataGrid.CurrentColumn.DisplayIndex + 1;
                             selectedRowIndex = row.GetIndex();
-                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
-                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[selectedColumnIndex];
-                            dtgridParameters.BeginEdit();
+                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[selectedColumnIndex];
+                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
+                            currentDataGrid.BeginEdit();
                         }
                         else if (itemCount - 1 > row.GetIndex())
                         {
                             selectedColumnIndex = 1;
                             selectedRowIndex = row.GetIndex() + 1;
-                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
-                            dtgridParameters.SelectedIndex = selectedRowIndex;
-                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[1];
-                            dtgridParameters.BeginEdit();
+                            currentDataGrid.SelectedIndex = selectedRowIndex;
+                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[1];
+                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
+                            currentDataGrid.BeginEdit();
                         }
                         else
                         {
                             selectedColumnIndex = 1;
                             selectedRowIndex = row.GetIndex();
-                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
-                            SimulateCellClick(row, dtgridParameters.Columns[1]);
+                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
+                            SimulateCellClick(row, currentDataGrid.Columns[1]);
                         }
-                            
+
                     }
                 }
-                e.Handled = true;                
+                e.Handled = true;
             }
         }        
     }
 
+    private int GetCurrentlySelectedRequestTab()
+    {
+        SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
+        int currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
+        return currentSelectedIndex;
+    }
+
     private void SimulateCellClick(DataGridRow? row, DataGridColumn? column)
     {
-        var firstColumn = dtgridParameters.Columns[(column.DisplayIndex)];
+        var firstColumn = currentDataGrid.Columns[(column.DisplayIndex)];
         var firstCellContent = firstColumn.GetCellContent(row);
         if (firstCellContent != null)
         {
@@ -288,11 +308,9 @@ public sealed partial class RequestPage : Page
     {
         var button = sender as Button;
 
-
         dtgridParameters.CommitEdit(DataGridEditingUnit.Row, true);
 
-        SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
-        int currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
+        var currentSelectedIndex = GetCurrentlySelectedRequestTab();
 
         switch (currentSelectedIndex)
         {

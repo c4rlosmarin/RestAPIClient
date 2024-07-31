@@ -66,7 +66,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
     [RelayCommand]
     public void AddNewParameter()
     {
-        var Parameter = new ParameterItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var Parameter = new ParameterItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };        
         Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
     }

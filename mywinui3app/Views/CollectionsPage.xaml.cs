@@ -61,6 +61,8 @@ public sealed partial class CollectionsPage : Page
 
     private TabViewItem CreateNewTab()
     {
+        //TODO: Implementar el estilo y texto del tabViewItem de forma dinámica
+
         TabViewItem newItem = new TabViewItem();
         newItem.HeaderTemplate = newTabViewItemHeaderTemplate;        
         newItem.Header = "Untitled request";

@@ -328,7 +328,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridFormData_LoadingRow" SizeChanged="dtgridFormData_SizeChanged" Height="275" MinHeight="28" MaxHeight="555" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridFormData_LoadingRow" SizeChanged="dtgridFormData_SizeChanged" Height="275" MinHeight="28" MaxHeight="555" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -336,7 +336,7 @@
                     
                     <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -344,7 +344,7 @@
 
                     <controls:DataGridTemplateColumn Header="Header" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -352,7 +352,7 @@
 
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -360,7 +360,7 @@
 
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -368,7 +368,7 @@
 
                     <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Click="btnDelete_Click">
                                     <FontIcon Glyph="&#xe74d;" FontSize="12"/>
                                     <ToolTipService.ToolTip>
@@ -389,7 +389,7 @@
 
                     <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:BodyItem">
                                 <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -397,7 +397,7 @@
 
                     <controls:DataGridTemplateColumn Header="Item" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:BodyItem">
                                 <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -405,7 +405,7 @@
 
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:BodyItem">
                                 <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -413,7 +413,7 @@
 
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:BodyItem">
                                 <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
@@ -421,7 +421,7 @@
 
                     <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
                         <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate x:DataType="viewmodels:ParameterItem">
+                            <DataTemplate x:DataType="viewmodels:BodyItem">
                                 <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Click="btnDelete_Click">
                                     <FontIcon Glyph="&#xe74d;" FontSize="12"/>
                                     <ToolTipService.ToolTip>
@@ -481,7 +481,6 @@
                                     </DataTemplate>
                                 </controls:DataGridTemplateColumn.CellTemplate>
                             </controls:DataGridTemplateColumn>
-
 
                         </controls:DataGrid.Columns>
                     </controls:DataGrid>
