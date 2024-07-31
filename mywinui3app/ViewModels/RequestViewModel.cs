@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace mywinui3app.ViewModels;
 
-public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
+public partial class RequestViewModel : ObservableRecipient, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
 {
     [ObservableProperty]
     public string requestId;
@@ -44,6 +44,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
         Response = new ResponseViewModel();
 
         StrongReferenceMessenger.Default.Register<string>(this);
+        StrongReferenceMessenger.Default.Register<ParameterItem>(this);
+        StrongReferenceMessenger.Default.Register<HeaderItem>(this);
+        StrongReferenceMessenger.Default.Register<BodyItem>(this);
 
         this.AddNewParameter();
         this.AddNewHeader();
@@ -63,10 +66,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
         Methods.Add(new MethodsItemViewModel() { Name = "OPTIONS", Foreground = "Blue" });
     }
 
-    [RelayCommand]
     public void AddNewParameter()
     {
-        var Parameter = new ParameterItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };        
+        var Parameter = new ParameterItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
     }
@@ -86,7 +88,22 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
         item.DeleteButtonVisibility = "Visible";
     }
 
-    [RelayCommand]
+    public void DeleteParameterItem(ParameterItem item)
+    {
+        Parameters.Remove(item);
+        RefreshURL();
+    }
+
+    public void DeleteHeaderItem(HeaderItem item)
+    {
+        Headers.Remove(item);
+    }
+
+    public void DeleteBodyItem(BodyItem item)
+    {
+        Body.Remove(item);
+    }
+
     public void AddNewHeader()
     {
         var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
@@ -107,7 +124,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
         item.DeleteButtonVisibility = "Visible";
     }
 
-    [RelayCommand]
     public void AddNewBodyItem()
     {
         var BodyItem = new BodyItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
@@ -165,15 +181,13 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
         foreach (var item in response.Headers)
         {
             foreach (var subitem in item.Value)
-            {
                 Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
-            }
         }
 
         return Response.Body;
     }
 
-    public void Receive(string message)
+    private void RefreshURL()
     {
         if (isInitialized)
         {
@@ -190,7 +204,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
                 }
                 else
                 {
-                    if (Parameters.IndexOf(item) <= Parameters.Count -1 && (item.Key != "" || item.Value != ""))
+                    if (Parameters.IndexOf(item) <= Parameters.Count - 1 && (item.Key != "" || item.Value != ""))
                         rawURL += "&" + item.Key + "=" + item.Value;
                 }
             }
@@ -199,6 +213,28 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>
                 rawURL = "";
             URL.RawURL = rawURL;
         }
+    }
+
+
+
+    public void Receive(string message)
+    {
+        RefreshURL();
+    }
+
+    public void Receive(ParameterItem item)
+    {
+        DeleteParameterItem(item);
+    }
+
+    public void Receive(HeaderItem item)
+    {
+        DeleteHeaderItem(item);
+    }
+
+    public void Receive(BodyItem item)
+    {
+        DeleteBodyItem(item);
     }
 }
 
@@ -227,16 +263,22 @@ public partial class ParameterItem : ObservableRecipient
     [ObservableProperty]
     public string description;
     [ObservableProperty]
-    public string deleteButtonVisibility;
+    public string deleteButtonVisibility;    
 
     partial void OnKeyChanged(string value)
     {
-        StrongReferenceMessenger.Default.Send("KeyChanged");
+        StrongReferenceMessenger.Default.Send("RefreshURL");
     }
 
     partial void OnValueChanged(string value)
     {
-        StrongReferenceMessenger.Default.Send("ValueChanged");
+        StrongReferenceMessenger.Default.Send("RefreshURL");
+    }
+
+    [RelayCommand]
+    public void DeleteParameterItem(ParameterItem item)
+    {
+        StrongReferenceMessenger.Default.Send(item);
     }
 }
 
@@ -252,8 +294,13 @@ public partial class HeaderItem : ObservableRecipient
     public string description;
     [ObservableProperty]
     public string deleteButtonVisibility;
-}
 
+    [RelayCommand]
+    public void DeleteHeaderItem(HeaderItem item)
+    {
+        StrongReferenceMessenger.Default.Send(item);
+    }
+}
 
 public partial class BodyItem : ObservableRecipient
 {
@@ -267,4 +314,10 @@ public partial class BodyItem : ObservableRecipient
     public string description;
     [ObservableProperty]
     public string deleteButtonVisibility;
+
+    [RelayCommand]
+    public void DeleteBodyItem(BodyItem item)
+    {
+        StrongReferenceMessenger.Default.Send(item);
+    }
 }

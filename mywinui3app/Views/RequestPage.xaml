@@ -316,7 +316,7 @@
                     <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Click="btnDelete_Click">
+                                <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Command="{x:Bind DeleteParameterItemCommand}" CommandParameter="{x:Bind}">
                                     <FontIcon Glyph="&#xe74d;" FontSize="12"/>
                                     <ToolTipService.ToolTip>
                                         <ToolTip>Delete</ToolTip>
@@ -369,7 +369,7 @@
                     <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Click="btnDelete_Click">
+                                <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Command="{x:Bind DeleteHeaderItemCommand}" CommandParameter="{x:Bind}">
                                     <FontIcon Glyph="&#xe74d;" FontSize="12"/>
                                     <ToolTipService.ToolTip>
                                         <ToolTip>Delete</ToolTip>
@@ -422,7 +422,7 @@
                     <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Click="btnDelete_Click">
+                                <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Command="{x:Bind DeleteBodyItemCommand}" CommandParameter="{x:Bind}">
                                     <FontIcon Glyph="&#xe74d;" FontSize="12"/>
                                     <ToolTipService.ToolTip>
                                         <ToolTip>Delete</ToolTip>

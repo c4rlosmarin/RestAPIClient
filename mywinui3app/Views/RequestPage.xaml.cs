@@ -115,6 +115,29 @@ public sealed partial class RequestPage : Page
         }
     }
 
+    private int GetCurrentlySelectedRequestTab()
+    {
+        SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
+        int currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
+        return currentSelectedIndex;
+    }
+
+    private void SimulateCellClick(DataGridRow? row, DataGridColumn? column)
+    {
+        var firstColumn = currentDataGrid.Columns[(column.DisplayIndex)];
+        var firstCellContent = firstColumn.GetCellContent(row);
+        if (firstCellContent != null)
+        {
+            var cell = firstCellContent.Parent as DataGridCell;
+            if (cell != null)
+            {
+                var peer = new DataGridCellAutomationPeer(cell);
+                var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProvider?.Invoke();
+            }
+        }
+    }
+
     private async Task<string> SendRequestAsync()
     {
         return await ViewModel.SendRequestAsync();        
@@ -251,31 +274,8 @@ public sealed partial class RequestPage : Page
                 e.Handled = true;
             }
         }        
-    }
-
-    private int GetCurrentlySelectedRequestTab()
-    {
-        SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
-        int currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
-        return currentSelectedIndex;
-    }
-
-    private void SimulateCellClick(DataGridRow? row, DataGridColumn? column)
-    {
-        var firstColumn = currentDataGrid.Columns[(column.DisplayIndex)];
-        var firstCellContent = firstColumn.GetCellContent(row);
-        if (firstCellContent != null)
-        {
-            var cell = firstCellContent.Parent as DataGridCell;
-            if (cell != null)
-            {
-                var peer = new DataGridCellAutomationPeer(cell);
-                var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                invokeProvider?.Invoke();
-            }
-        }
-    }
-
+    }    
+    
     private void myMethodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         this.SetTabViewHeaderTemplate(sender, true);
@@ -302,41 +302,6 @@ public sealed partial class RequestPage : Page
     private void btnSend_Click(object sender, RoutedEventArgs e)
     {
         var response = SendRequestAsync();
-    }
-
-    private void btnDelete_Click(object sender, RoutedEventArgs e)
-    {
-        var button = sender as Button;
-
-        dtgridParameters.CommitEdit(DataGridEditingUnit.Row, true);
-
-        var currentSelectedIndex = GetCurrentlySelectedRequestTab();
-
-        switch (currentSelectedIndex)
-        {
-            case 0:
-                if (ViewModel.Parameters.Count > 1)
-                {
-                    var item = (ParameterItem)button.DataContext;
-                    ViewModel.Parameters.Remove(item);
-                    ViewModel.Receive("ParameterDeleted");
-                }
-                break;
-            case 1:
-                if (ViewModel.Headers.Count > 1)
-                {
-                    var item = (HeaderItem)button.DataContext;
-                    ViewModel.Headers.Remove(item);
-                }
-                break;
-            default:
-                if (ViewModel.Body.Count > 1)
-                {
-                    var item = (BodyItem)button.DataContext;
-                    ViewModel.Body.Remove(item);
-                }
-                break;
-        }
     }
 
     private void dtgridFormData_SizeChanged(object sender, SizeChangedEventArgs e)
