@@ -20,7 +20,7 @@ public sealed partial class RequestPage : Page
         get;
     }
 
-    private double ParametersDatagridHeight = 275;
+    private double datagridHeight = 275;
     DataGrid currentDataGrid;
 
     #endregion
@@ -150,27 +150,42 @@ public sealed partial class RequestPage : Page
                 dtgridParameters.Visibility = Visibility.Visible;
                 dtgridHeaders.Visibility = Visibility.Collapsed;
                 dtgridBodyItems.Visibility = Visibility.Collapsed;
+                dtgridParametersContentSizer.Visibility = Visibility.Visible;
+                dtgridHeadersContentSizer.Visibility = Visibility.Collapsed;
+                dtgridBodyItemsContentSizer.Visibility = Visibility.Collapsed;
+
                 break;
             case "Headers":
                 dtgridParameters.Visibility = Visibility.Collapsed;
                 dtgridHeaders.Visibility = Visibility.Visible;
                 dtgridBodyItems.Visibility = Visibility.Collapsed;
+                dtgridParametersContentSizer.Visibility = Visibility.Collapsed;
+                dtgridHeadersContentSizer.Visibility = Visibility.Visible;
+                dtgridBodyItemsContentSizer.Visibility = Visibility.Collapsed;
                 break;
             default:
                 dtgridParameters.Visibility = Visibility.Collapsed;
                 dtgridHeaders.Visibility = Visibility.Collapsed;
                 dtgridBodyItems.Visibility = Visibility.Visible;
+                dtgridParametersContentSizer.Visibility = Visibility.Collapsed;
+                dtgridHeadersContentSizer.Visibility = Visibility.Collapsed;
+                dtgridBodyItemsContentSizer.Visibility = Visibility.Visible;
                 break;
         }
     }
 
-    private void dtgridFormData_LoadingRow(object sender, DataGridRowEventArgs e)
+    private void myMethodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        e.Row.KeyDown -= dtgridFormData_KeyDown;
-        e.Row.KeyDown += dtgridFormData_KeyDown;
+        this.SetTabViewHeaderTemplate(sender, true);
     }
 
-    private void dtgridFormData_KeyDown(object sender, KeyRoutedEventArgs e)
+    private void dtgrid_LoadingRow(object sender, DataGridRowEventArgs e)
+    {
+        e.Row.KeyDown -= dtgrid_KeyDown;
+        e.Row.KeyDown += dtgrid_KeyDown;
+    }
+
+    private void dtgrid_KeyDown(object sender, KeyRoutedEventArgs e)
     {
         var isShiftPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
         var selectedRowIndex = 0;
@@ -270,52 +285,29 @@ public sealed partial class RequestPage : Page
             }
         }        
     }    
-    
-    private void myMethodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        this.SetTabViewHeaderTemplate(sender, true);
-    }
 
-    private void btnSave_Click(object sender, RoutedEventArgs e)
-    {
-        SetTabViewHeaderTemplate(sender, false);
-
-        ContentDialog dialog = new ContentDialog();
-
-        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
-        dialog.XamlRoot = this.XamlRoot;
-        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.Title = "Save your work?";
-        dialog.PrimaryButtonText = "Save";
-        dialog.SecondaryButtonText = "Don't Save";
-        dialog.CloseButtonText = "Cancel";
-        dialog.DefaultButton = ContentDialogButton.Primary;
-
-        var result = dialog.ShowAsync();
-    }
-
-    private void dtgridFormData_SizeChanged(object sender, SizeChangedEventArgs e)
+    private void dtgrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         var newRequestDataGridHeight = e.NewSize.Height;
         double newJsonPanelHeight;
         double newHeadersPanelHeight;
 
-        if (newRequestDataGridHeight > ParametersDatagridHeight)
+        if (newRequestDataGridHeight > datagridHeight)
         {
-            newJsonPanelHeight = gridResponseJson.Height - (newRequestDataGridHeight - ParametersDatagridHeight);
+            newJsonPanelHeight = gridResponseJson.Height - (newRequestDataGridHeight - datagridHeight);
             if (newJsonPanelHeight >= 0)
-                gridResponseJson.Height -= (newRequestDataGridHeight - ParametersDatagridHeight);
+                gridResponseJson.Height -= (newRequestDataGridHeight - datagridHeight);
 
-            newHeadersPanelHeight = gridResponseHeaders.Height - (newRequestDataGridHeight - ParametersDatagridHeight);
+            newHeadersPanelHeight = gridResponseHeaders.Height - (newRequestDataGridHeight - datagridHeight);
             if (newHeadersPanelHeight >= 0)
-                gridResponseHeaders.Height -= (newRequestDataGridHeight - ParametersDatagridHeight);
+                gridResponseHeaders.Height -= (newRequestDataGridHeight - datagridHeight);
         }
-        else if (newRequestDataGridHeight < ParametersDatagridHeight)
+        else if (newRequestDataGridHeight < datagridHeight)
         {
-            gridResponseJson.Height += (ParametersDatagridHeight - newRequestDataGridHeight);
-            gridResponseHeaders.Height += (ParametersDatagridHeight - newRequestDataGridHeight);
+            gridResponseJson.Height += (datagridHeight - newRequestDataGridHeight);
+            gridResponseHeaders.Height += (datagridHeight - newRequestDataGridHeight);
         }
-        ParametersDatagridHeight = newRequestDataGridHeight;
+        datagridHeight = newRequestDataGridHeight;
     }
 
     private void selectbarResponse_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
@@ -336,20 +328,22 @@ public sealed partial class RequestPage : Page
         }
     }
 
-    private void txtUrl_TextChanged(object sender, TextChangedEventArgs e)
+    private void btnSave_Click(object sender, RoutedEventArgs e)
     {
-        //string text = this.txtUrl.Text;
+        SetTabViewHeaderTemplate(sender, false);
 
-        //if (!string.IsNullOrEmpty(text))
-        //{
-        //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
+        ContentDialog dialog = new ContentDialog();
 
-        //    if (lastCharArray.Length == 1)
-        //    {
-        //        var algo = lastCharArray[0];
-        //    }
+        // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+        dialog.XamlRoot = this.XamlRoot;
+        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+        dialog.Title = "Save your work?";
+        dialog.PrimaryButtonText = "Save";
+        dialog.SecondaryButtonText = "Don't Save";
+        dialog.CloseButtonText = "Cancel";
+        dialog.DefaultButton = ContentDialogButton.Primary;
 
-        //}
+        var result = dialog.ShowAsync();
     }
 
     #endregion

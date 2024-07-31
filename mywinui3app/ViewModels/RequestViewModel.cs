@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace mywinui3app.ViewModels;
 
-public partial class RequestViewModel : ObservableRecipient, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
+public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
 {
     [ObservableProperty]
     public string requestId;
@@ -43,6 +43,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>,
         Methods = new ObservableCollection<MethodsItemViewModel>();
         Response = new ResponseViewModel();
 
+        StrongReferenceMessenger.Default.Register<URL>(this);
         StrongReferenceMessenger.Default.Register<string>(this);
         StrongReferenceMessenger.Default.Register<ParameterItem>(this);
         StrongReferenceMessenger.Default.Register<HeaderItem>(this);
@@ -87,6 +88,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>,
 
         item.DeleteButtonVisibility = "Visible";
     }
+
 
     public void DeleteParameterItem(ParameterItem item)
     {
@@ -142,6 +144,42 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>,
             item.IsEnabled = true;
 
         item.DeleteButtonVisibility = "Visible";
+    }
+
+    public void Receive(string message)
+    {
+        RefreshURL();
+    }
+
+    public void Receive(ParameterItem item)
+    {
+        DeleteParameterItem(item);
+    }
+
+    public void Receive(HeaderItem item)
+    {
+        DeleteHeaderItem(item);
+    }
+
+    public void Receive(BodyItem item)
+    {
+        DeleteBodyItem(item);
+    }
+
+    public void Receive(URL item)
+    {
+        //string text = this.txtUrl.Text;
+
+        //if (!string.IsNullOrEmpty(text))
+        //{
+        //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
+
+        //    if (lastCharArray.Length == 1)
+        //    {
+        //        var algo = lastCharArray[0];
+        //    }
+
+        //}
     }
 
     [RelayCommand]
@@ -215,28 +253,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<string>,
             URL.RawURL = rawURL;
         }
     }
-
-
-
-    public void Receive(string message)
-    {
-        RefreshURL();
-    }
-
-    public void Receive(ParameterItem item)
-    {
-        DeleteParameterItem(item);
-    }
-
-    public void Receive(HeaderItem item)
-    {
-        DeleteHeaderItem(item);
-    }
-
-    public void Receive(BodyItem item)
-    {
-        DeleteBodyItem(item);
-    }
 }
 
 public partial class URL : ObservableRecipient
@@ -251,6 +267,10 @@ public partial class URL : ObservableRecipient
     public ICollection<string> path;
     [ObservableProperty]
     public IDictionary<string, string> variables;
+
+    partial void OnRawURLChanged(string value) {
+        StrongReferenceMessenger.Default.Send(this);
+    }
 }
 
 public partial class ParameterItem : ObservableRecipient
