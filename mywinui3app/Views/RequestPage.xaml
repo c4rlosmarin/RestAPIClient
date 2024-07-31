@@ -258,7 +258,7 @@
 
             </Grid>
             <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,20">
-                <ComboBox x:Name="myMethodComboBox" Grid.Column="0" Width="100" SelectedIndex="0" ItemsSource="{x:Bind ViewModel.Methods}" SelectedValuePath="Name" SelectionChanged="myMethodComboBox_SelectionChanged">
+                <ComboBox x:Name="comboMethods" Grid.Column="0" Width="100" SelectedIndex="0" ItemsSource="{x:Bind ViewModel.Methods}" SelectedValuePath="Name" SelectionChanged="comboMethods_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:MethodsItemViewModel">
                             <TextBlock Text="{x:Bind Name}" />
@@ -275,7 +275,7 @@
                     <SelectorBarItem Text="Body" />
                 </SelectorBar>
             </Grid>
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="555" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -328,7 +328,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="555" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -381,7 +381,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridBodyItems" ItemsSource="{x:Bind ViewModel.Body}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="555" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridBodyItems" ItemsSource="{x:Bind ViewModel.Body}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -435,9 +435,7 @@
             </controls:DataGrid>
         </Grid>
 
-        <controls2:ContentSizer x:Name="dtgridParametersContentSizer" Grid.Row="1" TargetControl="{x:Bind dtgridParameters}" Orientation="Horizontal"/>
-        <controls2:ContentSizer x:Name="dtgridHeadersContentSizer" Grid.Row="1" TargetControl="{x:Bind dtgridHeaders}" Orientation="Horizontal" Visibility="Collapsed"/>
-        <controls2:ContentSizer x:Name="dtgridBodyItemsContentSizer" Grid.Row="1" TargetControl="{x:Bind dtgridBodyItems}" Orientation="Horizontal" Visibility="Collapsed"/>
+        <controls2:ContentSizer x:Name="dtgridContentSizer" Grid.Row="1" TargetControl="{x:Bind dtgridParameters}" Orientation="Horizontal"/>
 
         <Grid Grid.Row="2" RowDefinitions="Auto,Auto">
             <SelectorBar x:Name="selectbarResponse" Grid.Row="0" Margin="-10,0,0,0" SelectionChanged="selectbarResponse_SelectionChanged">

@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using mywinui3app.ViewModels;
+using Windows.Security.Cryptography.Certificates;
 using Windows.System;
 
 namespace mywinui3app.Views;
@@ -65,7 +66,7 @@ public sealed partial class RequestPage : Page
 
             if (myTabViewItem != null)
             {
-                switch (myMethodComboBox.SelectedValue)
+                switch (comboMethods.SelectedValue)
                 {
                     case "GET":
                         if (IsEditing)
@@ -150,31 +151,28 @@ public sealed partial class RequestPage : Page
                 dtgridParameters.Visibility = Visibility.Visible;
                 dtgridHeaders.Visibility = Visibility.Collapsed;
                 dtgridBodyItems.Visibility = Visibility.Collapsed;
-                dtgridParametersContentSizer.Visibility = Visibility.Visible;
-                dtgridHeadersContentSizer.Visibility = Visibility.Collapsed;
-                dtgridBodyItemsContentSizer.Visibility = Visibility.Collapsed;
+                dtgridContentSizer.TargetControl = dtgridParameters;
 
                 break;
             case "Headers":
                 dtgridParameters.Visibility = Visibility.Collapsed;
                 dtgridHeaders.Visibility = Visibility.Visible;
                 dtgridBodyItems.Visibility = Visibility.Collapsed;
-                dtgridParametersContentSizer.Visibility = Visibility.Collapsed;
-                dtgridHeadersContentSizer.Visibility = Visibility.Visible;
-                dtgridBodyItemsContentSizer.Visibility = Visibility.Collapsed;
+                dtgridContentSizer.TargetControl = dtgridHeaders;
                 break;
             default:
                 dtgridParameters.Visibility = Visibility.Collapsed;
                 dtgridHeaders.Visibility = Visibility.Collapsed;
                 dtgridBodyItems.Visibility = Visibility.Visible;
-                dtgridParametersContentSizer.Visibility = Visibility.Collapsed;
-                dtgridHeadersContentSizer.Visibility = Visibility.Collapsed;
-                dtgridBodyItemsContentSizer.Visibility = Visibility.Visible;
+                dtgridContentSizer.TargetControl = dtgridBodyItems;
                 break;
         }
+
+        txtJson.UpdateLayout();
+
     }
 
-    private void myMethodComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void comboMethods_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         this.SetTabViewHeaderTemplate(sender, true);
     }
@@ -283,8 +281,8 @@ public sealed partial class RequestPage : Page
                 }
                 e.Handled = true;
             }
-        }        
-    }    
+        }
+    }
 
     private void dtgrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
@@ -308,6 +306,9 @@ public sealed partial class RequestPage : Page
             gridResponseHeaders.Height += (datagridHeight - newRequestDataGridHeight);
         }
         datagridHeight = newRequestDataGridHeight;
+        dtgridParameters.Height = datagridHeight;
+        dtgridHeaders.Height = datagridHeight;
+        dtgridBodyItems.Height = datagridHeight;
     }
 
     private void selectbarResponse_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
