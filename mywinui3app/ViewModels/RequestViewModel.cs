@@ -5,7 +5,6 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Windows.Networking.NetworkOperators;
 
 namespace mywinui3app.ViewModels;
 

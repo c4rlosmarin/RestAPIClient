@@ -149,12 +149,16 @@ public sealed partial class RequestPage : Page
 
     private void dtgridFormData_LoadingRow(object sender, DataGridRowEventArgs e)
     {
+        e.Row.KeyDown -= dtgridFormData_KeyDown;
         e.Row.KeyDown += dtgridFormData_KeyDown;
     }
 
     private void dtgridFormData_KeyDown(object sender, KeyRoutedEventArgs e)
     {
         var isShiftPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+        var selectedRowIndex = 0;
+        var selectedColumnIndex = 0;
+
 
         var row = sender as DataGridRow;
         if (row != null)
@@ -167,12 +171,18 @@ public sealed partial class RequestPage : Page
                     {
                         if (dtgridParameters.CurrentColumn.DisplayIndex > 1)
                         {
+                            selectedColumnIndex = dtgridParameters.CurrentColumn.DisplayIndex - 1;
+                            selectedRowIndex = row.GetIndex();
+                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
                             dtgridParameters.CurrentColumn = dtgridParameters.Columns[dtgridParameters.CurrentColumn.DisplayIndex - 1];
                             dtgridParameters.BeginEdit();
                         }
                         else if (row.GetIndex() > 0)
                         {
-                            dtgridParameters.SelectedIndex = row.GetIndex() - 1;
+                            selectedColumnIndex = 3;
+                            selectedRowIndex = row.GetIndex() - 1;
+                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
+                            dtgridParameters.SelectedIndex = selectedRowIndex;
                             dtgridParameters.CurrentColumn = dtgridParameters.Columns[3];
                             dtgridParameters.BeginEdit();
                         }
@@ -200,26 +210,34 @@ public sealed partial class RequestPage : Page
                     {
                         if (dtgridParameters.CurrentColumn.DisplayIndex < dtgridParameters.Columns.Count - 2)
                         {
-                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[dtgridParameters.CurrentColumn.DisplayIndex + 1];
+                            selectedColumnIndex = dtgridParameters.CurrentColumn.DisplayIndex + 1;
+                            selectedRowIndex = row.GetIndex();
+                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
+                            dtgridParameters.CurrentColumn = dtgridParameters.Columns[selectedColumnIndex];
                             dtgridParameters.BeginEdit();
                         }
                         else if (itemCount - 1 > row.GetIndex())
                         {
-                            dtgridParameters.SelectedIndex = row.GetIndex() + 1;
+                            selectedColumnIndex = 1;
+                            selectedRowIndex = row.GetIndex() + 1;
+                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
+                            dtgridParameters.SelectedIndex = selectedRowIndex;
                             dtgridParameters.CurrentColumn = dtgridParameters.Columns[1];
                             dtgridParameters.BeginEdit();
                         }
                         else
+                        {
+                            selectedColumnIndex = 1;
+                            selectedRowIndex = row.GetIndex();
+                            dtgridParameters.ScrollIntoView(ViewModel.Parameters[selectedRowIndex], dtgridParameters.Columns[selectedColumnIndex]);
                             SimulateCellClick(row, dtgridParameters.Columns[1]);
+                        }
+                            
                     }
                 }
-                e.Handled = true;
+                e.Handled = true;                
             }
-        }
-
-
-        //dtgridParameters.ScrollIntoView();
-
+        }        
     }
 
     private void SimulateCellClick(DataGridRow? row, DataGridColumn? column)
@@ -363,8 +381,4 @@ public sealed partial class RequestPage : Page
 
     #endregion
 
-    private void CheckBox_Click(object sender, RoutedEventArgs e)
-    {
-        ((CheckBox)sender).IsChecked = false;
-    }
 }
