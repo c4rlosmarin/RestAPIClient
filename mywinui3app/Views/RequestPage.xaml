@@ -265,7 +265,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox x:Name="txtUrl" Grid.Column="1" Margin="10,0" PlaceholderText="Enter URL" Text="{x:Bind ViewModel.URL.RawURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox x:Name="txtUrl" Grid.Column="1" Margin="10,0" PlaceholderText="Enter URL" Text="{x:Bind ViewModel.URL.RawURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="txtUrl_GotFocus" LostFocus="txtUrl_LostFocus"/>
                 <Button x:Name="btnSend" Grid.Column="2" Margin="10,0,-5,0" Content="Send" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.SendRequestCommand}" FontSize="13"/>
             </Grid>
             <Grid Grid.Row="2">
@@ -275,7 +275,7 @@
                     <SelectorBarItem Text="Body" />
                 </SelectorBar>
             </Grid>
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" GotFocus="dtgridParameters_GotFocus" LostFocus="dtgridParameters_LostFocus" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>

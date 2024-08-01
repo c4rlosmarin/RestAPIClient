@@ -472,5 +472,24 @@ public sealed partial class RequestPage : Page
     }
 
     #endregion
-    
+
+    private void txtUrl_GotFocus(object sender, RoutedEventArgs e)
+    {
+        ViewModel.isURLEditing = true;
+    }
+
+    private void txtUrl_LostFocus(object sender, RoutedEventArgs e)
+    {
+        ViewModel.isURLEditing = false;
+    }
+
+    private void dtgridParameters_GotFocus(object sender, RoutedEventArgs e)
+    {
+        ViewModel.isParametersEditing = true;
+    }
+
+    private void dtgridParameters_LostFocus(object sender, RoutedEventArgs e)
+    {
+        ViewModel.isParametersEditing = false;
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,10 +18,10 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public string method;
     [ObservableProperty]
     public ObservableCollection<MethodsItemViewModel> methods;
-    [ObservableProperty]
-    public string rawURL;
+    public bool isURLEditing;
     [ObservableProperty]
     public URL uRL;
+    public bool isParametersEditing;
     [ObservableProperty]
     public ObservableCollection<ParameterItem> parameters;
     [ObservableProperty]
@@ -33,7 +32,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public ResponseViewModel response;
 
     private bool isInitialized = false;
-
+    private bool isRefreshParameters = false;
     public RequestViewModel()
     {
         Name = "Untitled request";
@@ -50,7 +49,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         StrongReferenceMessenger.Default.Register<HeaderItem>(this);
         StrongReferenceMessenger.Default.Register<BodyItem>(this);
 
-        this.AddNewParameter();
+        this.AddNewParameter(false);
         this.AddNewHeader();
         this.AddNewBodyItem();
         this.AddMethods();
@@ -68,9 +67,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         Methods.Add(new MethodsItemViewModel() { Name = "OPTIONS", Foreground = "Blue" });
     }
 
-    public void AddNewParameter()
+    public void AddNewParameter(bool isEnabled)
     {
-        var Parameter = new ParameterItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
     }
@@ -83,7 +82,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         int index = Parameters.IndexOf(item);
 
         if (index == Parameters.Count - 1 && e.PropertyName != "IsEnabled")
-            AddNewParameter();
+            AddNewParameter(false);
         else if (!item.IsEnabled && e.PropertyName != "IsEnabled")
             item.IsEnabled = true;
 
@@ -169,18 +168,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void Receive(URL item)
     {
-        //string text = this.txtUrl.Text;
-
-        //if (!string.IsNullOrEmpty(text))
-        //{
-        //    var lastCharArray = text.Substring(text.Length-1,1).ToCharArray();
-
-        //    if (lastCharArray.Length == 1)
-        //    {
-        //        var algo = lastCharArray[0];
-        //    }
-
-        //}
+        RefreshParameters(item);
     }
 
     [RelayCommand]
@@ -227,35 +215,97 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         return Response.Body;
     }
 
+    private void RefreshParameters(URL item)
+    {
+        if (isInitialized)
+        {
+            if (isURLEditing)
+            {
+                Parameters.Clear();
+                isRefreshParameters = true;
+                int questionMarkIndex = URL.RawURL.IndexOf('?');
+                var rawURL = "";
+                if (questionMarkIndex == -1)
+                    Parameters.Clear();
+                else
+                {
+                    var rawParameters = URL.RawURL.Substring(questionMarkIndex + 1, URL.RawURL.Length - questionMarkIndex - 1);
+                    var parameterSplit = rawParameters.Split("&");
+
+                    if (parameterSplit.Length > 0)
+                    {
+                        for (int i = 0; i < parameterSplit.Length; i++)
+                        {
+                            var equalsMarkIndex = parameterSplit[i].IndexOf("=");
+                            
+                            if (parameterSplit[i] == "")
+                                AddNewParameter(true);
+                            else if (equalsMarkIndex == -1)
+                            {
+                                Parameters.Add(new ParameterItem()
+                                {
+                                    IsEnabled = true,
+                                    Key = parameterSplit[i],
+                                    DeleteButtonVisibility = "Visible"
+                                });
+                            }
+                            else
+                            {
+                                Parameters.Add(new ParameterItem()
+                                {
+                                    IsEnabled = true,
+                                    Key = parameterSplit[i].Substring(0, equalsMarkIndex),
+                                    Value = parameterSplit[i].Substring(equalsMarkIndex + 1, parameterSplit[i].Length - equalsMarkIndex - 1),
+                                    DeleteButtonVisibility = "Visible"
+
+                                });
+                            }
+                        }
+                    }
+                }
+                AddNewParameter(false);
+            }
+        }
+    }
+
     private void RefreshURL()
     {
         if (isInitialized)
         {
-            var urlSplit = URL.RawURL.Split('?');
-            var rawURL = urlSplit[0];
-            var rawParameters = "";
-            bool isFirstParameter = true;
-
-            foreach (var item in Parameters)
+            if (isParametersEditing)
             {
-                if (isFirstParameter)
-                {
-                    rawParameters += "?" + item.Key + "=" + item.Value;
-                    isFirstParameter = false;
-                }
+                int questionMarkIndex = URL.RawURL.IndexOf('?');
+                var rawURL = "";
+                if (questionMarkIndex == -1)
+                    rawURL = URL.RawURL;
                 else
+                    rawURL = URL.RawURL.Substring(0, questionMarkIndex);
+
+                var rawParameters = "";
+                bool isFirstParameter = true;
+
+                foreach (var item in Parameters)
                 {
-                    if (Parameters.IndexOf(item) <= Parameters.Count - 1 && (item.Key != "" || item.Value != ""))
-                        rawParameters += "&" + item.Key + "=" + item.Value;
+                    if (isFirstParameter)
+                    {
+                        rawParameters += "?" + item.Key + "=" + item.Value;
+                        isFirstParameter = false;
+                    }
+                    else
+                    {
+                        if (Parameters.IndexOf(item) <= Parameters.Count - 1 && (item.Key != "" || item.Value != ""))
+                            rawParameters += "&" + item.Key + "=" + item.Value;
+                    }
                 }
+
+                if (rawParameters == "?=")
+                    rawParameters = "";
+
+                URL.RawURL = rawURL + rawParameters;
             }
-
-            if (rawParameters == "?=")
-                rawParameters = "";
-
-            URL.RawURL = rawURL + rawParameters;
         }
     }
+
 }
 
 public partial class URL : ObservableRecipient
@@ -292,12 +342,12 @@ public partial class ParameterItem : ObservableRecipient
 
     partial void OnKeyChanged(string value)
     {
-        StrongReferenceMessenger.Default.Send("RefreshURL");
+        StrongReferenceMessenger.Default.Send("KeyChanged");
     }
 
     partial void OnValueChanged(string value)
     {
-        StrongReferenceMessenger.Default.Send("RefreshURL");
+        StrongReferenceMessenger.Default.Send("ValueChanged");
     }
 
     [RelayCommand]
