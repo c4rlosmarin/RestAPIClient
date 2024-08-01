@@ -463,8 +463,6 @@
                             <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                         </controls:DataGrid.Resources>
                         <controls:DataGrid.Columns>
-                            <!--<controls:DataGridTextColumn Header="Key" Binding="{Binding Key, Mode=OneWay}" Width="*" />
-                            <controls:DataGridTextColumn Header="Value" Binding="{Binding Value, Mode=OneWay}" Width="*"/>-->
 
                             <controls:DataGridTemplateColumn Header="Key" Width="*">
                                 <controls:DataGridTemplateColumn.CellTemplate>

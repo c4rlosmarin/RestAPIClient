@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -231,26 +232,28 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         if (isInitialized)
         {
             var urlSplit = URL.RawURL.Split('?');
-            var rawURL = urlSplit[0] + "?";
+            var rawURL = urlSplit[0];
+            var rawParameters = "";
             bool isFirstParameter = true;
 
             foreach (var item in Parameters)
             {
                 if (isFirstParameter)
                 {
-                    rawURL += item.Key + "=" + item.Value;
+                    rawParameters += "?" + item.Key + "=" + item.Value;
                     isFirstParameter = false;
                 }
                 else
                 {
                     if (Parameters.IndexOf(item) <= Parameters.Count - 1 && (item.Key != "" || item.Value != ""))
-                        rawURL += "&" + item.Key + "=" + item.Value;
+                        rawParameters += "&" + item.Key + "=" + item.Value;
                 }
             }
 
-            if (rawURL == "?=")
-                rawURL = "";
-            URL.RawURL = rawURL;
+            if (rawParameters == "?=")
+                rawParameters = "";
+
+            URL.RawURL = rawURL + rawParameters;
         }
     }
 }
@@ -268,7 +271,8 @@ public partial class URL : ObservableRecipient
     [ObservableProperty]
     public IDictionary<string, string> variables;
 
-    partial void OnRawURLChanged(string value) {
+    partial void OnRawURLChanged(string value)
+    {
         StrongReferenceMessenger.Default.Send(this);
     }
 }
@@ -284,7 +288,7 @@ public partial class ParameterItem : ObservableRecipient
     [ObservableProperty]
     public string description;
     [ObservableProperty]
-    public string deleteButtonVisibility;    
+    public string deleteButtonVisibility;
 
     partial void OnKeyChanged(string value)
     {
