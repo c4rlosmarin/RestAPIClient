@@ -22,7 +22,7 @@ public sealed partial class RequestPage : Page
     }
 
     private double datagridHeight = 275;
-    DataGrid currentDataGrid;
+    DataGrid currentRequestDataGrid;
     DataPackage dataPackage = new DataPackage();
 
     #endregion
@@ -33,7 +33,7 @@ public sealed partial class RequestPage : Page
     {
         ViewModel = App.GetService<RequestViewModel>();
         this.InitializeComponent();
-        currentDataGrid = dtgridResponseHeaders;
+        currentRequestDataGrid = dtgridParameters;
     }
 
     #endregion
@@ -125,9 +125,25 @@ public sealed partial class RequestPage : Page
         return currentSelectedIndex;
     }
 
-    private void SimulateCellClick(DataGridRow? row, DataGridColumn? column)
+    private void SimulateRequestCellClick(DataGridRow? row, DataGridColumn? column)
     {
-        var firstColumn = currentDataGrid.Columns[(column.DisplayIndex)];
+        var firstColumn = currentRequestDataGrid.Columns[(column.DisplayIndex)];
+        var firstCellContent = firstColumn.GetCellContent(row);
+        if (firstCellContent != null)
+        {
+            var cell = firstCellContent.Parent as DataGridCell;
+            if (cell != null)
+            {
+                var peer = new DataGridCellAutomationPeer(cell);
+                var invokeProvider = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProvider?.Invoke();
+            }
+        }
+    }
+
+    private void SimulateResponseCellClick(DataGridRow? row, DataGridColumn? column)
+    {
+        var firstColumn = dtgridResponseHeaders.Columns[(column.DisplayIndex)];
         var firstCellContent = firstColumn.GetCellContent(row);
         if (firstCellContent != null)
         {
@@ -179,13 +195,19 @@ public sealed partial class RequestPage : Page
         this.SetTabViewHeaderTemplate(sender, true);
     }
 
-    private void dtgrid_LoadingRow(object sender, DataGridRowEventArgs e)
+    private void dtgridRequest_LoadingRow(object sender, DataGridRowEventArgs e)
     {
-        e.Row.KeyDown -= dtgrid_KeyDown;
-        e.Row.KeyDown += dtgrid_KeyDown;
+        e.Row.KeyDown -= dtgridRequest_KeyDown;
+        e.Row.KeyDown += dtgridRequest_KeyDown;
     }
 
-    private void dtgrid_KeyDown(object sender, KeyRoutedEventArgs e)
+    private void dtgridResponseHeaders_LoadingRow(object sender, DataGridRowEventArgs e)
+    {
+        e.Row.KeyDown -= dtgridResponse_KeyDown;
+        e.Row.KeyDown += dtgridResponse_KeyDown;
+    }
+
+    private void dtgridRequest_KeyDown(object sender, KeyRoutedEventArgs e)
     {
         var row = sender as DataGridRow;
         if (row != null)
@@ -197,13 +219,13 @@ public sealed partial class RequestPage : Page
                 switch (currentSelectedIndex)
                 {
                     case 0:
-                        currentDataGrid = dtgridParameters;
+                        currentRequestDataGrid = dtgridParameters;
                         break;
                     case 1:
-                        currentDataGrid = dtgridHeaders;
+                        currentRequestDataGrid = dtgridHeaders;
                         break;
                     default:
-                        currentDataGrid = dtgridBodyItems;
+                        currentRequestDataGrid = dtgridBodyItems;
                         break;
                 }
 
@@ -216,22 +238,22 @@ public sealed partial class RequestPage : Page
                 {
                     if (row.GetIndex() >= 0)
                     {
-                        if (currentDataGrid.CurrentColumn.DisplayIndex > 1)
+                        if (currentRequestDataGrid.CurrentColumn.DisplayIndex > 1)
                         {
-                            selectedColumnIndex = currentDataGrid.CurrentColumn.DisplayIndex - 1;
+                            selectedColumnIndex = currentRequestDataGrid.CurrentColumn.DisplayIndex - 1;
                             selectedRowIndex = row.GetIndex();
-                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[selectedColumnIndex];
-                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
-                            currentDataGrid.BeginEdit();
+                            currentRequestDataGrid.CurrentColumn = currentRequestDataGrid.Columns[selectedColumnIndex];
+                            currentRequestDataGrid.ScrollIntoView(currentRequestDataGrid.SelectedItem, currentRequestDataGrid.Columns[selectedColumnIndex]);
+                            currentRequestDataGrid.BeginEdit();
                         }
                         else if (row.GetIndex() > 0)
                         {
                             selectedColumnIndex = 3;
                             selectedRowIndex = row.GetIndex() - 1;
-                            currentDataGrid.SelectedIndex = selectedRowIndex;
-                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[3];
-                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
-                            currentDataGrid.BeginEdit();
+                            currentRequestDataGrid.SelectedIndex = selectedRowIndex;
+                            currentRequestDataGrid.CurrentColumn = currentRequestDataGrid.Columns[3];
+                            currentRequestDataGrid.ScrollIntoView(currentRequestDataGrid.SelectedItem, currentRequestDataGrid.Columns[selectedColumnIndex]);
+                            currentRequestDataGrid.BeginEdit();
                         }
                     }
                 }
@@ -255,29 +277,29 @@ public sealed partial class RequestPage : Page
 
                     if (row.GetIndex() <= itemCount - 1)
                     {
-                        if (currentDataGrid.CurrentColumn.DisplayIndex < currentDataGrid.Columns.Count - 2)
+                        if (currentRequestDataGrid.CurrentColumn.DisplayIndex < currentRequestDataGrid.Columns.Count - 2)
                         {
-                            selectedColumnIndex = currentDataGrid.CurrentColumn.DisplayIndex + 1;
+                            selectedColumnIndex = currentRequestDataGrid.CurrentColumn.DisplayIndex + 1;
                             selectedRowIndex = row.GetIndex();
-                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[selectedColumnIndex];
-                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
-                            currentDataGrid.BeginEdit();
+                            currentRequestDataGrid.CurrentColumn = currentRequestDataGrid.Columns[selectedColumnIndex];
+                            currentRequestDataGrid.ScrollIntoView(currentRequestDataGrid.SelectedItem, currentRequestDataGrid.Columns[selectedColumnIndex]);
+                            currentRequestDataGrid.BeginEdit();
                         }
                         else if (itemCount - 1 > row.GetIndex())
                         {
                             selectedColumnIndex = 1;
                             selectedRowIndex = row.GetIndex() + 1;
-                            currentDataGrid.SelectedIndex = selectedRowIndex;
-                            currentDataGrid.CurrentColumn = currentDataGrid.Columns[1];
-                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
-                            currentDataGrid.BeginEdit();
+                            currentRequestDataGrid.SelectedIndex = selectedRowIndex;
+                            currentRequestDataGrid.CurrentColumn = currentRequestDataGrid.Columns[1];
+                            currentRequestDataGrid.ScrollIntoView(currentRequestDataGrid.SelectedItem, currentRequestDataGrid.Columns[selectedColumnIndex]);
+                            currentRequestDataGrid.BeginEdit();
                         }
                         else
                         {
                             selectedColumnIndex = 1;
                             selectedRowIndex = row.GetIndex();
-                            currentDataGrid.ScrollIntoView(currentDataGrid.SelectedItem, currentDataGrid.Columns[selectedColumnIndex]);
-                            SimulateCellClick(row, currentDataGrid.Columns[1]);
+                            currentRequestDataGrid.ScrollIntoView(currentRequestDataGrid.SelectedItem, currentRequestDataGrid.Columns[selectedColumnIndex]);
+                            SimulateRequestCellClick(row, currentRequestDataGrid.Columns[1]);
                         }
 
                     }
@@ -287,7 +309,79 @@ public sealed partial class RequestPage : Page
         }
     }
 
-    private void dtgrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    private void dtgridResponse_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        var row = sender as DataGridRow;
+        if (row != null)
+        {
+            if (e.Key == VirtualKey.Tab)
+            {
+                var selectedRowIndex = 0;
+                var selectedColumnIndex = 0;
+
+                var isShiftPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+
+                if (isShiftPressed)
+                {
+                    if (row.GetIndex() >= 0)
+                    {
+                        if (dtgridResponseHeaders.CurrentColumn.DisplayIndex > 0)
+                        {
+                            selectedColumnIndex = dtgridResponseHeaders.CurrentColumn.DisplayIndex - 1;
+                            selectedRowIndex = row.GetIndex();
+                            dtgridResponseHeaders.CurrentColumn = dtgridResponseHeaders.Columns[selectedColumnIndex];
+                            dtgridResponseHeaders.ScrollIntoView(dtgridResponseHeaders.SelectedItem, dtgridResponseHeaders.Columns[selectedColumnIndex]);
+                        }
+                        else if (row.GetIndex() > 0)
+                        {
+                            selectedColumnIndex = 1;
+                            selectedRowIndex = row.GetIndex() - 1;
+                            dtgridResponseHeaders.SelectedIndex = selectedRowIndex;
+                            dtgridResponseHeaders.CurrentColumn = dtgridResponseHeaders.Columns[selectedColumnIndex];
+                            dtgridResponseHeaders.ScrollIntoView(dtgridResponseHeaders.SelectedItem, dtgridResponseHeaders.Columns[selectedColumnIndex]);
+                            dtgridResponseHeaders.BeginEdit();
+                        }
+                    }
+                }
+                else
+                {
+                    var itemCount = ViewModel.Response.Headers.Count;
+
+                    if (row.GetIndex() <= itemCount - 1)
+                    {
+                        if (dtgridResponseHeaders.CurrentColumn.DisplayIndex < dtgridResponseHeaders.Columns.Count - 1)
+                        {
+                            selectedColumnIndex = dtgridResponseHeaders.CurrentColumn.DisplayIndex + 1;
+                            selectedRowIndex = row.GetIndex();
+                            dtgridResponseHeaders.CurrentColumn = dtgridResponseHeaders.Columns[selectedColumnIndex];
+                            dtgridResponseHeaders.ScrollIntoView(dtgridResponseHeaders.SelectedItem, dtgridResponseHeaders.Columns[selectedColumnIndex]);
+                            dtgridResponseHeaders.BeginEdit();
+                        }
+                        else if (itemCount - 1 > row.GetIndex())
+                        {
+                            selectedColumnIndex = 0;
+                            selectedRowIndex = row.GetIndex() + 1;
+                            dtgridResponseHeaders.SelectedIndex = selectedRowIndex;
+                            dtgridResponseHeaders.ScrollIntoView(dtgridResponseHeaders.SelectedItem, dtgridResponseHeaders.Columns[selectedColumnIndex]);
+                            dtgridResponseHeaders.CurrentColumn = dtgridResponseHeaders.Columns[0];
+                            dtgridResponseHeaders.BeginEdit();
+                        }
+                        else
+                        {
+                            selectedColumnIndex = 0;
+                            selectedRowIndex = row.GetIndex();
+                            dtgridResponseHeaders.CurrentColumn = dtgridResponseHeaders.Columns[selectedColumnIndex];
+                            dtgridResponseHeaders.ScrollIntoView(dtgridResponseHeaders.SelectedItem, dtgridResponseHeaders.Columns[selectedColumnIndex]);
+                            dtgridResponseHeaders.BeginEdit();
+                        }
+                    }
+                }
+                e.Handled = true;
+            }
+        }
+    }
+
+    private void dtgridRequest_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         var newRequestDataGridHeight = e.NewSize.Height;
         double newJsonPanelHeight;
@@ -350,7 +444,7 @@ public sealed partial class RequestPage : Page
         var result = dialog.ShowAsync();
     }
 
-    private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+    private void TextBoxDatagridCell_KeyDown(object sender, KeyRoutedEventArgs e)
     {
         var isControlPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
 
@@ -378,5 +472,5 @@ public sealed partial class RequestPage : Page
     }
 
     #endregion
-
+    
 }

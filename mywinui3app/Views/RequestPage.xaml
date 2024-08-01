@@ -275,7 +275,7 @@
                     <SelectorBarItem Text="Body" />
                 </SelectorBar>
             </Grid>
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -292,7 +292,7 @@
                     <controls:DataGridTemplateColumn Header="Parameter" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -300,7 +300,7 @@
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -308,7 +308,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -328,7 +328,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -345,7 +345,7 @@
                     <controls:DataGridTemplateColumn Header="Header" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -353,7 +353,7 @@
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -361,7 +361,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -381,7 +381,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridBodyItems" ItemsSource="{x:Bind ViewModel.Body}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgrid_LoadingRow" SizeChanged="dtgrid_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridBodyItems" ItemsSource="{x:Bind ViewModel.Body}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -398,7 +398,7 @@
                     <controls:DataGridTemplateColumn Header="Item" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -406,7 +406,7 @@
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -414,7 +414,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -458,7 +458,7 @@
 
             <Grid x:Name="gridResponseHeaders" Grid.Row="1" Height="250" Visibility="Collapsed">
                 <Border VerticalAlignment="Stretch">
-                    <controls:DataGrid x:Name="dtgridResponseHeaders" ItemsSource="{x:Bind ViewModel.Response.Headers, Mode=TwoWay}" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" IsReadOnly="True" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
+                    <controls:DataGrid x:Name="dtgridResponseHeaders" ItemsSource="{x:Bind ViewModel.Response.Headers, Mode=TwoWay}" LoadingRow="dtgridResponseHeaders_LoadingRow" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
                         <controls:DataGrid.Resources>
                             <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                         </controls:DataGrid.Resources>
@@ -469,7 +469,7 @@
                             <controls:DataGridTemplateColumn Header="Key" Width="*">
                                 <controls:DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate x:DataType="viewmodels:ResponseData">
-                                        <TextBox Text="{x:Bind Key, Mode=OneWay}"/>
+                                        <TextBox Text="{x:Bind Key, Mode=OneWay}" IsReadOnly="True" KeyDown="TextBoxDatagridCell_KeyDown"/>
                                     </DataTemplate>
                                 </controls:DataGridTemplateColumn.CellTemplate>
                             </controls:DataGridTemplateColumn>
@@ -477,7 +477,7 @@
                             <controls:DataGridTemplateColumn Header="Value" Width="*">
                                 <controls:DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate x:DataType="viewmodels:ResponseData">
-                                        <TextBox Text="{x:Bind Value, Mode=OneWay}"/>
+                                        <TextBox Text="{x:Bind Value, Mode=OneWay}" IsReadOnly="True" KeyDown="TextBoxDatagridCell_KeyDown"/>
                                     </DataTemplate>
                                 </controls:DataGridTemplateColumn.CellTemplate>
                             </controls:DataGridTemplateColumn>
