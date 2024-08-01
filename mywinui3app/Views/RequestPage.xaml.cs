@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using mywinui3app.ViewModels;
-using Windows.Security.Cryptography.Certificates;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 
 namespace mywinui3app.Views;
@@ -23,6 +23,7 @@ public sealed partial class RequestPage : Page
 
     private double datagridHeight = 275;
     DataGrid currentDataGrid;
+    DataPackage dataPackage = new DataPackage();
 
     #endregion
 
@@ -32,6 +33,7 @@ public sealed partial class RequestPage : Page
     {
         ViewModel = App.GetService<RequestViewModel>();
         this.InitializeComponent();
+        currentDataGrid = dtgridResponseHeaders;
     }
 
     #endregion
@@ -185,10 +187,6 @@ public sealed partial class RequestPage : Page
 
     private void dtgrid_KeyDown(object sender, KeyRoutedEventArgs e)
     {
-        var isShiftPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
-        var selectedRowIndex = 0;
-        var selectedColumnIndex = 0;
-
         var row = sender as DataGridRow;
         if (row != null)
         {
@@ -208,6 +206,11 @@ public sealed partial class RequestPage : Page
                         currentDataGrid = dtgridBodyItems;
                         break;
                 }
+
+                var selectedRowIndex = 0;
+                var selectedColumnIndex = 0;
+
+                var isShiftPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
 
                 if (isShiftPressed)
                 {
@@ -345,6 +348,33 @@ public sealed partial class RequestPage : Page
         dialog.DefaultButton = ContentDialogButton.Primary;
 
         var result = dialog.ShowAsync();
+    }
+
+    private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        var isControlPressed = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control).HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down);
+
+        if (isControlPressed)
+        {
+            var textbox = sender as TextBox;
+
+            if (e.Key == VirtualKey.C)
+            {
+                CopyTextToClipboard(textbox);
+                e.Handled = true;
+            }
+        }
+    }
+
+    private void CopyTextToClipboard(TextBox? textbox)
+    {
+        dataPackage.RequestedOperation = DataPackageOperation.Copy;
+        if (textbox.SelectedText != "")
+            dataPackage.SetText(textbox.SelectedText);
+        else
+            dataPackage.SetText("");
+
+        Clipboard.SetContent(dataPackage);
     }
 
     #endregion
