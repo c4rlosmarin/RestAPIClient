@@ -31,8 +31,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public ResponseViewModel response;
 
-    private bool isInitialized = false;
-    private bool isRefreshParameters = false;
     public RequestViewModel()
     {
         Name = "Untitled request";
@@ -49,11 +47,10 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         StrongReferenceMessenger.Default.Register<HeaderItem>(this);
         StrongReferenceMessenger.Default.Register<BodyItem>(this);
 
-        this.AddNewParameter(false);
+        this.AddNewParameter();
         this.AddNewHeader();
         this.AddNewBodyItem();
         this.AddMethods();
-        isInitialized = true;
     }
 
 
@@ -67,9 +64,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         Methods.Add(new MethodsItemViewModel() { Name = "OPTIONS", Foreground = "Blue" });
     }
 
-    public void AddNewParameter(bool isEnabled)
+    public void AddNewParameter(bool isEnabled = false, string key = "", string value = "", string deleteButtonVisibility = "Collapsed")
     {
-        var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = key, Value = value, Description = "", DeleteButtonVisibility = deleteButtonVisibility };
         Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
     }
@@ -217,95 +214,93 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     private void RefreshParameters(URL item)
     {
-        if (isInitialized)
+        if (isURLEditing)
         {
-            if (isURLEditing)
-            {
+            Parameters.Clear();
+            int questionMarkIndex = URL.RawURL.IndexOf('?');
+            var rawURL = "";
+            if (questionMarkIndex == -1)
                 Parameters.Clear();
-                isRefreshParameters = true;
-                int questionMarkIndex = URL.RawURL.IndexOf('?');
-                var rawURL = "";
-                if (questionMarkIndex == -1)
-                    Parameters.Clear();
-                else
+            else
+            {
+                var rawParameters = URL.RawURL.Substring(questionMarkIndex + 1, URL.RawURL.Length - questionMarkIndex - 1);
+                var parameterSplit = rawParameters.Split("&");
+
+                if (parameterSplit.Length > 0)
                 {
-                    var rawParameters = URL.RawURL.Substring(questionMarkIndex + 1, URL.RawURL.Length - questionMarkIndex - 1);
-                    var parameterSplit = rawParameters.Split("&");
-
-                    if (parameterSplit.Length > 0)
+                    for (int i = 0; i < parameterSplit.Length; i++)
                     {
-                        for (int i = 0; i < parameterSplit.Length; i++)
-                        {
-                            var equalsMarkIndex = parameterSplit[i].IndexOf("=");
-                            
-                            if (parameterSplit[i] == "")
-                                AddNewParameter(true);
-                            else if (equalsMarkIndex == -1)
-                            {
-                                Parameters.Add(new ParameterItem()
-                                {
-                                    IsEnabled = true,
-                                    Key = parameterSplit[i],
-                                    DeleteButtonVisibility = "Visible"
-                                });
-                            }
-                            else
-                            {
-                                Parameters.Add(new ParameterItem()
-                                {
-                                    IsEnabled = true,
-                                    Key = parameterSplit[i].Substring(0, equalsMarkIndex),
-                                    Value = parameterSplit[i].Substring(equalsMarkIndex + 1, parameterSplit[i].Length - equalsMarkIndex - 1),
-                                    DeleteButtonVisibility = "Visible"
+                        var equalsMarkIndex = parameterSplit[i].IndexOf("=");
 
-                                });
-                            }
+                        if (parameterSplit[i] == "")
+                            AddNewParameter(isEnabled: true, deleteButtonVisibility: "Visible");
+                        else if (equalsMarkIndex == -1)
+                            AddNewParameter(isEnabled: true, key: parameterSplit[i], deleteButtonVisibility: "Visible");
+                        else
+                        {
+                            AddNewParameter(isEnabled: true, key: parameterSplit[i].Substring(0, equalsMarkIndex),
+                                value: parameterSplit[i].Substring(equalsMarkIndex + 1, parameterSplit[i].Length - equalsMarkIndex - 1),
+                                deleteButtonVisibility: "Visible");
                         }
                     }
                 }
-                AddNewParameter(false);
             }
+            AddNewParameter(false);
         }
     }
 
     private void RefreshURL()
     {
-        if (isInitialized)
+        if (isParametersEditing)
         {
-            if (isParametersEditing)
+            int questionMarkIndex = URL.RawURL.IndexOf('?');
+            var rawURL = "";
+            if (questionMarkIndex == -1)
+                rawURL = URL.RawURL;
+            else
+                rawURL = URL.RawURL.Substring(0, questionMarkIndex);
+
+            var rawParameters = "";
+            bool isFirstParameter = true;
+
+            foreach (var item in Parameters)
             {
-                int questionMarkIndex = URL.RawURL.IndexOf('?');
-                var rawURL = "";
-                if (questionMarkIndex == -1)
-                    rawURL = URL.RawURL;
-                else
-                    rawURL = URL.RawURL.Substring(0, questionMarkIndex);
-
-                var rawParameters = "";
-                bool isFirstParameter = true;
-
-                foreach (var item in Parameters)
+                if (item.IsEnabled)
                 {
                     if (isFirstParameter)
                     {
-                        rawParameters += "?" + item.Key + "=" + item.Value;
+                        if (!string.IsNullOrEmpty(item.Key) && string.IsNullOrEmpty(item.Value))
+                            rawParameters += "?" + item.Key;
+                        else if (string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Value))
+                            rawParameters += "?" + "=" + item.Value;
+                        else if (!string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Value))
+                            rawParameters += "?" + item.Key + "=" + item.Value;
+                        else if (string.IsNullOrEmpty(item.Key) && string.IsNullOrEmpty(item.Value))
+                            rawParameters += "?";
+
                         isFirstParameter = false;
                     }
                     else
                     {
-                        if (Parameters.IndexOf(item) <= Parameters.Count - 1 && (item.Key != "" || item.Value != ""))
-                            rawParameters += "&" + item.Key + "=" + item.Value;
+                        if (Parameters.IndexOf(item) <= Parameters.Count - 1)
+                        {
+                            if (string.IsNullOrEmpty(item.Key) && string.IsNullOrEmpty(item.Value))
+                                rawParameters += "&";
+                            else if (string.IsNullOrEmpty(item.Value))
+                                rawParameters += "&" + item.Key;
+                            else
+                                rawParameters += "&" + item.Key + "=" + item.Value;
+                        }
                     }
                 }
-
-                if (rawParameters == "?=")
-                    rawParameters = "";
-
-                URL.RawURL = rawURL + rawParameters;
             }
+
+            if (rawParameters == "?=")
+                rawParameters = "";
+
+            URL.RawURL = rawURL + rawParameters;
         }
     }
-
 }
 
 public partial class URL : ObservableRecipient
