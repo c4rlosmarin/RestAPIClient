@@ -284,12 +284,14 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                     {
                         if (Parameters.IndexOf(item) <= Parameters.Count - 1)
                         {
-                            if (string.IsNullOrEmpty(item.Key) && string.IsNullOrEmpty(item.Value))
-                                rawParameters += "&";
-                            else if (string.IsNullOrEmpty(item.Value))
+                            if (!string.IsNullOrEmpty(item.Key) && string.IsNullOrEmpty(item.Value))
                                 rawParameters += "&" + item.Key;
-                            else
+                            else if (string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Value))
+                                rawParameters += "&" + "=" + item.Value;
+                            else if (!string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Value))
                                 rawParameters += "&" + item.Key + "=" + item.Value;
+                            else if (string.IsNullOrEmpty(item.Key) && string.IsNullOrEmpty(item.Value))
+                                rawParameters += "&";
                         }
                     }
                 }
