@@ -52,7 +52,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         this.AddMethods();
     }
 
-
     public void AddMethods()
     {
         Methods.Add(new MethodsItemViewModel() { Name = "GET", Foreground = "Green" });
@@ -66,26 +65,27 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public void AddNewParameter(bool isEnabled = false, string key = "", string value = "", string deleteButtonVisibility = "Collapsed")
     {
         var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = key, Value = value, Description = "", DeleteButtonVisibility = deleteButtonVisibility };
-        Parameter.PropertyChanged += Parameter_PropertyChanged;
+        Parameter.PropertyChanged += Parameters_PropertyChanged;
         Parameters.Add(Parameter);
     }
 
-    private void Parameter_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    private void Parameters_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         var item = sender as ParameterItem;
         int index = Parameters.IndexOf(item);
 
         if (!item.IsEnabled && e.PropertyName != "IsEnabled")
             item.IsEnabled = true;
-        if (index == Parameters.Count - 1 && e.PropertyName != "IsEnabled")
-            AddNewParameter(false);
 
-        item.DeleteButtonVisibility = "Visible";
+        if (index == Parameters.Count - 1)
+            AddNewParameter();
 
         if (e.PropertyName != "Description")
             RefreshURL();
-    }
 
+        if (item.DeleteButtonVisibility == "Collapsed")
+            item.DeleteButtonVisibility = "Visible";
+    }
 
     public void DeleteParameterItem(ParameterItem item)
     {
@@ -240,7 +240,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                     }
                 }
             }
-            AddNewParameter(false);
+            AddNewParameter();
         }
     }
 
