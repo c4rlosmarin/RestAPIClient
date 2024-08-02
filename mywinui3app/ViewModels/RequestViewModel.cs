@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace mywinui3app.ViewModels;
 
-public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
+public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
 {
     [ObservableProperty]
     public string requestId;
@@ -42,7 +42,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         Response = new ResponseViewModel();
 
         StrongReferenceMessenger.Default.Register<URL>(this);
-        StrongReferenceMessenger.Default.Register<string>(this);
         StrongReferenceMessenger.Default.Register<ParameterItem>(this);
         StrongReferenceMessenger.Default.Register<HeaderItem>(this);
         StrongReferenceMessenger.Default.Register<BodyItem>(this);
@@ -73,17 +72,18 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     private void Parameter_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        base.OnPropertyChanged(e);
-
         var item = sender as ParameterItem;
         int index = Parameters.IndexOf(item);
 
+        if (!item.IsEnabled && e.PropertyName != "IsEnabled")
+            item.IsEnabled = true;
         if (index == Parameters.Count - 1 && e.PropertyName != "IsEnabled")
             AddNewParameter(false);
-        else if (!item.IsEnabled && e.PropertyName != "IsEnabled")
-            item.IsEnabled = true;
 
         item.DeleteButtonVisibility = "Visible";
+
+        if (e.PropertyName != "Description")
+            RefreshURL();
     }
 
 
@@ -141,11 +141,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             item.IsEnabled = true;
 
         item.DeleteButtonVisibility = "Visible";
-    }
-
-    public void Receive(string message)
-    {
-        RefreshURL();
     }
 
     public void Receive(ParameterItem item)
@@ -336,16 +331,6 @@ public partial class ParameterItem : ObservableRecipient
     public string description;
     [ObservableProperty]
     public string deleteButtonVisibility;
-
-    partial void OnKeyChanged(string value)
-    {
-        StrongReferenceMessenger.Default.Send("KeyChanged");
-    }
-
-    partial void OnValueChanged(string value)
-    {
-        StrongReferenceMessenger.Default.Send("ValueChanged");
-    }
 
     [RelayCommand]
     public void DeleteParameterItem(ParameterItem item)
