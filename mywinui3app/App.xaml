@@ -16,11 +16,21 @@
                     <Style x:Key="MyFontIconStyle" TargetType="FontIcon">
                         <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}" />
                     </Style>
+
+                    <Style x:Key="MyTextBlockAccentStyle" TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
+                    </Style>
                 </ResourceDictionary>
 
                 <ResourceDictionary x:Key="Dark">
                     <Style x:Key="MyFontIconStyle" TargetType="FontIcon">
                         <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorLight2}" />
+                    </Style>
+
+                    <Style x:Key="MyTextBlockAccentStyle" TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorLight2}" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
                     </Style>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>

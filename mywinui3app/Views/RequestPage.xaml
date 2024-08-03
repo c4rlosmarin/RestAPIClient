@@ -333,7 +333,7 @@
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
                 <controls:DataGrid.Columns>
-                    
+
                     <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
@@ -438,12 +438,20 @@
         <controls2:ContentSizer x:Name="dtgridContentSizer" Grid.Row="1" TargetControl="{x:Bind dtgridParameters}" Orientation="Horizontal"/>
 
         <Grid Grid.Row="2" RowDefinitions="Auto,Auto">
-            <SelectorBar x:Name="selectbarResponse" Grid.Row="0" Margin="-10,0,0,0" SelectionChanged="selectbarResponse_SelectionChanged">
-                <SelectorBarItem Text="Body" IsSelected="True" />
-                <SelectorBarItem Text="Headers" />
-            </SelectorBar>
+
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto">
+
+                <SelectorBar Grid.Column="0" x:Name="selectbarResponse" Margin="-10,0,0,0" SelectionChanged="selectbarResponse_SelectionChanged">
+                    <SelectorBarItem Text="Body" IsSelected="True" />
+                    <SelectorBarItem Text="Headers"/>
+                </SelectorBar>
+
+                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Response.HeadersCount, Mode=TwoWay}" VerticalAlignment="Center" Margin="-8,0,0,1" Style="{ThemeResource MyTextBlockAccentStyle}"/>
+
+            </Grid>
 
             <Grid x:Name="gridResponseJson" Grid.Row="1" Height="250">
+
                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" VerticalAlignment="Stretch">
                     <Border VerticalAlignment="Stretch">
                         <RichTextBlock x:Name="txtJson" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Stretch">
@@ -484,6 +492,6 @@
                     </controls:DataGrid>
                 </Border>
             </Grid>
-        </Grid>        
+        </Grid>
     </Grid>
 </Page>

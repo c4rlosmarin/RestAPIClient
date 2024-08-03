@@ -74,6 +74,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         var item = sender as ParameterItem;
         int index = Parameters.IndexOf(item);
 
+        item.PropertyChanged -= Parameters_PropertyChanged;
+
         if (!item.IsEnabled && e.PropertyName != "IsEnabled")
             item.IsEnabled = true;
 
@@ -85,6 +87,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
         if (item.DeleteButtonVisibility == "Collapsed")
             item.DeleteButtonVisibility = "Visible";
+
+        item.PropertyChanged += Parameters_PropertyChanged;
     }
 
     public void DeleteParameterItem(ParameterItem item)
@@ -203,6 +207,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             foreach (var subitem in item.Value)
                 Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
         }
+
+        Response.HeadersCount = "(" + Response.Headers.Count + ")";
 
         return Response.Body;
     }

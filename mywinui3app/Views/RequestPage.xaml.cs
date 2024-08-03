@@ -471,8 +471,6 @@ public sealed partial class RequestPage : Page
         Clipboard.SetContent(dataPackage);
     }
 
-    #endregion
-
     private void txtUrl_GotFocus(object sender, RoutedEventArgs e)
     {
         ViewModel.isURLEditing = true;
@@ -492,4 +490,7 @@ public sealed partial class RequestPage : Page
     {
         ViewModel.isParametersEditing = false;
     }
+
+    #endregion
+
 }
