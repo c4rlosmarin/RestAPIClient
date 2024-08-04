@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -36,6 +37,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public string bodyItemsCount;
     [ObservableProperty]
     public ResponseViewModel response;
+
+    private Stopwatch Stopwatch = new();
 
     public RequestViewModel()
     {
@@ -263,7 +266,12 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         }
 
         request.Content = form;
+
+        Stopwatch.Reset();
+        Stopwatch.Start();
         response = await client.SendAsync(request);
+        Stopwatch.Stop();
+
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -273,13 +281,21 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         document.WriteTo(writer);
         writer.Flush();
 
-        Response.Body = Encoding.UTF8.GetString(stream.ToArray());
-        Response.Headers = new ObservableCollection<ResponseData>();
+        Response.StatusCode = ((int)response.StatusCode).ToString() + " " + response.StatusCode;
 
+        var responseHeadersSize = await GetResponseHeadersSizeInKB(response);
+        var responseBodySize = response.Content.Headers.ContentLength;
+        Response.Size = Math.Round((decimal)((responseHeadersSize + responseBodySize)/ 1024.0),2) + " KB";
+
+        Response.Time = Stopwatch.ElapsedMilliseconds + " ms";
+
+        Response.Body = Encoding.UTF8.GetString(stream.ToArray());
+        Response.Headers = new ObservableCollection<ResponseHeaderItem>();
+        
         foreach (var item in response.Headers)
         {
             foreach (var subitem in item.Value)
-                Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
+                Response.Headers.Add(new ResponseHeaderItem() { Key = item.Key, Value = subitem.ToString() });
         }
 
         if (Response.Headers.Count == 0)
@@ -287,7 +303,24 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         else
             Response.HeadersCount = "(" + (Response.Headers.Count) + ")";
 
+        Response.BannerVisibility = "Collapsed";
+        Response.Visibility = "Visible";
+
         return Response.Body;
+    }
+
+    public async Task<long> GetResponseHeadersSizeInKB(HttpResponseMessage response)
+    {
+        long totalSize = 0;
+        foreach (var header in response.Headers)
+        {
+            totalSize += Encoding.UTF8.GetByteCount(header.Key);
+
+            foreach (var value in header.Value)
+                totalSize += Encoding.UTF8.GetByteCount(value);
+        }
+
+        return totalSize;
     }
 
     private void RefreshParameters(URL item)

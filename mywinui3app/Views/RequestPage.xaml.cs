@@ -461,9 +461,6 @@ public sealed partial class RequestPage : Page
         ViewModel.isParametersEditing = false;
     }
 
-
-    #endregion
-
     private void tabResponse_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         switch (tabResponse.SelectedIndex)
@@ -476,6 +473,16 @@ public sealed partial class RequestPage : Page
                 gridResponseJson.Visibility = Visibility.Collapsed;
                 gridResponseHeaders.Visibility = Visibility.Visible;
                 break;
+        }
+    }
+
+    #endregion
+
+    private void TabViewItem_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (sender is TabViewItem tabViewItem)
+        {
+            ToolTipService.SetToolTip(tabViewItem, null);
         }
     }
 }

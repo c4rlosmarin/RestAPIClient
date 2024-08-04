@@ -6,14 +6,24 @@ namespace mywinui3app.ViewModels;
 public partial class ResponseViewModel : ObservableRecipient
 {
     [ObservableProperty]
+    public string statusCode;
+    [ObservableProperty]
+    public string time;
+    [ObservableProperty]
+    public string size;
+    [ObservableProperty]
     public string body;
     [ObservableProperty]
-    public ObservableCollection<ResponseData> headers;
+    public ObservableCollection<ResponseHeaderItem> headers;
     [ObservableProperty]
     public string headersCount;
+    [ObservableProperty]
+    public string visibility = "Collapsed";
+    [ObservableProperty]
+    public string bannerVisibility = "Visible";
 
 }
-public partial class ResponseData: ObservableRecipient
+public partial class ResponseHeaderItem: ObservableRecipient
 {
     [ObservableProperty]
     public string key;

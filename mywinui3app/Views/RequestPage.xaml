@@ -13,7 +13,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid RowDefinitions="Auto,Auto,Auto" Padding="15">
+    <Grid RowDefinitions="Auto,Auto,*" Padding="15">
 
         <Grid.Resources>
             <ResourceDictionary>
@@ -249,9 +249,9 @@
                         </ToolTipService.ToolTip>
                     </DataTemplate>
                 </Grid.Resources>
-                
+
                 <TextBox Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="32"/>
-                
+
                 <AppBarButton Name="btnSave" Grid.Column="1" Padding="0" Margin="0,-15,-10,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="btnSave_Click">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="S"/>
@@ -280,12 +280,9 @@
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Parameter" Grid.Column="0" />
+                            <TextBlock Text="Parameters" Grid.Column="0" />
                             <TextBlock Text="{Binding}" Grid.Column="2" Style="{ThemeResource MyTextBlockAccentStyle}" />
                         </Grid>
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{Binding}"/>
-                        </ToolTipService.ToolTip>
                     </DataTemplate>
 
                     <DataTemplate x:Name="RequestHeadersTabViewItemHeaderTemplate">
@@ -295,12 +292,9 @@
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Header" Grid.Column="0" />
+                            <TextBlock Text="Headers" Grid.Column="0"/>
                             <TextBlock Text="{Binding}" Grid.Column="2" Style="{ThemeResource MyTextBlockAccentStyle}" />
                         </Grid>
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{Binding}"/>
-                        </ToolTipService.ToolTip>
                     </DataTemplate>
 
                     <DataTemplate x:Name="RequestBodyItemTabViewItemHeaderTemplate">
@@ -313,19 +307,16 @@
                             <TextBlock Text="Body" Grid.Column="0" />
                             <TextBlock Text="{Binding}" Grid.Column="2" Style="{ThemeResource MyTextBlockAccentStyle}" />
                         </Grid>
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{Binding}"/>
-                        </ToolTipService.ToolTip>
                     </DataTemplate>
                 </Grid.Resources>
 
-                <TabView x:Name="tabRequest" SelectionChanged="tabRequest_SelectionChanged">
-                    <TabViewItem Header="{x:Bind ViewModel.ParametersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestParametersTabViewItemHeaderTemplate}"/>
-                    <TabViewItem Header="{x:Bind ViewModel.HeadersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestHeadersTabViewItemHeaderTemplate}"/>
-                    <TabViewItem Header="{x:Bind ViewModel.BodyItemsCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestBodyItemTabViewItemHeaderTemplate}"/>
+                <TabView x:Name="tabRequest" SelectionChanged="tabRequest_SelectionChanged" IsAddTabButtonVisible="False" Width="310" HorizontalAlignment="Left">
+                    <TabViewItem Header="{x:Bind ViewModel.ParametersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestParametersTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
+                    <TabViewItem Header="{x:Bind ViewModel.HeadersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestHeadersTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
+                    <TabViewItem Header="{x:Bind ViewModel.BodyItemsCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestBodyItemTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
                 </TabView>
             </Grid>
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" GotFocus="dtgridParameters_GotFocus" LostFocus="dtgridParameters_LostFocus" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" GotFocus="dtgridParameters_GotFocus" LostFocus="dtgridParameters_LostFocus" Height="275" MinHeight="28" MaxHeight="605" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -378,7 +369,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridHeaders" ItemsSource="{x:Bind ViewModel.Headers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="605" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -431,7 +422,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <controls:DataGrid Grid.Row="3" x:Name="dtgridBodyItems" ItemsSource="{x:Bind ViewModel.Body}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="570" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
+            <controls:DataGrid Grid.Row="3" x:Name="dtgridBodyItems" ItemsSource="{x:Bind ViewModel.Body}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" Height="275" MinHeight="28" MaxHeight="605" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader" Visibility="Collapsed">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
                 </controls:DataGrid.Resources>
@@ -487,8 +478,15 @@
 
         <controls2:ContentSizer x:Name="dtgridContentSizer" Grid.Row="1" TargetControl="{x:Bind dtgridParameters}" Orientation="Horizontal"/>
 
-        <Grid Grid.Row="2" RowDefinitions="Auto,Auto">
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto">
+        <Grid Grid.Row="2" RowDefinitions="Auto,*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{x:Bind ViewModel.Response.BannerVisibility, Mode=TwoWay}">
+            <TextBlock Grid.Row="0" Text="Response" FontWeight="SemiBold"/>
+            <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Enter the request data and click send"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" RowDefinitions="Auto,*" HorizontalAlignment="Stretch">
+            <Grid Grid.Row="0" ColumnDefinitions="*,*">
                 <Grid.Resources>
                     <DataTemplate x:Name="ResponseHeadersTabViewItemHeaderTemplate">
                         <Grid Width="Auto">
@@ -505,17 +503,40 @@
                         </ToolTipService.ToolTip>
                     </DataTemplate>
                 </Grid.Resources>
-                <TabView x:Name="tabResponse" Grid.Column="0" SelectionChanged="tabResponse_SelectionChanged">
-                    <TabViewItem Header="Body" IsSelected="True" IsClosable="False" MinWidth="100" MaxWidth="100" />
-                    <TabViewItem Header="{x:Bind ViewModel.Response.HeadersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource ResponseHeadersTabViewItemHeaderTemplate}"/>
-                </TabView>
+
+                <Grid Grid.Column="0" HorizontalAlignment="Left">
+
+                    <TabView x:Name="tabResponse" Grid.Column="0" Visibility="{x:Bind ViewModel.Response.Visibility, Mode=TwoWay}" SelectionChanged="tabResponse_SelectionChanged" IsAddTabButtonVisible="False" Width="210">
+                        <TabViewItem Header="Body" IsSelected="True" IsClosable="False" MinWidth="100" MaxWidth="100" Loaded="TabViewItem_Loaded"/>
+                        <TabViewItem Header="{x:Bind ViewModel.Response.HeadersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource ResponseHeadersTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
+                    </TabView>
+
+                </Grid>
+
+                <Grid Grid.Column="1" ColumnDefinitions="Auto,Auto,Auto" HorizontalAlignment="Right" ColumnSpacing="15" Visibility="{x:Bind ViewModel.Response.Visibility, Mode=TwoWay}" Margin="0,16">
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Status:" FontSize="12"/>
+                        <TextBlock Text="{x:Bind ViewModel.Response.StatusCode, Mode=TwoWay}" Style="{ThemeResource MyTextBlockAccentStyle}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Time:" FontSize="12"/>
+                        <TextBlock Text="{x:Bind ViewModel.Response.Time, Mode=TwoWay}" Style="{ThemeResource MyTextBlockAccentStyle}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Size:" FontSize="12"/>
+                        <TextBlock Text="{x:Bind ViewModel.Response.Size, Mode=TwoWay}" Style="{ThemeResource MyTextBlockAccentStyle}"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
 
-            <Grid x:Name="gridResponseJson" Grid.Row="1" Height="250">
+            <Grid x:Name="gridResponseJson" Grid.Row="1">
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" VerticalAlignment="Stretch">
                     <Border VerticalAlignment="Stretch">
-                        <RichTextBlock x:Name="txtJson" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Stretch">
+                        <RichTextBlock x:Name="txtJson" Grid.Row="1" VerticalAlignment="Stretch" Margin="0,15">
                             <Paragraph>
                                 <Run Text="{x:Bind ViewModel.Response.Body, Mode=OneWay}"/>
                             </Paragraph>
@@ -525,7 +546,7 @@
                 </ScrollViewer>
             </Grid>
 
-            <Grid x:Name="gridResponseHeaders" Grid.Row="1" Height="250" Visibility="Collapsed">
+            <Grid x:Name="gridResponseHeaders" Grid.Row="1" Visibility="Collapsed">
                 <Border VerticalAlignment="Stretch">
                     <controls:DataGrid x:Name="dtgridResponseHeaders" ItemsSource="{x:Bind ViewModel.Response.Headers, Mode=TwoWay}" LoadingRow="dtgridResponseHeaders_LoadingRow" Margin="0,15" MinHeight="28" AutoGenerateColumns="False" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False">
                         <controls:DataGrid.Resources>
@@ -535,7 +556,7 @@
 
                             <controls:DataGridTemplateColumn Header="Key" Width="*">
                                 <controls:DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate x:DataType="viewmodels:ResponseData">
+                                    <DataTemplate x:DataType="viewmodels:ResponseHeaderItem">
                                         <TextBox Text="{x:Bind Key, Mode=OneWay}" IsReadOnly="True" KeyDown="TextBoxDatagridCell_KeyDown"/>
                                     </DataTemplate>
                                 </controls:DataGridTemplateColumn.CellTemplate>
@@ -543,7 +564,7 @@
 
                             <controls:DataGridTemplateColumn Header="Value" Width="*">
                                 <controls:DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate x:DataType="viewmodels:ResponseData">
+                                    <DataTemplate x:DataType="viewmodels:ResponseHeaderItem">
                                         <TextBox Text="{x:Bind Value, Mode=OneWay}" IsReadOnly="True" KeyDown="TextBoxDatagridCell_KeyDown"/>
                                     </DataTemplate>
                                 </controls:DataGridTemplateColumn.CellTemplate>

@@ -14,12 +14,13 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <Style x:Key="MyFontIconStyle" TargetType="FontIcon">
-                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}" />
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}"/>
                     </Style>
 
                     <Style x:Key="MyTextBlockAccentStyle" TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}" />
-                        <Setter Property="FontWeight" Value="SemiBold" />
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="FontSize" Value="12"/>
                     </Style>
                 </ResourceDictionary>
 
@@ -29,8 +30,9 @@
                     </Style>
 
                     <Style x:Key="MyTextBlockAccentStyle" TargetType="TextBlock">
-                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorLight2}" />
-                        <Setter Property="FontWeight" Value="SemiBold" />
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorLight2}"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="FontSize" Value="12"/>
                     </Style>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
