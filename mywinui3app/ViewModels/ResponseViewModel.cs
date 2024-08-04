@@ -8,6 +8,8 @@ public partial class ResponseViewModel : ObservableRecipient
     [ObservableProperty]
     public string statusCode;
     [ObservableProperty]
+    public string statusStyleKey = "MyTextBlockAccentStyle";
+    [ObservableProperty]
     public string time;
     [ObservableProperty]
     public string size;

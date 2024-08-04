@@ -112,7 +112,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
         item.DeleteButtonVisibility = "Visible";
         RefreshURL();
-        
+
         item.PropertyChanged += Parameter_PropertyChanged;
     }
 
@@ -272,36 +272,57 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         response = await client.SendAsync(request);
         Stopwatch.Stop();
 
-        response.EnsureSuccessStatusCode();
+        if ((int)response.StatusCode >= 200 && (int)response.StatusCode <= 299)
+            Response.StatusStyleKey = "MyStatusCodeSuccessfulStyle";
+        else if ((int)response.StatusCode >= 300 && (int)response.StatusCode <= 399)
+            Response.StatusStyleKey = "MyStatusCodeWarningStyle";
+        else if ((int)response.StatusCode >= 400)
+            Response.StatusStyleKey = "MyStatusCodeErrorStyle";
+
         string responseBody = await response.Content.ReadAsStringAsync();
 
-        JsonDocument document = JsonDocument.Parse(responseBody);
-        var stream = new MemoryStream();
-        var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
-        document.WriteTo(writer);
-        writer.Flush();
+        if (!string.IsNullOrEmpty(responseBody))
+        {
+            JsonDocument document = JsonDocument.Parse(responseBody);
+            var stream = new MemoryStream();
+            var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
+            document.WriteTo(writer);
+            writer.Flush();
+
+            Response.Body = Encoding.UTF8.GetString(stream.ToArray());
+        }
+        else
+            Response.Body = "";
 
         Response.StatusCode = ((int)response.StatusCode).ToString() + " " + response.StatusCode;
 
         var responseHeadersSize = await GetResponseHeadersSizeInKB(response);
         var responseBodySize = response.Content.Headers.ContentLength;
-        Response.Size = Math.Round((decimal)((responseHeadersSize + responseBodySize)/ 1024.0),2) + " KB";
-
+        Response.Size = Math.Round((decimal)((responseHeadersSize + responseBodySize) / 1024.0), 2) + " KB";
         Response.Time = Stopwatch.ElapsedMilliseconds + " ms";
-
-        Response.Body = Encoding.UTF8.GetString(stream.ToArray());
         Response.Headers = new ObservableCollection<ResponseHeaderItem>();
-        
+
+        foreach (var item in response.Content.Headers)
+        {
+            if ((item.Key == "Content-Type") || (item.Key == "Content-Length" && item.Value != null) || (item.Key == "Expires" && item.Value != null))
+            {
+                foreach (var subitem in item.Value)
+                    Response.Headers.Add(new ResponseHeaderItem() { Key = item.Key, Value = subitem.ToString() });
+            }
+        }
+
         foreach (var item in response.Headers)
         {
             foreach (var subitem in item.Value)
                 Response.Headers.Add(new ResponseHeaderItem() { Key = item.Key, Value = subitem.ToString() });
         }
 
-        if (Response.Headers.Count == 0)
-            Response.HeadersCount = " ";
-        else
-            Response.HeadersCount = "(" + (Response.Headers.Count) + ")";
+        foreach (var item in response.Headers)
+
+            if (Response.Headers.Count == 0)
+                Response.HeadersCount = " ";
+            else
+                Response.HeadersCount = "(" + (Response.Headers.Count) + ")";
 
         Response.BannerVisibility = "Collapsed";
         Response.Visibility = "Visible";

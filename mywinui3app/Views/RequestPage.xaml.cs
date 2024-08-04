@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using mywinui3app.ViewModels;
@@ -484,5 +485,33 @@ public sealed partial class RequestPage : Page
         {
             ToolTipService.SetToolTip(tabViewItem, null);
         }
+    }
+}
+
+public class StyleConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, string language)
+    {
+        var styleKey = value as string;
+        if (styleKey != null)
+        {
+            return Application.Current.Resources[styleKey] as Style;
+        }
+        return null;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        var style = value as Style;
+        if (style != null)
+        {
+            if (style == Application.Current.Resources["MyStatusCodeSuccessfulStyle"])
+                return "MyStatusCodeSuccessfulStyle";
+            else if (style == Application.Current.Resources["MyStatusCodeWarningStyle"])
+                return "MyStatusCodeWarningStyle";
+            else if (style == Application.Current.Resources["MyStatusCodeErrorStyle"])
+                return "MyStatusCodeErrorStyle";
+        }
+        return null;
     }
 }

@@ -13,6 +13,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <local:StyleConverter x:Key="StyleConverter"/>
+    </Page.Resources>
+
     <Grid RowDefinitions="Auto,Auto,*" Padding="15">
 
         <Grid.Resources>
@@ -517,7 +521,7 @@
 
                     <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="5">
                         <TextBlock Text="Status:" FontSize="12"/>
-                        <TextBlock Text="{x:Bind ViewModel.Response.StatusCode, Mode=TwoWay}" Style="{ThemeResource MyTextBlockAccentStyle}"/>
+                        <TextBlock Text="{x:Bind ViewModel.Response.StatusCode, Mode=TwoWay}" Style="{x:Bind ViewModel.Response.StatusStyleKey, Mode=TwoWay, Converter = {StaticResource StyleConverter}}"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5">
@@ -533,7 +537,6 @@
             </Grid>
 
             <Grid x:Name="gridResponseJson" Grid.Row="1">
-
                 <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" VerticalAlignment="Stretch">
                     <Border VerticalAlignment="Stretch">
                         <RichTextBlock x:Name="txtJson" Grid.Row="1" VerticalAlignment="Stretch" Margin="0,15">
@@ -541,7 +544,6 @@
                                 <Run Text="{x:Bind ViewModel.Response.Body, Mode=OneWay}"/>
                             </Paragraph>
                         </RichTextBlock>
-
                     </Border>
                 </ScrollViewer>
             </Grid>
