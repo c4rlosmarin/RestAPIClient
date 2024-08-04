@@ -100,7 +100,7 @@
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="PUT" Grid.Column="0" Foreground="#D1750A" />
+                            <TextBlock Text="PUT" Grid.Column="0" Foreground="DarkOrange" />
                             <TextBlock Text="{Binding}" Grid.Column="2" />
                         </Grid>
                         <ToolTipService.ToolTip>
@@ -117,7 +117,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
-                            <TextBlock Text="PUT" Grid.Column="1" Foreground="#D1750A"/>
+                            <TextBlock Text="PUT" Grid.Column="1" Foreground="DarkOrange"/>
                             <TextBlock Text="{Binding}" Grid.Column="3" />
                         </Grid>
                         <ToolTipService.ToolTip>
@@ -164,7 +164,7 @@
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="DELETE" Grid.Column="0" Foreground="#FF0000" />
+                            <TextBlock Text="DELETE" Grid.Column="0" Foreground="#ED1C24" />
                             <TextBlock Text="{Binding}" Grid.Column="2" />
                         </Grid>
                         <ToolTipService.ToolTip>
@@ -181,7 +181,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
-                            <TextBlock Text="DELETE" Grid.Column="1" Foreground="#FF0000"/>
+                            <TextBlock Text="DELETE" Grid.Column="1" Foreground="#ED1C24"/>
                             <TextBlock Text="{Binding}" Grid.Column="3" />
                         </Grid>
                         <ToolTipService.ToolTip>
