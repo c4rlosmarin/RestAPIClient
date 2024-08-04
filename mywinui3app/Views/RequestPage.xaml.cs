@@ -118,13 +118,6 @@ public sealed partial class RequestPage : Page
         }
     }
 
-    private int GetCurrentlySelectedRequestTab()
-    {
-        SelectorBarItem selectedItem = selectbarRequest.SelectedItem;
-        int currentSelectedIndex = selectbarRequest.Items.IndexOf(selectedItem);
-        return currentSelectedIndex;
-    }
-
     private void SimulateRequestCellClick(DataGridRow? row, DataGridColumn? column)
     {
         var firstColumn = currentRequestDataGrid.Columns[(column.DisplayIndex)];
@@ -161,18 +154,18 @@ public sealed partial class RequestPage : Page
 
     #region << Events >>
 
-    private void selectbarRequest_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+    private void tabRequest_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        switch (selectbarRequest.SelectedItem.Text)
+        switch (tabRequest.SelectedIndex)
         {
-            case "Parameters":
+            case 0:
                 dtgridParameters.Visibility = Visibility.Visible;
                 dtgridHeaders.Visibility = Visibility.Collapsed;
                 dtgridBodyItems.Visibility = Visibility.Collapsed;
                 dtgridContentSizer.TargetControl = dtgridParameters;
 
                 break;
-            case "Headers":
+            case 1:
                 dtgridParameters.Visibility = Visibility.Collapsed;
                 dtgridHeaders.Visibility = Visibility.Visible;
                 dtgridBodyItems.Visibility = Visibility.Collapsed;
@@ -185,9 +178,6 @@ public sealed partial class RequestPage : Page
                 dtgridContentSizer.TargetControl = dtgridBodyItems;
                 break;
         }
-
-        txtJson.UpdateLayout();
-
     }
 
     private void comboMethods_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -214,9 +204,7 @@ public sealed partial class RequestPage : Page
         {
             if (e.Key == VirtualKey.Tab)
             {
-                var currentSelectedIndex = GetCurrentlySelectedRequestTab();
-
-                switch (currentSelectedIndex)
+                switch (tabRequest.SelectedIndex)
                 {
                     case 0:
                         currentRequestDataGrid = dtgridParameters;
@@ -260,13 +248,13 @@ public sealed partial class RequestPage : Page
                 else
                 {
                     var itemCount = 0;
-                    switch (selectbarRequest.SelectedItem.Text)
+                    switch (tabRequest.SelectedIndex)
                     {
-                        case "Parameters":
+                        case 0:
                             itemCount = ViewModel.Parameters.Count;
                             break;
 
-                        case "Headers":
+                        case 1:
                             itemCount = ViewModel.Headers.Count;
                             break;
 
@@ -408,24 +396,6 @@ public sealed partial class RequestPage : Page
         dtgridBodyItems.Height = datagridHeight;
     }
 
-    private void selectbarResponse_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-    {
-        SelectorBarItem selectedItem = sender.SelectedItem;
-        int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
-
-        switch (currentSelectedIndex)
-        {
-            case 0:
-                gridResponseJson.Visibility = Visibility.Visible;
-                gridResponseHeaders.Visibility = Visibility.Collapsed;
-                break;
-            case 1:
-                gridResponseJson.Visibility = Visibility.Collapsed;
-                gridResponseHeaders.Visibility = Visibility.Visible;
-                break;
-        }
-    }
-
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
         SetTabViewHeaderTemplate(sender, false);
@@ -491,6 +461,21 @@ public sealed partial class RequestPage : Page
         ViewModel.isParametersEditing = false;
     }
 
+
     #endregion
 
+    private void tabResponse_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        switch (tabResponse.SelectedIndex)
+        {
+            case 0:
+                gridResponseJson.Visibility = Visibility.Visible;
+                gridResponseHeaders.Visibility = Visibility.Collapsed;
+                break;
+            case 1:
+                gridResponseJson.Visibility = Visibility.Collapsed;
+                gridResponseHeaders.Visibility = Visibility.Visible;
+                break;
+        }
+    }
 }

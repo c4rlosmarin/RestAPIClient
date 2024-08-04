@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace mywinui3app.ViewModels;
 
-public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
+public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
 {
     [ObservableProperty]
     public string requestId;
@@ -25,9 +25,15 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public ObservableCollection<ParameterItem> parameters;
     [ObservableProperty]
+    public string parametersCount;
+    [ObservableProperty]
     public ObservableCollection<HeaderItem> headers;
     [ObservableProperty]
+    public string headersCount;
+    [ObservableProperty]
     public ObservableCollection<BodyItem> body;
+    [ObservableProperty]
+    public string bodyItemsCount;
     [ObservableProperty]
     public ResponseViewModel response;
 
@@ -42,6 +48,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         Response = new ResponseViewModel();
 
         StrongReferenceMessenger.Default.Register<URL>(this);
+        StrongReferenceMessenger.Default.Register<string>(this);
         StrongReferenceMessenger.Default.Register<ParameterItem>(this);
         StrongReferenceMessenger.Default.Register<HeaderItem>(this);
         StrongReferenceMessenger.Default.Register<BodyItem>(this);
@@ -51,6 +58,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         this.AddNewBodyItem();
         this.AddMethods();
     }
+
 
     public void AddMethods()
     {
@@ -65,46 +73,64 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public void AddNewParameter(bool isEnabled = false, string key = "", string value = "", string deleteButtonVisibility = "Collapsed")
     {
         var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = key, Value = value, Description = "", DeleteButtonVisibility = deleteButtonVisibility };
-        Parameter.PropertyChanged += Parameters_PropertyChanged;
+        Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
+        SetParameterCount();
     }
 
-    private void Parameters_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    private void SetParameterCount()
+    {
+        int count = 0;
+        foreach (var item in Parameters)
+        {
+            if (item.IsEnabled)
+                count += 1;
+        }
+
+        if (count == 0)
+            ParametersCount = " ";
+        else
+            ParametersCount = "(" + (count) + ")";
+    }
+
+    private void Parameter_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         var item = sender as ParameterItem;
         int index = Parameters.IndexOf(item);
 
-        item.PropertyChanged -= Parameters_PropertyChanged;
+        item.PropertyChanged -= Parameter_PropertyChanged;
 
         if (!item.IsEnabled && e.PropertyName != "IsEnabled")
             item.IsEnabled = true;
+        if (e.PropertyName == "IsEnabled")
+            SetParameterCount();
+        if (index == Parameters.Count - 1 && item.IsEnabled)
+            AddNewParameter(false);
 
-        if (index == Parameters.Count - 1)
-            AddNewParameter();
-
-        if (e.PropertyName != "Description")
-            RefreshURL();
-
-        if (item.DeleteButtonVisibility == "Collapsed")
-            item.DeleteButtonVisibility = "Visible";
-
-        item.PropertyChanged += Parameters_PropertyChanged;
+        item.DeleteButtonVisibility = "Visible";
+        RefreshURL();
+        
+        item.PropertyChanged += Parameter_PropertyChanged;
     }
+
 
     public void DeleteParameterItem(ParameterItem item)
     {
         Parameters.Remove(item);
+        SetParameterCount();
         RefreshURL();
     }
 
     public void DeleteHeaderItem(HeaderItem item)
     {
         Headers.Remove(item);
+        SetHeaderCount();
     }
 
     public void DeleteBodyItem(BodyItem item)
     {
         Body.Remove(item);
+        SetBodyItemCount();
     }
 
     public void AddNewHeader()
@@ -112,6 +138,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         Header.PropertyChanged += Header_PropertyChanged;
         Headers.Add(Header);
+        SetHeaderCount();
     }
 
     private void Header_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -119,19 +146,56 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         var item = sender as HeaderItem;
         int index = Headers.IndexOf(item);
 
-        if (index == Headers.Count - 1 && e.PropertyName != "IsEnabled")
-            AddNewHeader();
-        else if (!item.IsEnabled && e.PropertyName != "IsEnabled")
+        item.PropertyChanged -= Header_PropertyChanged;
+
+        if (!item.IsEnabled && e.PropertyName != "IsEnabled")
             item.IsEnabled = true;
+        if (e.PropertyName == "IsEnabled")
+            SetHeaderCount();
+        if (index == Headers.Count - 1 && item.IsEnabled)
+            AddNewHeader();
 
         item.DeleteButtonVisibility = "Visible";
+
+        item.PropertyChanged += Header_PropertyChanged;
+    }
+
+    private void SetHeaderCount()
+    {
+        int count = 0;
+        foreach (var item in Headers)
+        {
+            if (item.IsEnabled)
+                count += 1;
+        }
+
+        if (count == 0)
+            HeadersCount = " ";
+        else
+            HeadersCount = "(" + (count) + ")";
     }
 
     public void AddNewBodyItem()
     {
         var BodyItem = new BodyItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
         BodyItem.PropertyChanged += BodyItem_PropertyChanged;
-        body.Add(BodyItem);
+        Body.Add(BodyItem);
+        SetBodyItemCount();
+    }
+
+    private void SetBodyItemCount()
+    {
+        int count = 0;
+        foreach (var item in Body)
+        {
+            if (item.IsEnabled)
+                count += 1;
+        }
+
+        if (count == 0)
+            BodyItemsCount = " ";
+        else
+            BodyItemsCount = "(" + (count) + ")";
     }
 
     private void BodyItem_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -139,12 +203,22 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         var item = sender as BodyItem;
         int index = Body.IndexOf(item);
 
-        if (index == Body.Count - 1 && e.PropertyName != "IsEnabled")
-            AddNewBodyItem();
-        else if (!item.IsEnabled && e.PropertyName != "IsEnabled")
+        item.PropertyChanged -= BodyItem_PropertyChanged;
+
+        if (!item.IsEnabled && e.PropertyName != "IsEnabled")
             item.IsEnabled = true;
+        if (e.PropertyName == "IsEnabled")
+            SetBodyItemCount();
+        if (index == Body.Count - 1 && item.IsEnabled)
+            AddNewBodyItem();
 
         item.DeleteButtonVisibility = "Visible";
+        item.PropertyChanged += BodyItem_PropertyChanged;
+    }
+
+    public void Receive(string message)
+    {
+        RefreshURL();
     }
 
     public void Receive(ParameterItem item)
@@ -208,7 +282,10 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                 Response.Headers.Add(new ResponseData() { Key = item.Key, Value = subitem.ToString() });
         }
 
-        Response.HeadersCount = "(" + Response.Headers.Count + ")";
+        if (Response.Headers.Count == 0)
+            Response.HeadersCount = " ";
+        else
+            Response.HeadersCount = "(" + (Response.Headers.Count) + ")";
 
         return Response.Body;
     }
@@ -246,7 +323,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                     }
                 }
             }
-            AddNewParameter();
+            AddNewParameter(false);
         }
     }
 
@@ -337,6 +414,16 @@ public partial class ParameterItem : ObservableRecipient
     public string description;
     [ObservableProperty]
     public string deleteButtonVisibility;
+
+    partial void OnKeyChanged(string value)
+    {
+        StrongReferenceMessenger.Default.Send("KeyChanged");
+    }
+
+    partial void OnValueChanged(string value)
+    {
+        StrongReferenceMessenger.Default.Send("ValueChanged");
+    }
 
     [RelayCommand]
     public void DeleteParameterItem(ParameterItem item)
