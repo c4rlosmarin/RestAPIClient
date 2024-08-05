@@ -48,6 +48,15 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem x:Uid="Shell_About" helpers:NavigationHelper.NavigateTo="mywinui3app.ViewModels.AboutViewModel">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe946;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
                     <Grid>

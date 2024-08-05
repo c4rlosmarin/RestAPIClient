@@ -19,6 +19,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Styles\FontIcon.xaml" />
+    <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\RequestPage.xaml" />
   </ItemGroup>
 
@@ -63,4 +64,12 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Views\AboutPage.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Resource Remove="Views\AboutPage.xaml" />
+  </ItemGroup>
 </Project>

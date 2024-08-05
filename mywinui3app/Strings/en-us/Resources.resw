@@ -159,4 +159,10 @@
   <data name="Shell_Environments.Content" xml:space="preserve">
     <value>Environments</value>
   </data>
+  <data name="Shell_About.Content" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Settings_AboutContact.Text" xml:space="preserve">
+    <value>Please contact camarin@microsoft.com for additional information.</value>
+  </data>
 </root>

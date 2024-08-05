@@ -1,14 +1,10 @@
 ﻿using System.Reflection;
 using System.Windows.Input;
-
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using Microsoft.UI.Xaml;
-
 using mywinui3app.Contracts.Services;
 using mywinui3app.Helpers;
-
 using Windows.ApplicationModel;
 
 namespace mywinui3app.ViewModels;

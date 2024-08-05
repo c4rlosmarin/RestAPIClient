@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -16,7 +17,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public string name;
     [ObservableProperty]
-    public string method;
+    public MethodsItemViewModel selectedMethod;
     [ObservableProperty]
     public ObservableCollection<MethodsItemViewModel> methods;
     public bool isURLEditing;
@@ -65,12 +66,15 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void AddMethods()
     {
-        Methods.Add(new MethodsItemViewModel() { Name = "GET", Foreground = "Green" });
+        var getMethod = new MethodsItemViewModel() { Name = "GET", Foreground = "Green" };
+        Methods.Add(getMethod);
         Methods.Add(new MethodsItemViewModel() { Name = "POST", Foreground = "Blue" });
         Methods.Add(new MethodsItemViewModel() { Name = "PUT", Foreground = "Blue" });
         Methods.Add(new MethodsItemViewModel() { Name = "PATCH", Foreground = "Blue" });
         Methods.Add(new MethodsItemViewModel() { Name = "DELETE", Foreground = "Blue" });
         Methods.Add(new MethodsItemViewModel() { Name = "OPTIONS", Foreground = "Blue" });
+
+        SelectedMethod = getMethod;
     }
 
     public void AddNewParameter(bool isEnabled = false, string key = "", string value = "", string deleteButtonVisibility = "Collapsed")
@@ -251,20 +255,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         using MultipartFormDataContent form = new MultipartFormDataContent();
         HttpResponseMessage response;
 
-        var request = new HttpRequestMessage(new HttpMethod("GET"), URL.RawURL);
-
-        foreach (HeaderItem item in Headers)
-        {
-            if (item.IsEnabled)
-                client.DefaultRequestHeaders.Add(item.Key, item.Value);
-        }
-
-        foreach (BodyItem item in Body)
-        {
-            if (item.IsEnabled)
-                form.Add(new StringContent(item.Value), item.Key);
-        }
-
+        var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
+        AddRequestHeaders(client);
+        AddRequestBody(form);
         request.Content = form;
 
         Stopwatch.Reset();
@@ -272,36 +265,43 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         response = await client.SendAsync(request);
         Stopwatch.Stop();
 
-        if ((int)response.StatusCode >= 200 && (int)response.StatusCode <= 299)
-            Response.StatusStyleKey = "MyStatusCodeSuccessfulStyle";
-        else if ((int)response.StatusCode >= 300 && (int)response.StatusCode <= 399)
-            Response.StatusStyleKey = "MyStatusCodeWarningStyle";
-        else if ((int)response.StatusCode >= 400)
-            Response.StatusStyleKey = "MyStatusCodeErrorStyle";
+        GetResponseStatusCode(response);
+        await GetResponseMetadata(response);
+        await GetResponseBody(response);
+        GetResponseHeaders(response);
 
-        string responseBody = await response.Content.ReadAsStringAsync();
 
-        if (!string.IsNullOrEmpty(responseBody))
+
+        Response.BannerVisibility = "Collapsed";
+        Response.Visibility = "Visible";
+
+        return Response.Body;
+    }
+
+    public static string BeautifyXml(string xml)
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml(xml);
+
+        StringBuilder sb = new StringBuilder();
+        XmlWriterSettings settings = new XmlWriterSettings
         {
-            JsonDocument document = JsonDocument.Parse(responseBody);
-            var stream = new MemoryStream();
-            var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
-            document.WriteTo(writer);
-            writer.Flush();
+            Indent = true,
+            IndentChars = "  ",
+            NewLineChars = "\r\n",
+            NewLineHandling = NewLineHandling.Replace
+        };
 
-            Response.Body = Encoding.UTF8.GetString(stream.ToArray());
+        using (XmlWriter writer = XmlWriter.Create(sb, settings))
+        {
+            doc.Save(writer);
         }
-        else
-            Response.Body = "";
 
-        Response.StatusCode = ((int)response.StatusCode).ToString() + " " + response.StatusCode;
+        return sb.ToString();
+    }
 
-        var responseHeadersSize = await GetResponseHeadersSizeInKB(response);
-        var responseBodySize = response.Content.Headers.ContentLength;
-        Response.Size = Math.Round((decimal)((responseHeadersSize + responseBodySize) / 1024.0), 2) + " KB";
-        Response.Time = Stopwatch.ElapsedMilliseconds + " ms";
-        Response.Headers = new ObservableCollection<ResponseHeaderItem>();
-
+    private void GetResponseHeaders(HttpResponseMessage response)
+    {
         foreach (var item in response.Content.Headers)
         {
             if ((item.Key == "Content-Type") || (item.Key == "Content-Length" && item.Value != null) || (item.Key == "Expires" && item.Value != null))
@@ -323,11 +323,74 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                 Response.HeadersCount = " ";
             else
                 Response.HeadersCount = "(" + (Response.Headers.Count) + ")";
+    }
 
-        Response.BannerVisibility = "Collapsed";
-        Response.Visibility = "Visible";
+    private async Task GetResponseMetadata(HttpResponseMessage response)
+    {
+        var responseHeadersSize = await GetResponseHeadersSizeInKB(response);
+        var responseBodySize = response.Content.Headers.ContentLength;
+        Response.Size = Math.Round((decimal)((responseHeadersSize + responseBodySize) / 1024.0), 2) + " KB";
+        Response.Time = Stopwatch.ElapsedMilliseconds + " ms";
+        Response.Headers = new ObservableCollection<ResponseHeaderItem>();
+    }
 
-        return Response.Body;
+    private async Task GetResponseBody(HttpResponseMessage response)
+    {
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        if (!string.IsNullOrEmpty(responseBody))
+        {
+            switch (response.Content.Headers.ContentType.MediaType)
+            {
+                case "application/xml":
+                    XmlDocument xmlDocument = new XmlDocument();
+                    xmlDocument.LoadXml(responseBody);
+                    Response.Body = BeautifyXml(xmlDocument.OuterXml);
+                    break;
+                case "application/json":
+                    JsonDocument jsonDocument = JsonDocument.Parse(responseBody);
+                    var stream = new MemoryStream();
+                    var writer = new Utf8JsonWriter(stream, new JsonWriterOptions() { Indented = true });
+                    jsonDocument.WriteTo(writer);
+                    writer.Flush();
+
+                    Response.Body = Encoding.UTF8.GetString(stream.ToArray());
+                    break;
+                default:
+                    Response.Body = "";
+                    break;
+            }
+        }
+    }
+
+    private void GetResponseStatusCode(HttpResponseMessage response)
+    {
+        if ((int)response.StatusCode >= 200 && (int)response.StatusCode <= 299)
+            Response.StatusStyleKey = "MyStatusCodeSuccessfulStyle";
+        else if ((int)response.StatusCode >= 300 && (int)response.StatusCode <= 399)
+            Response.StatusStyleKey = "MyStatusCodeWarningStyle";
+        else if ((int)response.StatusCode >= 400)
+            Response.StatusStyleKey = "MyStatusCodeErrorStyle";
+
+        Response.StatusCode = ((int)response.StatusCode).ToString() + " " + response.StatusCode;
+    }
+
+    private void AddRequestBody(MultipartFormDataContent form)
+    {
+        foreach (BodyItem item in Body)
+        {
+            if (item.IsEnabled)
+                form.Add(new StringContent(item.Value), item.Key);
+        }
+    }
+
+    private void AddRequestHeaders(HttpClient client)
+    {
+        foreach (HeaderItem item in Headers)
+        {
+            if (item.IsEnabled)
+                client.DefaultRequestHeaders.Add(item.Key, item.Value);
+        }
     }
 
     public async Task<long> GetResponseHeadersSizeInKB(HttpResponseMessage response)

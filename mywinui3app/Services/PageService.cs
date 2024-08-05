@@ -14,9 +14,10 @@ public class PageService : IPageService
 
     public PageService()
     {
-        Configure<CollectionsViewModel, CollectionsPage>();
-        Configure<SettingsViewModel, SettingsPage>();
+        Configure<CollectionsViewModel, CollectionsPage>();        
         Configure<EnvironmentsViewModel, EnvironmentsPage>();
+        Configure<SettingsViewModel, SettingsPage>();
+        Configure<AboutViewModel, AboutPage>();
     }
 
     public Type GetPageType(string key)

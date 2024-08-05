@@ -1,12 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-
 using mywinui3app.Contracts.Services;
 using mywinui3app.Helpers;
 using mywinui3app.ViewModels;
-
 using Windows.System;
 
 namespace mywinui3app.Views;

@@ -264,7 +264,7 @@
 
             </Grid>
             <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,20">
-                <ComboBox x:Name="comboMethods" Grid.Column="0" Width="100" SelectedIndex="0" ItemsSource="{x:Bind ViewModel.Methods}" SelectedValuePath="Name" SelectionChanged="comboMethods_SelectionChanged">
+                <ComboBox x:Name="comboMethods" Grid.Column="0" Width="100" ItemsSource="{x:Bind ViewModel.Methods}" SelectedValuePath="Name" SelectedItem="{x:Bind ViewModel.SelectedMethod, Mode=TwoWay}" SelectionChanged="comboMethods_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:MethodsItemViewModel">
                             <TextBlock Text="{x:Bind Name}" />
