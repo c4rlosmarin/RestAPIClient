@@ -420,6 +420,16 @@
                                         </Button>
                                         
                                     </Grid>
+
+                                    <Grid Grid.Column="1" ColumnDefinitions="5,Auto,5" Visibility="{x:Bind HideDatePickerButtonVisibility, Mode=TwoWay}">
+                                        <Button Grid.Column="1" HorizontalAlignment="Right" Command="{x:Bind HideDatePickerItemCommand}" CommandParameter="{x:Bind}">
+                                            <FontIcon Glyph="&#xe711;" FontSize="12"/>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip>Cancel</ToolTip>
+                                            </ToolTipService.ToolTip>
+                                        </Button>
+
+                                    </Grid>
                                 </Grid>
 
                             </DataTemplate>

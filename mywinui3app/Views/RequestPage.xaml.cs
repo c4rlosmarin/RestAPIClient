@@ -495,6 +495,8 @@ public sealed partial class RequestPage : Page
             ViewModel.SetMsDate(item, (DateTimeOffset)picker.Date);
             item.DatePickerVisibility = "Collapsed";
             item.DateTextboxVisibility = "Visible";
+            item.DatePickerButtonVisibility = "Visible";
+            item.HideDatePickerButtonVisibility = "Collapsed";
         }
     }
 

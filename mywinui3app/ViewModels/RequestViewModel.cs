@@ -149,7 +149,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void AddNewHeader()
     {
-        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed" };
+        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", HideDatePickerButtonVisibility="Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed" };
         Header.PropertyChanged += Header_PropertyChanged;
         Headers.Add(Header);
         SetHeaderCount();
@@ -181,16 +181,16 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             }
             else if (item.Key == "x-ms-version")
             {
-                item.DatePickerButtonVisibility = "Visible";
                 item.UTCVisibility = "Collapsed";
                 item.DateTextboxVisibility = "Visible";
+                item.DatePickerButtonVisibility = "Visible";
                 item.DatePickerVisibility = "Collapsed";
             }
             else
             {
-                item.DatePickerButtonVisibility = "Collapsed";
                 item.UTCVisibility = "Collapsed";
                 item.DateTextboxVisibility = "Visible";
+                item.DatePickerButtonVisibility = "Collapsed";
                 item.DatePickerVisibility = "Collapsed";
             }
         }
@@ -321,8 +321,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         await GetResponseBody(response);
         GetResponseHeaders(response);
 
-
-
         Response.BannerVisibility = "Collapsed";
         Response.Visibility = "Visible";
 
@@ -412,6 +410,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                     break;
             }
         }
+        else
+            Response.Body = "";
     }
 
     private void GetResponseStatusCode(HttpResponseMessage response)
@@ -618,9 +618,12 @@ public partial class HeaderItem : ObservableRecipient
     [ObservableProperty]
     public string datePickerButtonVisibility;
     [ObservableProperty]
+    public string hideDatePickerButtonVisibility;
+    [ObservableProperty]
     public string dateTextboxVisibility;
     [ObservableProperty]
     public string datePickerVisibility;
+
 
     [RelayCommand]
     public void GetDateTimeInUTC(HeaderItem item)
@@ -641,6 +644,18 @@ public partial class HeaderItem : ObservableRecipient
     {
         item.DateTextboxVisibility = "Collapsed";
         item.DatePickerVisibility= "Visible";
+        item.DatePickerButtonVisibility = "Collapsed";
+        item.HideDatePickerButtonVisibility = "Visible";
+    }
+
+    [RelayCommand]
+    public void HideDatePickerItem(HeaderItem item)
+    {
+        item.DateTextboxVisibility = "Visible";
+        item.DatePickerVisibility = "Collapsed";
+        item.DatePickerButtonVisibility = "Visible";
+        item.HideDatePickerButtonVisibility = "Collapsed";
+        //item.Value = "";
     }
 }
 
