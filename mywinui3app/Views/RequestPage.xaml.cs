@@ -1,10 +1,10 @@
+using System.Diagnostics;
 using CommunityToolkit.WinUI.UI.Automation.Peers;
 using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using mywinui3app.ViewModels;
@@ -25,6 +25,7 @@ public sealed partial class RequestPage : Page
     private double datagridHeight = 275;
     DataGrid currentRequestDataGrid;
     DataPackage dataPackage = new DataPackage();
+
 
     #endregion
 
@@ -195,7 +196,7 @@ public sealed partial class RequestPage : Page
     private void dtgridResponseHeaders_LoadingRow(object sender, DataGridRowEventArgs e)
     {
         e.Row.KeyDown -= dtgridResponse_KeyDown;
-        e.Row.KeyDown += dtgridResponse_KeyDown;
+        e.Row.KeyDown += dtgridResponse_KeyDown;       
     }
 
     private void dtgridRequest_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -477,8 +478,6 @@ public sealed partial class RequestPage : Page
         }
     }
 
-    #endregion
-
     private void TabViewItem_Loaded(object sender, RoutedEventArgs e)
     {
         if (sender is TabViewItem tabViewItem)
@@ -486,32 +485,19 @@ public sealed partial class RequestPage : Page
             ToolTipService.SetToolTip(tabViewItem, null);
         }
     }
-}
 
-public class StyleConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, string language)
+    private void DatePicker_SelectedDateChanged(DatePicker sender, DatePickerSelectedValueChangedEventArgs args)
     {
-        var styleKey = value as string;
-        if (styleKey != null)
+        var picker = sender as DatePicker;
+        if (!string.IsNullOrEmpty(picker.Date.ToString()))
         {
-            return Application.Current.Resources[styleKey] as Style;
+            var item = dtgridHeaders.SelectedItem as HeaderItem;
+            ViewModel.SetMsDate(item, (DateTimeOffset)picker.Date);
+            item.DatePickerVisibility = "Collapsed";
+            item.DateTextboxVisibility = "Visible";
         }
-        return null;
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, string language)
-    {
-        var style = value as Style;
-        if (style != null)
-        {
-            if (style == Application.Current.Resources["MyStatusCodeSuccessfulStyle"])
-                return "MyStatusCodeSuccessfulStyle";
-            else if (style == Application.Current.Resources["MyStatusCodeWarningStyle"])
-                return "MyStatusCodeWarningStyle";
-            else if (style == Application.Current.Resources["MyStatusCodeErrorStyle"])
-                return "MyStatusCodeErrorStyle";
-        }
-        return null;
-    }
+    #endregion
+
 }

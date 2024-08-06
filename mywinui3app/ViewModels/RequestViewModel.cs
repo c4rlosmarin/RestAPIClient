@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Windows.Input;
 using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,7 +11,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace mywinui3app.ViewModels;
 
-public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderItem>, IRecipient<BodyItem>
+public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderCommandMessage>, IRecipient<BodyItem>
 {
     [ObservableProperty]
     public string requestId;
@@ -41,6 +42,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     private Stopwatch Stopwatch = new();
 
+    StrongReferenceMessenger _messenger = new StrongReferenceMessenger();
+
     public RequestViewModel()
     {
         Name = "Untitled request";
@@ -54,15 +57,19 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         StrongReferenceMessenger.Default.Register<URL>(this);
         StrongReferenceMessenger.Default.Register<string>(this);
         StrongReferenceMessenger.Default.Register<ParameterItem>(this);
-        StrongReferenceMessenger.Default.Register<HeaderItem>(this);
+        StrongReferenceMessenger.Default.Register<HeaderCommandMessage>(this);
         StrongReferenceMessenger.Default.Register<BodyItem>(this);
 
         this.AddNewParameter();
         this.AddNewHeader();
         this.AddNewBodyItem();
         this.AddMethods();
-    }
 
+        _messenger.Register<HeaderItem>(this, (recipient, message) =>
+        {
+            // Handle the message
+        });
+    }
 
     public void AddMethods()
     {
@@ -142,7 +149,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void AddNewHeader()
     {
-        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed" };
         Header.PropertyChanged += Header_PropertyChanged;
         Headers.Add(Header);
         SetHeaderCount();
@@ -161,6 +168,32 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             SetHeaderCount();
         if (index == Headers.Count - 1 && item.IsEnabled)
             AddNewHeader();
+
+
+        if (e.PropertyName == "Key")
+        {
+            if (item.Key == "Date" || item.Key == "x-ms-date")
+            {
+                item.UTCVisibility = "Visible";
+                item.DateTextboxVisibility = "Visible";
+                item.DatePickerButtonVisibility = "Collapsed";
+                item.DatePickerVisibility = "Collapsed";
+            }
+            else if (item.Key == "x-ms-version")
+            {
+                item.DatePickerButtonVisibility = "Visible";
+                item.UTCVisibility = "Collapsed";
+                item.DateTextboxVisibility = "Visible";
+                item.DatePickerVisibility = "Collapsed";
+            }
+            else
+            {
+                item.DatePickerButtonVisibility = "Collapsed";
+                item.UTCVisibility = "Collapsed";
+                item.DateTextboxVisibility = "Visible";
+                item.DatePickerVisibility = "Collapsed";
+            }
+        }
 
         item.DeleteButtonVisibility = "Visible";
 
@@ -235,7 +268,25 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void Receive(HeaderItem item)
     {
-        DeleteHeaderItem(item);
+    }
+
+    public void Receive(HeaderCommandMessage message)
+    {
+        switch (message.CommandName)
+        {
+            case "GetDateTimeInUTC":
+                message.Item.Value = DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'");
+                break;
+
+            case "DeleteHeaderItem":
+                DeleteHeaderItem(message.Item);
+                break;
+        }
+    }
+
+    public void SetMsDate(HeaderItem item, DateTimeOffset date)
+    {
+        item.Value = date.ToString("yyyy-MM-dd");
     }
 
     public void Receive(BodyItem item)
@@ -498,6 +549,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             URL.RawURL = rawURL + rawParameters;
         }
     }
+
 }
 
 public partial class URL : ObservableRecipient
@@ -561,11 +613,34 @@ public partial class HeaderItem : ObservableRecipient
     public string description;
     [ObservableProperty]
     public string deleteButtonVisibility;
+    [ObservableProperty]
+    public string uTCVisibility;
+    [ObservableProperty]
+    public string datePickerButtonVisibility;
+    [ObservableProperty]
+    public string dateTextboxVisibility;
+    [ObservableProperty]
+    public string datePickerVisibility;
+
+    [RelayCommand]
+    public void GetDateTimeInUTC(HeaderItem item)
+    {
+        var message = new HeaderCommandMessage("GetDateTimeInUTC", item);
+        StrongReferenceMessenger.Default.Send(message);
+    }
 
     [RelayCommand]
     public void DeleteHeaderItem(HeaderItem item)
     {
-        StrongReferenceMessenger.Default.Send(item);
+        var message = new HeaderCommandMessage("DeleteHeaderItem", item);
+        StrongReferenceMessenger.Default.Send(message);
+    }
+
+    [RelayCommand]
+    public void ShowDatePickerItem(HeaderItem item)
+    {
+        item.DateTextboxVisibility = "Collapsed";
+        item.DatePickerVisibility= "Visible";
     }
 }
 
@@ -586,5 +661,23 @@ public partial class BodyItem : ObservableRecipient
     public void DeleteBodyItem(BodyItem item)
     {
         StrongReferenceMessenger.Default.Send(item);
+    }
+}
+
+public class HeaderCommandMessage
+{
+    public string CommandName
+    {
+        get;
+    }
+    public HeaderItem Item
+    {
+        get;
+    }
+
+    public HeaderCommandMessage(string commandName, HeaderItem item)
+    {
+        CommandName = commandName;
+        Item = item;
     }
 }

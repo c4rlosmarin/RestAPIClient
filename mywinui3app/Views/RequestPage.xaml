@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="mywinui3app.Views.RequestPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:mywinui3app.Views"
+    xmlns:helpers="using:mywinui3app.Helpers"
     xmlns:viewmodels="using:mywinui3app.ViewModels"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:controls2="using:CommunityToolkit.WinUI.Controls"
@@ -14,7 +14,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <local:StyleConverter x:Key="StyleConverter"/>
+        <helpers:StyleConverter x:Key="StyleConverter"/>
     </Page.Resources>
 
     <Grid RowDefinitions="Auto,Auto,*" Padding="15">
@@ -164,7 +164,7 @@
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="DELETE" Grid.Column="0" Foreground="#ED1C24" />
+                            <TextBlock Text="DELETE" Grid.Column="0" Foreground="#ED133A" />
                             <TextBlock Text="{Binding}" Grid.Column="2" />
                         </Grid>
                         <ToolTipService.ToolTip>
@@ -181,7 +181,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
-                            <TextBlock Text="DELETE" Grid.Column="1" Foreground="#ED1C24"/>
+                            <TextBlock Text="DELETE" Grid.Column="1" Foreground="#ED133A"/>
                             <TextBlock Text="{Binding}" Grid.Column="3" />
                         </Grid>
                         <ToolTipService.ToolTip>
@@ -256,11 +256,11 @@
 
                 <TextBox Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="32"/>
 
-                <AppBarButton Name="btnSave" Grid.Column="1" Padding="0" Margin="0,-15,-10,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="btnSave_Click">
+                <!--<AppBarButton Name="btnSave" Grid.Column="1" Padding="0" Margin="0,-15,-10,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="btnSave_Click">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="S"/>
                     </AppBarButton.KeyboardAccelerators>
-                </AppBarButton>
+                </AppBarButton>-->
 
             </Grid>
             <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Margin="0,20">
@@ -398,7 +398,30 @@
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBox Grid.Column="0" Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{x:Bind DateTextboxVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                    <DatePicker Name="datepickValue" Grid.Column="0" Visibility="{x:Bind DatePickerVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+
+                                    <Grid Grid.Column="1" ColumnDefinitions="5,Auto,5" Visibility="{x:Bind UTCVisibility, Mode=TwoWay}">
+                                        <Button Grid.Column="1" x:Name="btnGetDatetimeInUTC" HorizontalAlignment="Right" Command="{x:Bind GetDateTimeInUTCCommand}" CommandParameter="{x:Bind}">
+                                            <FontIcon Glyph="&#xec92;" FontSize="12"/>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip>Insert current datetime</ToolTip>
+                                            </ToolTipService.ToolTip>
+                                        </Button>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" ColumnDefinitions="5,Auto,5" Visibility="{x:Bind DatePickerButtonVisibility, Mode=TwoWay}">
+                                        <Button Grid.Column="1" HorizontalAlignment="Right" Command="{x:Bind ShowDatePickerItemCommand}" CommandParameter="{x:Bind}">
+                                            <FontIcon Glyph="&#xe787;" FontSize="12"/>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip>Select REST API version</ToolTip>
+                                            </ToolTipService.ToolTip>
+                                        </Button>
+                                        
+                                    </Grid>
+                                </Grid>
+
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
