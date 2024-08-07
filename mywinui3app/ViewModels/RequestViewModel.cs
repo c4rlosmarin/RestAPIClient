@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
-using System.Windows.Input;
 using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -39,40 +39,68 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public string bodyItemsCount;
     [ObservableProperty]
     public ResponseViewModel response;
-
     private Stopwatch Stopwatch = new();
-
-    StrongReferenceMessenger _messenger = new StrongReferenceMessenger();
 
     public RequestViewModel()
     {
-        Name = "Untitled request";
-        URL = new URL() { RawURL = "" };
-        Parameters = new ObservableCollection<ParameterItem>();
-        Headers = new ObservableCollection<HeaderItem>();
-        Body = new ObservableCollection<BodyItem>();
-        Methods = new ObservableCollection<MethodsItemViewModel>();
-        Response = new ResponseViewModel();
+        InitializeRequest();
 
+        this.AddMethods();
         StrongReferenceMessenger.Default.Register<URL>(this);
         StrongReferenceMessenger.Default.Register<string>(this);
         StrongReferenceMessenger.Default.Register<ParameterItem>(this);
         StrongReferenceMessenger.Default.Register<HeaderCommandMessage>(this);
         StrongReferenceMessenger.Default.Register<BodyItem>(this);
+    }
+
+    private void InitializeRequest()
+    {
+        Name = "Untitled request";
+
+        URL = new URL() { RawURL = "" };
+        Parameters = new ObservableCollection<ParameterItem>();
+        Headers = new ObservableCollection<HeaderItem>();
+        Body = new ObservableCollection<BodyItem>();
+        Response = new ResponseViewModel();
 
         this.AddNewParameter();
         this.AddNewHeader();
         this.AddNewBodyItem();
-        this.AddMethods();
+    }
 
-        _messenger.Register<HeaderItem>(this, (recipient, message) =>
+    public void InitializeRequest(RequestItem request)
+    {
+        RequestId = request.RequestId;
+        Name = request.Name;
+        URL = request.URL;
+        Parameters = request.Parameters;
+        Headers = request.Headers;
+        Body = request.Body;
+
+        foreach (MethodsItemViewModel item in Methods)
         {
-            // Handle the message
-        });
+            if (item.Name == request.Method)
+                SelectedMethod = item;
+        }
+
+        foreach (ParameterItem item in Parameters)
+            item.PropertyChanged += Parameter_PropertyChanged;
+
+        foreach (HeaderItem item in Headers)
+            item.PropertyChanged += Header_PropertyChanged;
+
+        foreach (BodyItem item in Body)
+            item.PropertyChanged += BodyItem_PropertyChanged;
+
+        isParametersEditing = true;
+        RefreshURL();
+        isParametersEditing = false;
+
     }
 
     public void AddMethods()
     {
+        Methods = new ObservableCollection<MethodsItemViewModel>();
         var getMethod = new MethodsItemViewModel() { Name = "GET", Foreground = "Green" };
         Methods.Add(getMethod);
         Methods.Add(new MethodsItemViewModel() { Name = "POST", Foreground = "Blue" });
@@ -149,7 +177,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void AddNewHeader()
     {
-        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", HideDatePickerButtonVisibility="Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed" };
+        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", HideDatePickerButtonVisibility = "Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed" };
         Header.PropertyChanged += Header_PropertyChanged;
         Headers.Add(Header);
         SetHeaderCount();
@@ -614,15 +642,15 @@ public partial class HeaderItem : ObservableRecipient
     [ObservableProperty]
     public string deleteButtonVisibility;
     [ObservableProperty]
-    public string uTCVisibility;
+    public string uTCVisibility = "Collapsed";
     [ObservableProperty]
-    public string datePickerButtonVisibility;
+    public string datePickerButtonVisibility = "Collapsed";
     [ObservableProperty]
-    public string hideDatePickerButtonVisibility;
+    public string hideDatePickerButtonVisibility = "Collapsed";
     [ObservableProperty]
-    public string dateTextboxVisibility;
+    public string dateTextboxVisibility = "Visible";
     [ObservableProperty]
-    public string datePickerVisibility;
+    public string datePickerVisibility = "Collapsed";
 
 
     [RelayCommand]
@@ -643,7 +671,7 @@ public partial class HeaderItem : ObservableRecipient
     public void ShowDatePickerItem(HeaderItem item)
     {
         item.DateTextboxVisibility = "Collapsed";
-        item.DatePickerVisibility= "Visible";
+        item.DatePickerVisibility = "Visible";
         item.DatePickerButtonVisibility = "Collapsed";
         item.HideDatePickerButtonVisibility = "Visible";
     }

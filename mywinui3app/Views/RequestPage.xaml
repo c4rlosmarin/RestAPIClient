@@ -26,6 +26,8 @@
             </ResourceDictionary>
         </Grid.Resources>
 
+        <!--TODO: Implementar binding para el color del método y para su visibilidad-->
+        
         <Grid x:Name="mainGrid" Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                 <Grid.Resources>
@@ -254,7 +256,9 @@
                     </DataTemplate>
                 </Grid.Resources>
 
-                <TextBox Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="32"/>
+                <!--<TextBox Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="32"/>-->
+
+                <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <!--<AppBarButton Name="btnSave" Grid.Column="1" Padding="0" Margin="0,-15,-10,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="btnSave_Click">
                     <AppBarButton.KeyboardAccelerators>

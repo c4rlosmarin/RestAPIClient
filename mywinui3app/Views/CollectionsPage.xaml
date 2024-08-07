@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:mywinui3app.Views"
+    xmlns:viewmodels="using:mywinui3app.ViewModels"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
@@ -55,27 +56,27 @@
                     </Grid>
                 </DataTemplate>
 
-                <DataTemplate x:Key="CollectionTemplate" x:DataType="local:Collection">
-                    <TreeViewItem AutomationProperties.Name="{x:Bind Title}" ItemsSource="{x:Bind Requests}">
+                <DataTemplate x:Key="CollectionTemplate" x:DataType="viewmodels:CollectionItem">
+                    <TreeViewItem AutomationProperties.Name="{x:Bind Name}" ItemsSource="{x:Bind Requests}">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xE8A5;" />
                             <TextBlock Margin="0,0,10,0"/>
-                            <TextBlock Text="{x:Bind Title}" TextTrimming="CharacterEllipsis" Width="245"/>
+                            <TextBlock Text="{x:Bind Name}" TextTrimming="CharacterEllipsis" Width="245"/>
                         </StackPanel>
                         <ToolTipService.ToolTip>
-                            <TextBlock Text="{x:Bind Title}"/>
+                            <TextBlock Text="{x:Bind Name}"/>
                         </ToolTipService.ToolTip>
                     </TreeViewItem>
                 </DataTemplate>
 
-                <DataTemplate x:Key="RequestTemplate" x:DataType="local:Request">
-                    <TreeViewItem AutomationProperties.Name="{x:Bind Title}">
+                <DataTemplate x:Key="RequestTemplate" x:DataType="viewmodels:RequestItem">
+                    <TreeViewItem AutomationProperties.Name="{x:Bind Name}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Margin="0,0,10,0"/>
-                            <TextBlock Text="{x:Bind Title}" TextTrimming="CharacterEllipsis"  Width="248"/>
+                            <TextBlock Text="{x:Bind Name}" TextTrimming="CharacterEllipsis"  Width="248"/>
                         </StackPanel>
                         <ToolTipService.ToolTip>
-                            <TextBlock Text="{x:Bind Title}"/>
+                            <TextBlock Text="{x:Bind Name}"/>
                         </ToolTipService.ToolTip>
                     </TreeViewItem>
                 </DataTemplate>
@@ -88,7 +89,7 @@
             <TabView Grid.Column="1" Name="tabView" Margin="0" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
             </NavigationView>-->
 
-            <TreeView Grid.Column="0" Grid.Row="1" ItemsSource="{x:Bind Collections}" ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}" Width="324"/>
+            <TreeView x:Name="treeCollections" Grid.Column="0" Grid.Row="1" ItemsSource="{x:Bind ViewModel.Collections, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}" Width="324" SelectionChanged="treeCollections_SelectionChanged"/>
 
             <TabView Grid.Column="1" Grid.Row ="1" Name="tabView" Margin="0,-11" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
         </Grid>

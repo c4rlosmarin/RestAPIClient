@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using mywinui3app.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
@@ -19,7 +20,7 @@ public sealed partial class RequestPage : Page
 
     public RequestViewModel? ViewModel
     {
-        get;
+        get; set;
     }
 
     private double datagridHeight = 275;
@@ -36,6 +37,12 @@ public sealed partial class RequestPage : Page
         ViewModel = App.GetService<RequestViewModel>();
         this.InitializeComponent();
         currentRequestDataGrid = dtgridParameters;
+    }
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+        if (e.Parameter is RequestItem request)
+            ViewModel.InitializeRequest(request);
     }
 
     #endregion
@@ -196,7 +203,7 @@ public sealed partial class RequestPage : Page
     private void dtgridResponseHeaders_LoadingRow(object sender, DataGridRowEventArgs e)
     {
         e.Row.KeyDown -= dtgridResponse_KeyDown;
-        e.Row.KeyDown += dtgridResponse_KeyDown;       
+        e.Row.KeyDown += dtgridResponse_KeyDown;
     }
 
     private void dtgridRequest_KeyDown(object sender, KeyRoutedEventArgs e)

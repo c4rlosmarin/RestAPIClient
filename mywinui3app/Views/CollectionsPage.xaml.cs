@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using mywinui3app.ViewModels;
 
@@ -7,117 +6,101 @@ namespace mywinui3app.Views;
 
 public sealed partial class CollectionsPage : Page
 {
-    #region << Variables >>
 
-    ObservableCollection<Collection> Collections = new ObservableCollection<Collection>();
-
-    #endregion
+    #region << Properties >>
 
     public CollectionsViewModel ViewModel
     {
         get;
     }
 
+    #endregion
+
+    #region << Constructor >>
+
     public CollectionsPage()
     {
         ViewModel = App.GetService<CollectionsViewModel>();
         InitializeComponent();
-        this.InitializeCollections();
     }
+
+    #endregion
 
     #region << Methods >>
 
-    private void InitializeCollections()
-    {
-        var collection = new Collection();
-        collection.Title = "Azure Entra ID";
-
-        var request = new Request() { Title = "Get Azure AD Token" };
-        collection.Requests.Add(request);
-
-        request = new Request() { Title = "Get Azure AD Token for Blob Storage REST API Copy" };
-        collection.Requests.Add(request);
-
-        request = new Request() { Title = "Get Azure AD Token for ADLSGen2 Storage REST API" };
-        collection.Requests.Add(request);
-
-        request = new Request() { Title = "Get Azure AD Token for Azure Service Bus" };
-        collection.Requests.Add(request);
-
-        Collections.Add(collection);
-
-        collection = new Collection() { Title = "Azure Storage | Blob Service" };
-        Collections.Add(collection);
-
-        collection = new Collection() { Title = "Azure Storage | Data Lake Storage Gen2 as das dasdasdasdas" };
-        Collections.Add(collection);
-
-        collection = new Collection() { Title = "Azure Storage | File Service" };
-        Collections.Add(collection);
-
-        collection = new Collection() { Title = "Azure Storage | Queue Service" };
-        Collections.Add(collection);
-    }
-
-    private TabViewItem CreateNewTab()
+    private void CreateRequestTab(RequestItem? request)
     {
         //TODO: Implementar el estilo y texto del tabViewItem de forma dinámica
 
         TabViewItem newItem = new TabViewItem();
-        newItem.HeaderTemplate = newTabViewItemHeaderTemplate;        
-        newItem.Header = "Untitled request";
-
-        //newItem.IconSource = new FontIconSource() { FontFamily = new FontFamily("Segoe Fluent Icons"), Glyph = "\ue915" };
-        //SolidColorBrush myBrush = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 57, 170, 246));
-        //newItem.IconSource.Foreground = myBrush;
-
-
         Frame frame = new Frame();
-        frame.Navigate(typeof(RequestPage));
+
+        if (request == null)
+        {
+            newItem.Header = "Untitled request";
+            frame.Navigate(typeof(RequestPage));
+            newItem.HeaderTemplate = newTabViewItemHeaderTemplate;
+        }
+        else
+        {
+            foreach (TabViewItem item in tabView.TabItems)
+            {
+                if (item.Header == request.Name)
+                {
+                    item.IsSelected = true;
+                    return;
+                }
+            }
+
+            newItem.Header = request.Name;
+            frame.Navigate(typeof(RequestPage), request);
+        }
+
         newItem.Content = frame;
         newItem.IsSelected = true;
-        return newItem;
+        
+        tabView.TabItems.Add(newItem);
     }
 
     #endregion
 
     #region << Events >>
 
-    private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
-    {
-        var naViewItemInvoked = (NavigationViewItem)args.InvokedItemContainer;
+    //private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+    //{
+    //    var naViewItemInvoked = (NavigationViewItem)args.InvokedItemContainer;
 
-        if (args.InvokedItemContainer is not null)
-        {
-            var navItemTag = args.InvokedItemContainer.Tag?.ToString();
-            if (!string.IsNullOrEmpty(navItemTag))
-            {
-                NavView_Navigate(navItemTag, new Microsoft.UI.Xaml.Media.Animation.EntranceNavigationTransitionInfo());
-            }
-        }
-    }
+    //    if (args.InvokedItemContainer is not null)
+    //    {
+    //        var navItemTag = args.InvokedItemContainer.Tag?.ToString();
+    //        if (!string.IsNullOrEmpty(navItemTag))
+    //        {
+    //            NavView_Navigate(navItemTag, new Microsoft.UI.Xaml.Media.Animation.EntranceNavigationTransitionInfo());
+    //        }
+    //    }
+    //}
 
-    private void NavView_Navigate(string navItemTag, Microsoft.UI.Xaml.Media.Animation.NavigationTransitionInfo transitionInfo)
-    {
-        //Type page;
+    //private void NavView_Navigate(string navItemTag, Microsoft.UI.Xaml.Media.Animation.NavigationTransitionInfo transitionInfo)
+    //{
+    //    Type page;
 
-        //MenuOption item = menuOptions.First(p => p.ClassName.Equals(navItemTag));
-        //page = Type.GetType(item.ClassName);
+    //    MenuOption item = menuOptions.First(p => p.ClassName.Equals(navItemTag));
+    //    page = Type.GetType(item.ClassName);
 
-        //// Get the page type before navigation so you can prevent duplicate
-        //// entries in the backstack.
-        //var preNavPageType = ContentFrame.CurrentSourcePageType;
+    //    // Get the page type before navigation so you can prevent duplicate
+    //    // entries in the backstack.
+    //    var preNavPageType = ContentFrame.CurrentSourcePageType;
 
-        //// Only navigate if the selected page isn't currently loaded.
-        //if ((page is not null) && !Type.Equals(preNavPageType, page))
-        //{
-        //    ContentFrame.Navigate(page, null, transitionInfo);
-        //}
-    }
+    //    // Only navigate if the selected page isn't currently loaded.
+    //    if ((page is not null) && !Type.Equals(preNavPageType, page))
+    //    {
+    //        ContentFrame.Navigate(page, null, transitionInfo);
+    //    }
+    //}
 
     private void tabView_AddTabButtonClick(TabView sender, object args)
     {
-        sender.TabItems.Add(CreateNewTab());
+        CreateRequestTab(null);
     }
 
     private void tabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
@@ -127,40 +110,19 @@ public sealed partial class CollectionsPage : Page
 
     #endregion
 
+    private void treeCollections_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
+    {
+        var selectedNode = (sender as TreeView).SelectedNode.Content;
+        if (selectedNode is RequestItem)
+        {
+            var request = (RequestItem)selectedNode;
+            CreateRequestTab(request);
+
+        }
+    }
 }
 
 #region << Internal Classes >>
-
-internal class Collection
-{
-    public string Title
-    {
-        get; set;
-    }
-    public string Description
-    {
-        get; set;
-    }
-    public DateTime? CreationTime
-    {
-        get; set;
-    }
-    public DateTime? LastModifiedTime
-    {
-        get; set;
-    }
-    public ObservableCollection<Request> Requests = new ObservableCollection<Request>();
-    public readonly bool IsCollection = true;
-}
-
-internal class Request
-{
-    public string Title
-    {
-        get; set;
-    }
-    public readonly bool IsCollection = false;
-}
 
 internal class MenuItemDataTemplateSelector : DataTemplateSelector
 {
@@ -177,8 +139,8 @@ internal class MenuItemDataTemplateSelector : DataTemplateSelector
     {
         return item switch
         {
-            Collection => CollectionTemplate,
-            Request => RequestTemplate,
+            CollectionItem => CollectionTemplate,
+            RequestItem => RequestTemplate,
             _ => null,
         };
     }
@@ -199,11 +161,11 @@ internal class ExplorerItemTemplateSelector : DataTemplateSelector
     {
         return item switch
         {
-            Collection => CollectionTemplate,
-            Request => RequestTemplate,
+            CollectionItem => CollectionTemplate,
+            RequestItem => RequestTemplate,
             _ => null,
         };
     }
 }
 
-    #endregion
+#endregion
