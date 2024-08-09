@@ -256,8 +256,6 @@
                     </DataTemplate>
                 </Grid.Resources>
 
-                <!--<TextBox Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="32"/>-->
-
                 <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <!--<AppBarButton Name="btnSave" Grid.Column="1" Padding="0" Margin="0,-15,-10,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="btnSave_Click">
@@ -525,7 +523,7 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <RichEditBox x:Name="txtRawBody" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" IsSpellCheckEnabled="False" KeyDown="txtBody_KeyDown" SizeChanged="dtgridRequest_SizeChanged" TextChanged="txtRawBody_TextChanged"/>
+            <RichEditBox x:Name="txtRawBody" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" IsSpellCheckEnabled="False" SizeChanged="dtgridRequest_SizeChanged" TextChanged="txtRawBody_TextChanged"/>
 
             <Grid x:Name="txtEmpty" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" SizeChanged="dtgridRequest_SizeChanged"/>
         </Grid>

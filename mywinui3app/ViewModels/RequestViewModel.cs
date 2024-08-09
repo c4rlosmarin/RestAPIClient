@@ -19,6 +19,10 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public string name;
     [ObservableProperty]
+    public string editingRequestIconVisibility;
+    [ObservableProperty]
+    public string editingRequestForegroundColor;
+    [ObservableProperty]
     public MethodsItemViewModel selectedMethod;
     [ObservableProperty]
     public ObservableCollection<MethodsItemViewModel> methods;

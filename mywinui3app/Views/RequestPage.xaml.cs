@@ -672,22 +672,6 @@ public sealed partial class RequestPage : Page
         range.ParagraphFormat.SpaceBefore = 0;
     }
 
-    private void txtBody_KeyDown(object sender, KeyRoutedEventArgs e)
-    {
-        //switch (((ComboBoxItem)comboBodyType.SelectedValue).Content)
-        //{
-        //    case "    Json":
-        //        ApplyJsonFormatting(txtBody.Document);
-        //        break;
-        //    case "    Xml":
-        //        ApplyXmlFormatting(txtBody.Document);
-        //        break;
-        //    case "    Text":
-        //        RemoveAllFormatting(txtBody.Document);
-        //        break;
-        //}
-    }
-
     private void txtRawBody_TextChanged(object sender, RoutedEventArgs e)
     {
         string rawBody;
