@@ -42,6 +42,25 @@ public partial class CollectionsViewModel : ObservableRecipient
             Body = new ObservableCollection<BodyItem>()
         };
 
+        request = new RequestItem()
+        {
+            Name = "Set Blob Service Properties",
+            URL = new URL() { RawURL = "https://account-name.blob.core.windows.net/" },
+            Method = "PUT",
+            Parameters = new ObservableCollection<ParameterItem>() {
+                new() { IsEnabled = true, Key = "restype", Value="service", Description="restype=service&comp=properties | Required. The combination of both query strings is required to set the storage service properties.", DeleteButtonVisibility="Collapsed" },
+                new() { IsEnabled = false, Key = "comp", Value="properties", Description = "restype=service&comp=properties | Required. The combination of both query strings is required to set the storage service properties." , DeleteButtonVisibility = "Collapsed"},
+                new() { IsEnabled = false, Key = "timeout", Description="Optional. The timeout parameter is expressed in seconds" , DeleteButtonVisibility = "Collapsed"}},
+            Headers = new ObservableCollection<HeaderItem>()
+            {
+                new() { IsEnabled = true, Key = "Authorization", Description = "Required. Specifies the authorization scheme, account name, and signature", DeleteButtonVisibility="Collapsed"},
+                new() { IsEnabled = true, Key = "x-ms-date", Description = "Required. Specifies the Coordinated Universal Time (UTC) for the request", UTCVisibility="Visible", DeleteButtonVisibility="Collapsed"},
+                new() { IsEnabled = true, Key = "x-ms-version", Description = "Required for all authorized requests. Specifies the version of the operation to use for this request.", DatePickerButtonVisibility="Visible",DeleteButtonVisibility="Collapsed"},
+                new() { IsEnabled = false, Key = "x-ms-client-request-id", Description = "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that's recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives.",DeleteButtonVisibility="Collapsed"},
+            },
+            Body = new ObservableCollection<BodyItem>()
+        };
+
         collection.Requests.Add(request);
         Collections.Add(collection);
 

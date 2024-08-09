@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.Http.Json;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
@@ -34,7 +35,13 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public string headersCount;
     [ObservableProperty]
+    public string selectedBodyType;
+    [ObservableProperty]
+    public ObservableCollection<string> bodyTypes;
+    [ObservableProperty]
     public ObservableCollection<BodyItem> body;
+    [ObservableProperty]
+    public string rawBody;
     [ObservableProperty]
     public string bodyItemsCount;
     [ObservableProperty]
@@ -46,11 +53,18 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         InitializeRequest();
 
         this.AddMethods();
+        this.AddBodyTypes();
         StrongReferenceMessenger.Default.Register<URL>(this);
         StrongReferenceMessenger.Default.Register<string>(this);
         StrongReferenceMessenger.Default.Register<ParameterItem>(this);
         StrongReferenceMessenger.Default.Register<HeaderCommandMessage>(this);
         StrongReferenceMessenger.Default.Register<BodyItem>(this);
+    }
+
+    public void AddBodyTypes()
+    {
+        BodyTypes = new ObservableCollection<string>() { "None", "Form", "Json", "Xml", "Text" };
+        selectedBodyType = "None";
     }
 
     private void InitializeRequest()
@@ -331,14 +345,12 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public async Task<string> SendRequestAsync()
     {
         using HttpClient client = new HttpClient();
-        using MultipartFormDataContent form = new MultipartFormDataContent();
         HttpResponseMessage response;
 
         var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
         AddRequestHeaders(client);
-        AddRequestBody(form);
-        request.Content = form;
-
+        AddRequestBody(request);
+        
         Stopwatch.Reset();
         Stopwatch.Start();
         response = await client.SendAsync(request);
@@ -454,12 +466,29 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         Response.StatusCode = ((int)response.StatusCode).ToString() + " " + response.StatusCode;
     }
 
-    private void AddRequestBody(MultipartFormDataContent form)
+    private void AddRequestBody(HttpRequestMessage request)
     {
-        foreach (BodyItem item in Body)
+        switch (selectedBodyType)
         {
-            if (item.IsEnabled)
-                form.Add(new StringContent(item.Value), item.Key);
+            case "Form":
+                var form = new MultipartFormDataContent();
+                foreach (BodyItem item in Body)
+                {
+                    if (item.IsEnabled)
+                        form.Add(new StringContent(item.Value), item.Key);
+                }
+                request.Content = form;
+                break;
+
+            case "Json":
+                request.Content = new StringContent(RawBody, Encoding.UTF8, "application/json");
+                break;
+            case "Xml":
+                request.Content = new StringContent(RawBody, Encoding.UTF8, "application/xml");
+                break;
+            case "Text":
+                request.Content = new StringContent(RawBody, Encoding.UTF8, "text/plain");
+                break;
         }
     }
 

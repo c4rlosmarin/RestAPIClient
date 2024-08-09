@@ -42,20 +42,6 @@
                 </DataTemplate>
                 <local:MenuItemDataTemplateSelector x:Key="ItemTemplateSelector" RequestTemplate="{StaticResource RequestMenuItemTemplate}" CollectionTemplate="{StaticResource CollectionMenuItemTemplate}" />-->
 
-                <DataTemplate x:Name="newTabViewItemHeaderTemplate">
-                    <Grid Width="Auto">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
-                        <TextBlock Text="GET" Grid.Column="1" Foreground="Green"/>
-                        <TextBlock Text="{Binding}" Grid.Column="3" />
-                    </Grid>
-                </DataTemplate>
-
                 <DataTemplate x:Key="CollectionTemplate" x:DataType="viewmodels:CollectionItem">
                     <TreeViewItem AutomationProperties.Name="{x:Bind Name}" ItemsSource="{x:Bind Requests}">
                         <StackPanel Orientation="Horizontal">

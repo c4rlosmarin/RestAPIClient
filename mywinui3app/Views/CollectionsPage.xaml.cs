@@ -39,7 +39,6 @@ public sealed partial class CollectionsPage : Page
         {
             newItem.Header = "Untitled request";
             frame.Navigate(typeof(RequestPage));
-            newItem.HeaderTemplate = newTabViewItemHeaderTemplate;
         }
         else
         {

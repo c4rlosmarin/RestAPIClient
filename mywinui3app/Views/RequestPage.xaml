@@ -27,8 +27,8 @@
         </Grid.Resources>
 
         <!--TODO: Implementar binding para el color del método y para su visibilidad-->
-        
-        <Grid x:Name="mainGrid" Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+
+        <Grid x:Name="mainGrid" Grid.Row="0" RowDefinitions="Auto,Auto,50,Auto,Auto">
             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                 <Grid.Resources>
                     <DataTemplate x:Name="GETTabViewItemHeaderTemplate">
@@ -166,7 +166,7 @@
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="DELETE" Grid.Column="0" Foreground="#ED133A" />
+                            <TextBlock Text="DELETE" Grid.Column="0" Foreground="#ED2B2B" />
                             <TextBlock Text="{Binding}" Grid.Column="2" />
                         </Grid>
                         <ToolTipService.ToolTip>
@@ -183,7 +183,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <FontIcon Tag="newRequestIcon" Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" />
-                            <TextBlock Text="DELETE" Grid.Column="1" Foreground="#ED133A"/>
+                            <TextBlock Text="DELETE" Grid.Column="1" Foreground="#ED2B2B"/>
                             <TextBlock Text="{Binding}" Grid.Column="3" />
                         </Grid>
                         <ToolTipService.ToolTip>
@@ -278,8 +278,7 @@
                 <TextBox x:Name="txtUrl" Grid.Column="1" Margin="10,0" PlaceholderText="Enter URL" Text="{x:Bind ViewModel.URL.RawURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="txtUrl_GotFocus" LostFocus="txtUrl_LostFocus"/>
                 <Button x:Name="btnSend" Grid.Column="2" Margin="0,0,-5,0" Content="Send" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.SendRequestCommand}" FontSize="13"/>
             </Grid>
-            <Grid Grid.Row="2">
-
+            <Grid Grid.Row="2" ColumnDefinitions ="Auto,10, Auto">
                 <Grid.Resources>
                     <DataTemplate x:Name="RequestParametersTabViewItemHeaderTemplate">
                         <Grid Width="Auto">
@@ -318,11 +317,21 @@
                     </DataTemplate>
                 </Grid.Resources>
 
-                <TabView x:Name="tabRequest" SelectionChanged="tabRequest_SelectionChanged" IsAddTabButtonVisible="False" Width="310" HorizontalAlignment="Left">
+                <TabView x:Name="tabRequest" Grid.Column="0" SelectionChanged="tabRequest_SelectionChanged" IsAddTabButtonVisible="False" Width="310" HorizontalAlignment="Left">
                     <TabViewItem Header="{x:Bind ViewModel.ParametersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestParametersTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
                     <TabViewItem Header="{x:Bind ViewModel.HeadersCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestHeadersTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
                     <TabViewItem Header="{x:Bind ViewModel.BodyItemsCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestBodyItemTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
                 </TabView>
+
+                <ComboBox x:Name="comboBodyType" ItemsSource="{x:Bind ViewModel.BodyTypes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="{Binding}" SelectedItem="{x:Bind ViewModel.SelectedBodyType, Mode=TwoWay}" Grid.Column="2" Width="100" Margin="0,8" Visibility="Collapsed" SelectionChanged="comboBodyType_SelectionChanged">
+                    <!--<ComboBoxItem Content="None" IsSelected="True"/>
+                    <ComboBoxItem Content="Form" />
+                    <ComboBoxItem Content="Raw" IsEnabled="False"/>
+                    <ComboBoxItem Content="    Json"/>
+                    <ComboBoxItem Content="    Xml"/>
+                    <ComboBoxItem Content="    Text"/>-->
+                    <!--<ComboBoxItem Content="    Binary" />-->
+                </ComboBox>
             </Grid>
             <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" GotFocus="dtgridParameters_GotFocus" LostFocus="dtgridParameters_LostFocus" Height="275" MinHeight="28" MaxHeight="605" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
                 <controls:DataGrid.Resources>
@@ -422,7 +431,7 @@
                                                 <ToolTip>Select REST API version</ToolTip>
                                             </ToolTipService.ToolTip>
                                         </Button>
-                                        
+
                                     </Grid>
 
                                     <Grid Grid.Column="1" ColumnDefinitions="5,Auto,5" Visibility="{x:Bind HideDatePickerButtonVisibility, Mode=TwoWay}">
@@ -515,6 +524,10 @@
                     </controls:DataGridTemplateColumn>
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
+
+            <RichEditBox x:Name="txtRawBody" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" IsSpellCheckEnabled="False" KeyDown="txtBody_KeyDown" SizeChanged="dtgridRequest_SizeChanged" TextChanged="txtRawBody_TextChanged"/>
+
+            <Grid x:Name="txtEmpty" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" SizeChanged="dtgridRequest_SizeChanged"/>
         </Grid>
 
         <controls2:ContentSizer x:Name="dtgridContentSizer" Grid.Row="1" TargetControl="{x:Bind dtgridParameters}" Orientation="Horizontal"/>
