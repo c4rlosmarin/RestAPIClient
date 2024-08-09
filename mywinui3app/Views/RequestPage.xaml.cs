@@ -1,7 +1,5 @@
-using System.Diagnostics;
 using CommunityToolkit.WinUI.UI.Automation.Peers;
 using CommunityToolkit.WinUI.UI.Controls;
-using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Automation.Provider;
@@ -13,6 +11,7 @@ using mywinui3app.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Text;
+using mywinui3app.Helpers;
 
 namespace mywinui3app.Views;
 public sealed partial class RequestPage : Page
@@ -68,56 +67,12 @@ public sealed partial class RequestPage : Page
 
         if (myTabView != null)
         {
-            var myTabViewItem = myTabView.SelectedItem as TabViewItem;
+            var item  = myTabView.SelectedItem as TabItem;
 
-            if (myTabViewItem != null)
+            if (item != null)
             {
-                switch (comboMethods.SelectedValue)
-                {
-                    case "GET":
-                        if (IsEditing)
-                            myTabViewItem.HeaderTemplate = EditingGETTabViewItemHeaderTemplate;
-                        else
-                            myTabViewItem.HeaderTemplate = GETTabViewItemHeaderTemplate;
-                        break;
-                    case "POST":
-                        if (IsEditing)
-                            myTabViewItem.HeaderTemplate = EditingPOSTTabViewItemHeaderTemplate;
-                        else
-                            myTabViewItem.HeaderTemplate = POSTTabViewItemHeaderTemplate;
-                        break;
-                    case "PUT":
-                        if (IsEditing)
-                            myTabViewItem.HeaderTemplate = EditingPUTTabViewItemHeaderTemplate;
-                        else
-                            myTabViewItem.HeaderTemplate = PUTTabViewItemHeaderTemplate;
-                        break;
-                    case "PATCH":
-                        if (IsEditing)
-                            myTabViewItem.HeaderTemplate = EditingPATCHTabViewItemHeaderTemplate;
-                        else
-                            myTabViewItem.HeaderTemplate = PATCHTabViewItemHeaderTemplate;
-                        break;
-                    case "DELETE":
-                        if (IsEditing)
-                            myTabViewItem.HeaderTemplate = EditingDELETETabViewItemHeaderTemplate;
-                        else
-                            myTabViewItem.HeaderTemplate = DELETETabViewItemHeaderTemplate;
-                        break;
-                    case "HEAD":
-                        if (IsEditing)
-                            myTabViewItem.HeaderTemplate = EditingHEADTabViewItemHeaderTemplate;
-                        else
-                            myTabViewItem.HeaderTemplate = HEADTabViewItemHeaderTemplate;
-                        break;
-                    default:
-                        if (IsEditing)
-                            myTabViewItem.HeaderTemplate = EditingOPTIONSTabViewItemHeaderTemplate;
-                        else
-                            myTabViewItem.HeaderTemplate = OPTIONSTabViewItemHeaderTemplate;
-                        break;
-
-                }
+                item.Foreground = ColorHelper.CreateSolidColorBrushFromHex(MethodForegroundColor.GetColorByMethod(ViewModel.SelectedMethod.Name));
+                item.Method = ViewModel.SelectedMethod.Name;
             }
         }
     }
@@ -161,7 +116,7 @@ public sealed partial class RequestPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        if (e.Parameter is RequestItem request)
+        if (e.Parameter is RequestViewModel request)
             ViewModel.InitializeRequest(request);
 
         currentRequestDataGrid = dtgridParameters;
@@ -520,12 +475,19 @@ public sealed partial class RequestPage : Page
         }
     }
 
-    #endregion
-
     private void comboBodyType_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         RefreshBodyTabContent();
     }
+
+    private void txtRawBody_TextChanged(object sender, RoutedEventArgs e)
+    {
+        string rawBody;
+        txtRawBody.TextDocument.GetText(Microsoft.UI.Text.TextGetOptions.None, out rawBody);
+        ViewModel.RawBody = rawBody;
+    }
+
+    #endregion
 
     private void RefreshBodyTabContent()
     {
@@ -671,11 +633,5 @@ public sealed partial class RequestPage : Page
         range.ParagraphFormat.SpaceAfter = 0;
         range.ParagraphFormat.SpaceBefore = 0;
     }
-
-    private void txtRawBody_TextChanged(object sender, RoutedEventArgs e)
-    {
-        string rawBody;
-        txtRawBody.TextDocument.GetText(Microsoft.UI.Text.TextGetOptions.None, out rawBody);
-        ViewModel.RawBody = rawBody;
-    }
+    
 }

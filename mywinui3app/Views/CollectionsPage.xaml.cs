@@ -1,6 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.WinUI.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using mywinui3app.ViewModels;
+using mywinui3app.Helpers;
 
 namespace mywinui3app.Views;
 
@@ -14,6 +17,11 @@ public sealed partial class CollectionsPage : Page
         get;
     }
 
+    public TabsViewModel TabsViewModel
+    {
+        get;
+    }
+
     #endregion
 
     #region << Constructor >>
@@ -21,6 +29,7 @@ public sealed partial class CollectionsPage : Page
     public CollectionsPage()
     {
         ViewModel = App.GetService<CollectionsViewModel>();
+        TabsViewModel = App.GetService<TabsViewModel>();
         InitializeComponent();
     }
 
@@ -28,37 +37,42 @@ public sealed partial class CollectionsPage : Page
 
     #region << Methods >>
 
-    private void CreateRequestTab(RequestItem? request)
+    private void CreateRequestTab(RequestViewModel? request)
     {
         //TODO: Implementar el estilo y texto del tabViewItem de forma dinámica
-
-        TabViewItem newItem = new TabViewItem();
         Frame frame = new Frame();
 
         if (request == null)
         {
-            newItem.Header = "Untitled request";
+            TabsViewModel.Tabs.Add(new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(MethodForegroundColor.GET) });
             frame.Navigate(typeof(RequestPage));
         }
         else
         {
-            foreach (TabViewItem item in tabView.TabItems)
+            foreach (TabItem item in tabView.TabItems)
             {
-                if (item.Header == request.Name)
+                if (item.Title == request.Name)
                 {
-                    item.IsSelected = true;
+                    TabViewItem existingItem = tabView.ContainerFromItem(item) as TabViewItem;
+                    existingItem.IsSelected = true;
                     return;
                 }
             }
 
-            newItem.Header = request.Name;
+            TabsViewModel.Tabs.Add(new TabItem() { Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(MethodForegroundColor.GetColorByMethod(request.SelectedMethod.Name)) });
             frame.Navigate(typeof(RequestPage), request);
         }
 
+        tabView.SelectedIndex = TabsViewModel.Tabs.Count - 1;
+        tabView.UpdateLayout();
+
+        TabViewItem newItem = tabView.ContainerFromItem(tabView.SelectedItem) as TabViewItem;
         newItem.Content = frame;
         newItem.IsSelected = true;
-        
-        tabView.TabItems.Add(newItem);
+
+        var originalSelectedItem = tabView.SelectedItem;
+        tabView.SelectedItem = null;
+        tabView.SelectedItem = originalSelectedItem;
     }
 
     #endregion
@@ -104,21 +118,28 @@ public sealed partial class CollectionsPage : Page
 
     private void tabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
     {
-        sender.TabItems.Remove(args.Tab);
+        TabsViewModel.Tabs.Remove(TabsViewModel.SelectedTabItem);
     }
-
-    #endregion
 
     private void treeCollections_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
     {
         var selectedNode = (sender as TreeView).SelectedNode.Content;
-        if (selectedNode is RequestItem)
+        if (selectedNode is RequestViewModel)
         {
-            var request = (RequestItem)selectedNode;
+            var request = (RequestViewModel)selectedNode;
             CreateRequestTab(request);
 
         }
     }
+
+    private void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var tabView = sender as TabView;
+
+    }
+
+    #endregion
+
 }
 
 #region << Internal Classes >>
@@ -139,7 +160,7 @@ internal class MenuItemDataTemplateSelector : DataTemplateSelector
         return item switch
         {
             CollectionItem => CollectionTemplate,
-            RequestItem => RequestTemplate,
+            RequestViewModel => RequestTemplate,
             _ => null,
         };
     }
@@ -161,7 +182,7 @@ internal class ExplorerItemTemplateSelector : DataTemplateSelector
         return item switch
         {
             CollectionItem => CollectionTemplate,
-            RequestItem => RequestTemplate,
+            RequestViewModel => RequestTemplate,
             _ => null,
         };
     }

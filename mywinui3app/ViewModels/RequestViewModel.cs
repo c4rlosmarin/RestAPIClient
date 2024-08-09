@@ -1,14 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Net.Http.Json;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.UI.Xaml.Media;
 
 namespace mywinui3app.ViewModels;
 
@@ -19,9 +18,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public string name;
     [ObservableProperty]
-    public string editingRequestIconVisibility;
+    public string tabIconVisibility;
     [ObservableProperty]
-    public string editingRequestForegroundColor;
+    public string tabMethodForegroundColor;
     [ObservableProperty]
     public MethodsItemViewModel selectedMethod;
     [ObservableProperty]
@@ -50,6 +49,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public string bodyItemsCount;
     [ObservableProperty]
     public ResponseViewModel response;
+
     private Stopwatch Stopwatch = new();
 
     public RequestViewModel()
@@ -74,7 +74,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     private void InitializeRequest()
     {
         Name = "Untitled request";
-
+        TabIconVisibility = "Visible";
+        TabMethodForegroundColor = MethodForegroundColor.GET;
         URL = new URL() { RawURL = "" };
         Parameters = new ObservableCollection<ParameterItem>();
         Headers = new ObservableCollection<HeaderItem>();
@@ -86,10 +87,12 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         this.AddNewBodyItem();
     }
 
-    public void InitializeRequest(RequestItem request)
+    public void InitializeRequest(RequestViewModel request)
     {
         RequestId = request.RequestId;
         Name = request.Name;
+        TabIconVisibility= request.TabIconVisibility;
+        TabMethodForegroundColor= request.TabMethodForegroundColor;
         URL = request.URL;
         Parameters = request.Parameters;
         Headers = request.Headers;
@@ -97,7 +100,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
         foreach (MethodsItemViewModel item in Methods)
         {
-            if (item.Name == request.Method)
+            if (item.Name == request.SelectedMethod.Name)
                 SelectedMethod = item;
         }
 
@@ -525,7 +528,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         {
             Parameters.Clear();
             int questionMarkIndex = URL.RawURL.IndexOf('?');
-            var rawURL = "";
             if (questionMarkIndex == -1)
                 Parameters.Clear();
             else
@@ -737,6 +739,32 @@ public partial class BodyItem : ObservableRecipient
     public void DeleteBodyItem(BodyItem item)
     {
         StrongReferenceMessenger.Default.Send(item);
+    }
+}
+
+public partial class TabItem : ObservableRecipient
+{
+    [ObservableProperty]
+    public string title;
+    [ObservableProperty]
+    public string editingIconVisibility;
+    [ObservableProperty]
+    public SolidColorBrush foreground;
+    [ObservableProperty]
+    public string method;
+
+}
+
+public partial class TabsViewModel : ObservableRecipient
+{
+    [ObservableProperty]
+    public ObservableCollection<TabItem> tabs;
+    [ObservableProperty]
+    public TabItem selectedTabItem;
+
+    public TabsViewModel()
+    {
+        tabs = new ObservableCollection<TabItem>();
     }
 }
 

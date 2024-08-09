@@ -18,13 +18,15 @@ public partial class CollectionsViewModel : ObservableRecipient
     {
         var collection = new CollectionItem();
         collection.Name = "Blob Service REST API";
-        collection.Requests = new ObservableCollection<RequestItem>();
+        collection.Requests = new ObservableCollection<RequestViewModel>();
 
-        var request = new RequestItem()
+        var request = new RequestViewModel()
         {
             Name = "List Containers",
             URL = new URL() { RawURL = "https://myaccount.blob.core.windows.net/" },
-            Method = "GET",
+            SelectedMethod = new MethodsItemViewModel() { Name = "GET" },
+            TabIconVisibility = "Collapsed",
+            TabMethodForegroundColor = MethodForegroundColor.GET,
             Parameters = new ObservableCollection<ParameterItem>() {
                 new() { IsEnabled = true, Key = "comp", Value="list", DeleteButtonVisibility="Collapsed"},
                 new() { IsEnabled = false, Key = "prefix", Description = "Optional. Filters the results to return only containers with a name that begins with the specified prefix." , DeleteButtonVisibility = "Collapsed"},
@@ -42,11 +44,13 @@ public partial class CollectionsViewModel : ObservableRecipient
             Body = new ObservableCollection<BodyItem>()
         };
 
-        request = new RequestItem()
+        request = new RequestViewModel()
         {
             Name = "Set Blob Service Properties",
             URL = new URL() { RawURL = "https://account-name.blob.core.windows.net/" },
-            Method = "PUT",
+            SelectedMethod = new MethodsItemViewModel() { Name = "GET" },
+            TabIconVisibility = "Collapsed",
+            TabMethodForegroundColor = MethodForegroundColor.PUT,
             Parameters = new ObservableCollection<ParameterItem>() {
                 new() { IsEnabled = true, Key = "restype", Value="service", Description="restype=service&comp=properties | Required. The combination of both query strings is required to set the storage service properties.", DeleteButtonVisibility="Collapsed" },
                 new() { IsEnabled = false, Key = "comp", Value="properties", Description = "restype=service&comp=properties | Required. The combination of both query strings is required to set the storage service properties." , DeleteButtonVisibility = "Collapsed"},
@@ -89,16 +93,34 @@ public partial class CollectionItem : ObservableRecipient
     [ObservableProperty]
     public DateTime? lastModifiedTime;
     [ObservableProperty]
-    public ObservableCollection<RequestItem> requests;
+    public ObservableCollection<RequestViewModel> requests;
 }
 
-public partial class RequestItem
+public static class MethodForegroundColor
 {
-    public string RequestId;
-    public string Name;
-    public string Method;
-    public URL URL;
-    public ObservableCollection<ParameterItem> Parameters;
-    public ObservableCollection<HeaderItem> Headers;
-    public ObservableCollection<BodyItem> Body;
+    public static string GET = "#22B14C";
+    public static string POST = "#218BEB";
+    public static string PUT = "FF8C00";
+    public static string PATCH = "#A347D1";
+    public static string DELETE = "#ED2B2B";
+    public static string OPTIONS = "#FF6593";
+
+    public static string GetColorByMethod(string method)
+    {
+        switch (method)
+        {
+            case "GET":
+                return GET;
+            case "POST":
+                return POST;
+            case "PUT":
+                return PUT;
+            case "PATCH":
+                return PATCH;
+            case "DELETE":
+                return DELETE;
+            default:
+                return OPTIONS;
+        }
+    }
 }

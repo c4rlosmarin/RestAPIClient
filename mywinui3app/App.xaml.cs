@@ -82,7 +82,7 @@ public partial class App : Application
             services.AddTransient<ShellViewModel>();
             services.AddTransient<RequestPage>();
             services.AddTransient<RequestViewModel>();
-            services.AddTransient<RequestItem>();
+            services.AddTransient<TabsViewModel>();
             services.AddTransient<ResponseViewModel>();
             services.AddTransient<MethodsItemViewModel>();
             
