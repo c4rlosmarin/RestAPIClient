@@ -70,23 +70,22 @@
                 <local:ExplorerItemTemplateSelector x:Key="ExplorerItemTemplateSelector" RequestTemplate="{StaticResource RequestTemplate}" CollectionTemplate="{StaticResource CollectionTemplate}" />
 
                 <DataTemplate x:Name="TabViewItemHeaderTemplate" x:DataType="viewmodels:TabItem">
-                    <Grid Width="Auto">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="5" />
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto">
                             <FontIcon Grid.Column="0" Tag="newRequestIcon" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" Visibility="{x:Bind EditingIconVisibility, Mode=TwoWay}"/>
                             <TextBlock Grid.Column="1" Text="{x:Bind Method, Mode=TwoWay}" Foreground="{x:Bind Foreground, Mode=TwoWay}" />
                         </Grid>
-                        <TextBlock Text="{x:Bind Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2">
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind Title, Mode=TwoWay}"/>
-                        </ToolTipService.ToolTip>
-                        </TextBlock>
-                    </Grid>
+                        <TextBlock Text="{x:Bind Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2"/>
 
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind Title, Mode=TwoWay}"/>
+                        </ToolTipService.ToolTip>
+                    </Grid>
                 </DataTemplate>
 
             </Grid.Resources>

@@ -38,7 +38,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public string headersCount;
     [ObservableProperty]
-    public string selectedBodyType;
+    public string selectedBodyType = "None";
     [ObservableProperty]
     public ObservableCollection<string> bodyTypes;
     [ObservableProperty]
@@ -68,7 +68,6 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public void AddBodyTypes()
     {
         BodyTypes = new ObservableCollection<string>() { "None", "Form", "Json", "Xml", "Text" };
-        selectedBodyType = "None";
     }
 
     private void InitializeRequest()
@@ -78,7 +77,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         TabMethodForegroundColor = MethodForegroundColor.GET;
         URL = new URL() { RawURL = "" };
         Parameters = new ObservableCollection<ParameterItem>();
-        Headers = new ObservableCollection<HeaderItem>();
+        Headers = new ObservableCollection<HeaderItem>();        
         Body = new ObservableCollection<BodyItem>();
         Response = new ResponseViewModel();
 
@@ -97,6 +96,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         Parameters = request.Parameters;
         Headers = request.Headers;
         Body = request.Body;
+        SelectedBodyType = request.SelectedBodyType;
+        RawBody = request.RawBody;
 
         foreach (MethodsItemViewModel item in Methods)
         {

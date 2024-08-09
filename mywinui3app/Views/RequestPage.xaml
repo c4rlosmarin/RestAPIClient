@@ -8,6 +8,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:controls2="using:CommunityToolkit.WinUI.Controls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:mywinui3app.Behaviors"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -28,28 +29,6 @@
 
         <Grid x:Name="mainGrid" Grid.Row="0" RowDefinitions="Auto,Auto,50,Auto,Auto">
             <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                <Grid.Resources>
-
-                    <DataTemplate x:Name="TabViewItemHeaderTemplate" x:DataType="viewmodels:RequestViewModel">
-                        <Grid Width="Auto">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="5" />
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto">
-                                <FontIcon Grid.Column="0" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" Visibility="{x:Bind TabIconVisibility, Mode=TwoWay}"/>
-                                <TextBlock Grid.Column="1" Text="GET" Foreground="{x:Bind TabMethodForegroundColor, Mode=TwoWay}" />
-                            </Grid>
-                            <TextBlock Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" />
-                        </Grid>
-                        <!--<ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind Name, Mode=TwoWay}"/>
-                        </ToolTipService.ToolTip>-->
-                    </DataTemplate>
-
-                </Grid.Resources>
-
                 <TextBlock Grid.Column="0" Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <!--<AppBarButton Name="btnSave" Grid.Column="1" Padding="0" Margin="0,-15,-10,0" Icon="Save" Label="Save" HorizontalAlignment="Right" Click="btnSave_Click">
@@ -115,15 +94,8 @@
                     <TabViewItem Header="{x:Bind ViewModel.BodyItemsCount, Mode=TwoWay}" IsClosable="False" MinWidth="100" MaxWidth="100" HeaderTemplate="{StaticResource RequestBodyItemTabViewItemHeaderTemplate}" Loaded="TabViewItem_Loaded"/>
                 </TabView>
 
-                <ComboBox x:Name="comboBodyType" ItemsSource="{x:Bind ViewModel.BodyTypes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="{Binding}" SelectedItem="{x:Bind ViewModel.SelectedBodyType, Mode=TwoWay}" Grid.Column="2" Width="100" Margin="0,8" Visibility="Collapsed" SelectionChanged="comboBodyType_SelectionChanged">
-                    <!--<ComboBoxItem Content="None" IsSelected="True"/>
-                    <ComboBoxItem Content="Form" />
-                    <ComboBoxItem Content="Raw" IsEnabled="False"/>
-                    <ComboBoxItem Content="    Json"/>
-                    <ComboBoxItem Content="    Xml"/>
-                    <ComboBoxItem Content="    Text"/>-->
-                    <!--<ComboBoxItem Content="    Binary" />-->
-                </ComboBox>
+                <ComboBox x:Name="comboBodyType" ItemsSource="{x:Bind ViewModel.BodyTypes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{x:Bind ViewModel.SelectedBodyType, Mode=TwoWay}" Grid.Column="2" Width="100" Margin="0,8" Visibility="Collapsed" SelectionChanged="comboBodyType_SelectionChanged"/>
+                
             </Grid>
             <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" GotFocus="dtgridParameters_GotFocus" LostFocus="dtgridParameters_LostFocus" Height="275" MinHeight="28" MaxHeight="605" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
                 <controls:DataGrid.Resources>
@@ -317,7 +289,11 @@
                 </controls:DataGrid.Columns>
             </controls:DataGrid>
 
-            <RichEditBox x:Name="txtRawBody" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" IsSpellCheckEnabled="False" SizeChanged="dtgridRequest_SizeChanged" TextChanged="txtRawBody_TextChanged"/>
+            <RichEditBox x:Name="txtRawBody" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" IsSpellCheckEnabled="False" SizeChanged="dtgridRequest_SizeChanged" TextChanged="txtRawBody_TextChanged">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:RichEditBoxBehavior Text="{x:Bind ViewModel.RawBody, Mode=TwoWay}"/>
+                </interactivity:Interaction.Behaviors>
+            </RichEditBox>
 
             <Grid x:Name="txtEmpty" Grid.Row="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="275" MinWidth="28" MaxHeight="605" Margin="0,15" Visibility="Collapsed" SizeChanged="dtgridRequest_SizeChanged"/>
         </Grid>

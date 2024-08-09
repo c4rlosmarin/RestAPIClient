@@ -44,6 +44,8 @@ public partial class CollectionsViewModel : ObservableRecipient
             Body = new ObservableCollection<BodyItem>()
         };
 
+        collection.Requests.Add(request);
+
         request = new RequestViewModel()
         {
             Name = "Set Blob Service Properties",
@@ -62,7 +64,9 @@ public partial class CollectionsViewModel : ObservableRecipient
                 new() { IsEnabled = true, Key = "x-ms-version", Description = "Required for all authorized requests. Specifies the version of the operation to use for this request.", DatePickerButtonVisibility="Visible",DeleteButtonVisibility="Collapsed"},
                 new() { IsEnabled = false, Key = "x-ms-client-request-id", Description = "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that's recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives.",DeleteButtonVisibility="Collapsed"},
             },
-            Body = new ObservableCollection<BodyItem>()
+            Body = new ObservableCollection<BodyItem>(),
+            SelectedBodyType = "Xml",
+            RawBody = "<?xml version=\"1.0\" encoding=\"utf-8\"?>  \r\n<StorageServiceProperties>  \r\n    <Logging>  \r\n        <Version>version-number</Version>  \r\n        <Delete>true|false</Delete>  \r\n        <Read>true|false</Read>  \r\n        <Write>true|false</Write>  \r\n        <RetentionPolicy>  \r\n            <Enabled>true|false</Enabled>  \r\n            <Days>number-of-days</Days>  \r\n        </RetentionPolicy>  \r\n    </Logging>  \r\n    <HourMetrics>  \r\n        <Version>version-number</Version>  \r\n        <Enabled>true|false</Enabled>  \r\n        <IncludeAPIs>true|false</IncludeAPIs>  \r\n        <RetentionPolicy>  \r\n            <Enabled>true|false</Enabled>  \r\n            <Days>number-of-days</Days>  \r\n        </RetentionPolicy>  \r\n    </HourMetrics>  \r\n    <MinuteMetrics>  \r\n        <Version>version-number</Version>  \r\n        <Enabled>true|false</Enabled>  \r\n        <IncludeAPIs>true|false</IncludeAPIs>  \r\n        <RetentionPolicy>  \r\n            <Enabled>true|false</Enabled>  \r\n            <Days>number-of-days</Days>  \r\n        </RetentionPolicy>  \r\n    </MinuteMetrics>  \r\n    <Cors>  \r\n        <CorsRule>  \r\n            <AllowedOrigins>comma-separated-list-of-allowed-origins</AllowedOrigins>  \r\n            <AllowedMethods>comma-separated-list-of-HTTP-verbs</AllowedMethods>  \r\n            <MaxAgeInSeconds>max-caching-age-in-seconds</MaxAgeInSeconds>  \r\n            <ExposedHeaders>comma-separated-list-of-response-headers</ExposedHeaders>  \r\n            <AllowedHeaders>comma-separated-list-of-request-headers</AllowedHeaders>  \r\n        </CorsRule>  \r\n    </Cors>    \r\n    <DefaultServiceVersion>default-service-version-string</DefaultServiceVersion>\r\n    <DeleteRetentionPolicy>\r\n        <Enabled>true|false</Enabled>\r\n        <Days>number-of-days</Days>\r\n    </DeleteRetentionPolicy>\r\n    <StaticWebsite>\r\n        <Enabled>true|false</Enabled>\r\n        <IndexDocument>default-name-of-index-page-under-each-directory</IndexDocument>\r\n        <DefaultIndexDocumentPath>absolute-path-of-the-default-index-page</DefaultIndexDocumentPath>\r\n        <ErrorDocument404Path>absolute-path-of-the-custom-404-page</ErrorDocument404Path>\r\n    </StaticWebsite>\r\n</StorageServiceProperties>"
         };
 
         collection.Requests.Add(request);
