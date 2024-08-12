@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="using:mywinui3app.Views"
     xmlns:viewmodels="using:mywinui3app.ViewModels"
-    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
@@ -55,14 +54,14 @@
                     </TreeViewItem>
                 </DataTemplate>
 
-                <DataTemplate x:Key="RequestTemplate" x:DataType="viewmodels:RequestViewModel">
+                <DataTemplate x:Key="RequestTemplate" x:DataType="viewmodels:RequestItem">
                     <TreeViewItem AutomationProperties.Name="{x:Bind Name}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Margin="0,0,10,0"/>
-                            <TextBlock Text="{x:Bind Name}" TextTrimming="CharacterEllipsis"  Width="248"/>
+                            <TextBlock Text="{x:Bind Name, Mode=TwoWay}" TextTrimming="CharacterEllipsis"  Width="248"/>
                         </StackPanel>
                         <ToolTipService.ToolTip>
-                            <TextBlock Text="{x:Bind Name}"/>
+                            <TextBlock Text="{x:Bind Name, Mode=TwoWay}"/>
                         </ToolTipService.ToolTip>
                     </TreeViewItem>
                 </DataTemplate>

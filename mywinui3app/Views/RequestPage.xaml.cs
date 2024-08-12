@@ -12,11 +12,14 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Text;
 using mywinui3app.Helpers;
+using Windows.Foundation.Metadata;
+using System.Diagnostics.Eventing.Reader;
+using Windows.UI.WebUI;
 
 namespace mywinui3app.Views;
 public sealed partial class RequestPage : Page
 {
-
+    //TODO: Implementar readonly feature para requests existentes
     #region << Variables >>
 
     public RequestViewModel? ViewModel
@@ -45,6 +48,7 @@ public sealed partial class RequestPage : Page
 
     private void SetTabViewHeaderTemplate(object sender, bool IsEditing)
     {
+        var foregroundColorHelper = new MethodForegroundColor();
         TabView? myTabView = null;
 
         DependencyObject parent = null;
@@ -67,11 +71,11 @@ public sealed partial class RequestPage : Page
 
         if (myTabView != null)
         {
-            var item  = myTabView.SelectedItem as TabItem;
+            var item = myTabView.SelectedItem as TabItem;
 
             if (item != null)
             {
-                item.Foreground = ColorHelper.CreateSolidColorBrushFromHex(MethodForegroundColor.GetColorByMethod(ViewModel.SelectedMethod.Name));
+                item.Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(ViewModel.SelectedMethod.Name));
                 item.Method = ViewModel.SelectedMethod.Name;
             }
         }
@@ -116,8 +120,16 @@ public sealed partial class RequestPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        if (e.Parameter is RequestViewModel request)
-            ViewModel.InitializeRequest(request);
+        if (e.Parameter is RequestItem request)
+        {
+            ViewModel.IsExistingRequest = true;
+            ViewModel.Initialize(request);
+            txtRawBody.TextDocument.SetText(Microsoft.UI.Text.TextSetOptions.None, request.RawBody);
+        }
+        else
+        {
+            ViewModel.Initialize(null);
+        }
 
         currentRequestDataGrid = dtgridParameters;
     }
@@ -633,5 +645,5 @@ public sealed partial class RequestPage : Page
         range.ParagraphFormat.SpaceAfter = 0;
         range.ParagraphFormat.SpaceBefore = 0;
     }
-    
+
 }

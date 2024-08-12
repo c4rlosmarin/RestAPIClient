@@ -25,16 +25,18 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public MethodsItemViewModel selectedMethod;
     [ObservableProperty]
     public ObservableCollection<MethodsItemViewModel> methods;
+    [ObservableProperty]
+    public string isMethodComboEnabled;
     public bool isURLEditing;
     [ObservableProperty]
     public URL uRL;
     public bool isParametersEditing;
     [ObservableProperty]
-    public ObservableCollection<ParameterItem> parameters;
+    internal ObservableCollection<ParameterItem> parameters;
     [ObservableProperty]
     public string parametersCount;
     [ObservableProperty]
-    public ObservableCollection<HeaderItem> headers;
+    internal ObservableCollection<HeaderItem> headers;
     [ObservableProperty]
     public string headersCount;
     [ObservableProperty]
@@ -42,22 +44,34 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     [ObservableProperty]
     public ObservableCollection<string> bodyTypes;
     [ObservableProperty]
-    public ObservableCollection<BodyItem> body;
+    public string isBodyComboEnabled;
+    [ObservableProperty]
+    internal ObservableCollection<BodyItem> body;
     [ObservableProperty]
     public string rawBody;
     [ObservableProperty]
     public string bodyItemsCount;
     [ObservableProperty]
     public ResponseViewModel response;
+    public bool IsExistingRequest;
 
     private Stopwatch Stopwatch = new();
 
     public RequestViewModel()
     {
-        InitializeRequest();
 
+    }
+
+    public void Initialize(RequestItem request)
+    {
         this.AddMethods();
         this.AddBodyTypes();
+
+        if (IsExistingRequest)
+            InitializeExistingRequest(request);
+        else
+            InitializeRequest();
+
         StrongReferenceMessenger.Default.Register<URL>(this);
         StrongReferenceMessenger.Default.Register<string>(this);
         StrongReferenceMessenger.Default.Register<ParameterItem>(this);
@@ -72,52 +86,69 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     private void InitializeRequest()
     {
+        var foregroundColorHelper = new MethodForegroundColor();
+        IsExistingRequest = false;
         Name = "Untitled request";
         TabIconVisibility = "Visible";
-        TabMethodForegroundColor = MethodForegroundColor.GET;
+        TabMethodForegroundColor = foregroundColorHelper.GET;
+        IsMethodComboEnabled = "true";
         URL = new URL() { RawURL = "" };
         Parameters = new ObservableCollection<ParameterItem>();
-        Headers = new ObservableCollection<HeaderItem>();        
+        Headers = new ObservableCollection<HeaderItem>();
         Body = new ObservableCollection<BodyItem>();
         Response = new ResponseViewModel();
+        IsBodyComboEnabled = "true";
 
         this.AddNewParameter();
         this.AddNewHeader();
         this.AddNewBodyItem();
     }
 
-    public void InitializeRequest(RequestViewModel request)
+    public void InitializeExistingRequest(RequestItem request)
     {
-        RequestId = request.RequestId;
         Name = request.Name;
-        TabIconVisibility= request.TabIconVisibility;
-        TabMethodForegroundColor= request.TabMethodForegroundColor;
+        TabIconVisibility = request.TabIconVisibility;
+        TabMethodForegroundColor = request.TabMethodForegroundColor;
+        IsMethodComboEnabled = request.IsMethodComboEnabled;
         URL = request.URL;
         Parameters = request.Parameters;
         Headers = request.Headers;
         Body = request.Body;
-        SelectedBodyType = request.SelectedBodyType;
-        RawBody = request.RawBody;
+        Response = new ResponseViewModel();
+        Response.Visibility = request.ResponseVisibility;
+        IsBodyComboEnabled = request.IsBodyComboEnabled;
 
         foreach (MethodsItemViewModel item in Methods)
         {
-            if (item.Name == request.SelectedMethod.Name)
+            if (item.Name == SelectedMethod.Name)
                 SelectedMethod = item;
         }
 
-        foreach (ParameterItem item in Parameters)
-            item.PropertyChanged += Parameter_PropertyChanged;
+        if (Parameters is not null)
+        {
+            foreach (ParameterItem item in Parameters)
+                item.PropertyChanged += Parameter_PropertyChanged;
 
-        foreach (HeaderItem item in Headers)
-            item.PropertyChanged += Header_PropertyChanged;
+            isParametersEditing = true;
+            RefreshURL();
+            isParametersEditing = false;
+        }
+        SetParameterCount();
 
-        foreach (BodyItem item in Body)
-            item.PropertyChanged += BodyItem_PropertyChanged;
+        if (Headers is not null)
+        {
+            foreach (HeaderItem item in Headers)
+                item.PropertyChanged += Header_PropertyChanged;
 
-        isParametersEditing = true;
-        RefreshURL();
-        isParametersEditing = false;
+        }
+        SetHeaderCount();
 
+        if (Body is not null)
+        {
+            foreach (BodyItem item in Body)
+                item.PropertyChanged += BodyItem_PropertyChanged;
+        }
+        SetBodyItemCount();
     }
 
     public void AddMethods()
@@ -130,13 +161,14 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         Methods.Add(new MethodsItemViewModel() { Name = "PATCH", Foreground = "Blue" });
         Methods.Add(new MethodsItemViewModel() { Name = "DELETE", Foreground = "Blue" });
         Methods.Add(new MethodsItemViewModel() { Name = "OPTIONS", Foreground = "Blue" });
+        Methods.Add(new MethodsItemViewModel() { Name = "HEAD", Foreground = "Blue" });
 
         SelectedMethod = getMethod;
     }
 
-    public void AddNewParameter(bool isEnabled = false, string key = "", string value = "", string deleteButtonVisibility = "Collapsed")
+    public void AddNewParameter(bool isEnabled = false, string key = "", string value = "", string description = "", string deleteButtonVisibility = "Collapsed", string isKeyReadonly = "false", string isDescriptionReadyOnly = "false")
     {
-        var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = key, Value = value, Description = "", DeleteButtonVisibility = deleteButtonVisibility };
+        var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = key, Value = value, Description = description, DeleteButtonVisibility = deleteButtonVisibility, IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
         Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
         SetParameterCount();
@@ -145,10 +177,13 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     private void SetParameterCount()
     {
         int count = 0;
-        foreach (var item in Parameters)
+        if (Parameters is not null)
         {
-            if (item.IsEnabled)
-                count += 1;
+            foreach (var item in Parameters)
+            {
+                if (item.IsEnabled)
+                    count += 1;
+            }
         }
 
         if (count == 0)
@@ -168,10 +203,12 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             item.IsEnabled = true;
         if (e.PropertyName == "IsEnabled")
             SetParameterCount();
-        if (index == Parameters.Count - 1 && item.IsEnabled)
+        if (index == Parameters.Count - 1 && item.IsEnabled && !IsExistingRequest)
             AddNewParameter(false);
 
-        item.DeleteButtonVisibility = "Visible";
+        if (!IsExistingRequest)
+            item.DeleteButtonVisibility = "Visible";
+
         RefreshURL();
 
         item.PropertyChanged += Parameter_PropertyChanged;
@@ -197,9 +234,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         SetBodyItemCount();
     }
 
-    public void AddNewHeader()
+    public void AddNewHeader(string isKeyReadonly = "false", string isDescriptionReadyOnly = "false")
     {
-        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", HideDatePickerButtonVisibility = "Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed" };
+        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", HideDatePickerButtonVisibility = "Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed", IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
         Header.PropertyChanged += Header_PropertyChanged;
         Headers.Add(Header);
         SetHeaderCount();
@@ -216,7 +253,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             item.IsEnabled = true;
         if (e.PropertyName == "IsEnabled")
             SetHeaderCount();
-        if (index == Headers.Count - 1 && item.IsEnabled)
+        if (index == Headers.Count - 1 && item.IsEnabled && !IsExistingRequest)
             AddNewHeader();
 
 
@@ -245,7 +282,8 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             }
         }
 
-        item.DeleteButtonVisibility = "Visible";
+        if (!IsExistingRequest)
+            item.DeleteButtonVisibility = "Visible";
 
         item.PropertyChanged += Header_PropertyChanged;
     }
@@ -253,10 +291,13 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     private void SetHeaderCount()
     {
         int count = 0;
-        foreach (var item in Headers)
+        if (Headers is not null)
         {
-            if (item.IsEnabled)
-                count += 1;
+            foreach (var item in Headers)
+            {
+                if (item.IsEnabled)
+                    count += 1;
+            }
         }
 
         if (count == 0)
@@ -265,9 +306,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             HeadersCount = "(" + (count) + ")";
     }
 
-    public void AddNewBodyItem()
+    public void AddNewBodyItem(string isKeyReadonly = "false", string isDescriptionReadyOnly = "false")
     {
-        var BodyItem = new BodyItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed" };
+        var BodyItem = new BodyItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed", IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
         BodyItem.PropertyChanged += BodyItem_PropertyChanged;
         Body.Add(BodyItem);
         SetBodyItemCount();
@@ -276,10 +317,14 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     private void SetBodyItemCount()
     {
         int count = 0;
-        foreach (var item in Body)
+
+        if (Body is not null)
         {
-            if (item.IsEnabled)
-                count += 1;
+            foreach (var item in Body)
+            {
+                if (item.IsEnabled)
+                    count += 1;
+            }
         }
 
         if (count == 0)
@@ -299,10 +344,11 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
             item.IsEnabled = true;
         if (e.PropertyName == "IsEnabled")
             SetBodyItemCount();
-        if (index == Body.Count - 1 && item.IsEnabled)
+        if (index == Body.Count - 1 && item.IsEnabled && !IsExistingRequest)
             AddNewBodyItem();
 
-        item.DeleteButtonVisibility = "Visible";
+        if (!IsExistingRequest)
+            item.DeleteButtonVisibility = "Visible";
         item.PropertyChanged += BodyItem_PropertyChanged;
     }
 
@@ -353,21 +399,29 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public async Task<string> SendRequestAsync()
     {
         using HttpClient client = new HttpClient();
-        HttpResponseMessage response;
+        HttpResponseMessage response = new HttpResponseMessage();
 
         var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
         AddRequestHeaders(client);
         AddRequestBody(request);
-        
+        Response.HeadersCount = "";
         Stopwatch.Reset();
         Stopwatch.Start();
-        response = await client.SendAsync(request);
-        Stopwatch.Stop();
+        try
+        {
+            response = await client.SendAsync(request);
+            GetResponseStatusCode(response);
+            await GetResponseMetadata(response);
+            await GetResponseBody(response);
+            GetResponseHeaders(response);
 
-        GetResponseStatusCode(response);
-        await GetResponseMetadata(response);
-        await GetResponseBody(response);
-        GetResponseHeaders(response);
+        }
+        catch (Exception ex)
+        {
+            Response.StatusStyleKey = "MyStatusCodeErrorStyle";
+            Response.StatusCode = ex.Message;
+        }
+        Stopwatch.Stop();
 
         Response.BannerVisibility = "Collapsed";
         Response.Visibility = "Visible";
@@ -375,7 +429,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         return Response.Body;
     }
 
-    public static string BeautifyXml(string xml)
+    public string BeautifyXml(string xml)
     {
         XmlDocument doc = new XmlDocument();
         doc.LoadXml(xml);
@@ -425,8 +479,13 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     private async Task GetResponseMetadata(HttpResponseMessage response)
     {
         var responseHeadersSize = await GetResponseHeadersSizeInKB(response);
-        var responseBodySize = response.Content.Headers.ContentLength;
-        Response.Size = Math.Round((decimal)((responseHeadersSize + responseBodySize) / 1024.0), 2) + " KB";
+        long? responseBodySize = response.Content.Headers.ContentLength;
+
+        if (responseBodySize is not null)
+            Response.Size = Math.Round((decimal)((responseHeadersSize + responseBodySize) / 1024.0), 2) + " KB";
+        else
+            Response.Size = Math.Round((decimal)(responseHeadersSize / 1024.0), 2) + " KB";
+
         Response.Time = Stopwatch.ElapsedMilliseconds + " ms";
         Response.Headers = new ObservableCollection<ResponseHeaderItem>();
     }
@@ -471,7 +530,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         else if ((int)response.StatusCode >= 400)
             Response.StatusStyleKey = "MyStatusCodeErrorStyle";
 
-        Response.StatusCode = ((int)response.StatusCode).ToString() + " " + response.StatusCode;
+        Response.StatusCode = ((int)response.StatusCode).ToString() + " " + response.ReasonPhrase;
     }
 
     private void AddRequestBody(HttpRequestMessage request)
@@ -527,35 +586,41 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     {
         if (isURLEditing)
         {
-            Parameters.Clear();
             int questionMarkIndex = URL.RawURL.IndexOf('?');
-            if (questionMarkIndex == -1)
-                Parameters.Clear();
-            else
+            List<List<string>> disabledParameters = new List<List<string>>();
+            foreach (var parameter in Parameters)
             {
-                var rawParameters = URL.RawURL.Substring(questionMarkIndex + 1, URL.RawURL.Length - questionMarkIndex - 1);
-                var parameterSplit = rawParameters.Split("&");
-
-                if (parameterSplit.Length > 0)
+                if (parameter.IsEnabled == false)
                 {
-                    for (int i = 0; i < parameterSplit.Length; i++)
-                    {
-                        var equalsMarkIndex = parameterSplit[i].IndexOf("=");
-
-                        if (parameterSplit[i] == "")
-                            AddNewParameter(isEnabled: true, deleteButtonVisibility: "Visible");
-                        else if (equalsMarkIndex == -1)
-                            AddNewParameter(isEnabled: true, key: parameterSplit[i], deleteButtonVisibility: "Visible");
-                        else
-                        {
-                            AddNewParameter(isEnabled: true, key: parameterSplit[i].Substring(0, equalsMarkIndex),
-                                value: parameterSplit[i].Substring(equalsMarkIndex + 1, parameterSplit[i].Length - equalsMarkIndex - 1),
-                                deleteButtonVisibility: "Visible");
-                        }
-                    }
+                    disabledParameters.Add(new List<string> { parameter.Key, parameter.Value, parameter.Description, parameter.DeleteButtonVisibility });
                 }
             }
-            AddNewParameter(false);
+
+            Parameters.Clear();
+
+            var rawParameters = URL.RawURL.Substring(questionMarkIndex + 1, URL.RawURL.Length - questionMarkIndex - 1);
+            var parameterSplit = rawParameters.Split("&");
+
+            if (parameterSplit.Length > 0)
+            {
+                for (int i = 0; i < parameterSplit.Length; i++)
+                {
+                    var equalsMarkIndex = parameterSplit[i].IndexOf("=");
+
+                    if (parameterSplit[i] == "")
+                        AddNewParameter(isEnabled: true, deleteButtonVisibility: IsExistingRequest? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                    else if (equalsMarkIndex == -1)
+                        AddNewParameter(isEnabled: true, key: parameterSplit[i], deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                    else
+                        AddNewParameter(isEnabled: true, key: parameterSplit[i].Substring(0, equalsMarkIndex), value: parameterSplit[i].Substring(equalsMarkIndex + 1, parameterSplit[i].Length - equalsMarkIndex - 1), deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                }
+            }
+
+            foreach (var parameter in disabledParameters)
+            {
+                AddNewParameter(isEnabled: false, key: parameter[0], value: parameter[1], description: parameter[2], deleteButtonVisibility: parameter[3], isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+            }
+            //disabledParameters = null;
         }
     }
 
@@ -642,9 +707,13 @@ public partial class ParameterItem : ObservableRecipient
     [ObservableProperty]
     public string key;
     [ObservableProperty]
+    public string isKeyReadyOnly;
+    [ObservableProperty]
     public string value;
     [ObservableProperty]
     public string description;
+    [ObservableProperty]
+    public string isDescriptionReadyOnly;
     [ObservableProperty]
     public string deleteButtonVisibility;
 
@@ -672,9 +741,13 @@ public partial class HeaderItem : ObservableRecipient
     [ObservableProperty]
     public string key;
     [ObservableProperty]
+    public string isKeyReadyOnly;
+    [ObservableProperty]
     public string value;
     [ObservableProperty]
     public string description;
+    [ObservableProperty]
+    public string isDescriptionReadyOnly;
     [ObservableProperty]
     public string deleteButtonVisibility;
     [ObservableProperty]
@@ -730,9 +803,13 @@ public partial class BodyItem : ObservableRecipient
     [ObservableProperty]
     public string key;
     [ObservableProperty]
+    public string isKeyReadyOnly;
+    [ObservableProperty]
     public string value;
     [ObservableProperty]
     public string description;
+    [ObservableProperty]
+    public string isDescriptionReadyOnly;
     [ObservableProperty]
     public string deleteButtonVisibility;
 

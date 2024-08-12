@@ -37,14 +37,15 @@ public sealed partial class CollectionsPage : Page
 
     #region << Methods >>
 
-    private void CreateRequestTab(RequestViewModel? request)
+    private void CreateRequestTab(RequestItem? request)
     {
+        var foregroundColorHelper = new MethodForegroundColor();
         //TODO: Implementar el estilo y texto del tabViewItem de forma dinámica
         Frame frame = new Frame();
 
         if (request == null)
         {
-            TabsViewModel.Tabs.Add(new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(MethodForegroundColor.GET) });
+            TabsViewModel.Tabs.Add(new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GET) });
             frame.Navigate(typeof(RequestPage));
         }
         else
@@ -59,7 +60,7 @@ public sealed partial class CollectionsPage : Page
                 }
             }
 
-            TabsViewModel.Tabs.Add(new TabItem() { Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(MethodForegroundColor.GetColorByMethod(request.SelectedMethod.Name)) });
+            TabsViewModel.Tabs.Add(new TabItem() { Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(request.SelectedMethod.Name)) });
             frame.Navigate(typeof(RequestPage), request);
         }
 
@@ -124,9 +125,9 @@ public sealed partial class CollectionsPage : Page
     private void treeCollections_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
     {
         var selectedNode = (sender as TreeView).SelectedNode.Content;
-        if (selectedNode is RequestViewModel)
+        if (selectedNode is RequestItem)
         {
-            var request = (RequestViewModel)selectedNode;
+            var request = (RequestItem)selectedNode;
             CreateRequestTab(request);
 
         }
@@ -160,7 +161,7 @@ internal class MenuItemDataTemplateSelector : DataTemplateSelector
         return item switch
         {
             CollectionItem => CollectionTemplate,
-            RequestViewModel => RequestTemplate,
+            RequestItem => RequestTemplate,
             _ => null,
         };
     }
@@ -182,7 +183,7 @@ internal class ExplorerItemTemplateSelector : DataTemplateSelector
         return item switch
         {
             CollectionItem => CollectionTemplate,
-            RequestViewModel => RequestTemplate,
+            RequestItem => RequestTemplate,
             _ => null,
         };
     }
