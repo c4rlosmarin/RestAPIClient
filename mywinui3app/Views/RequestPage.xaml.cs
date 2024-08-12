@@ -31,14 +31,17 @@ public sealed partial class RequestPage : Page
     DataGrid currentRequestDataGrid;
     DataPackage dataPackage = new DataPackage();
 
-
+    ViewModelLocator viewModelLocator = new ViewModelLocator();
     #endregion
 
     #region << Constructor >>
 
     public RequestPage()
     {
+        
+        
         ViewModel = App.GetService<RequestViewModel>();
+
         this.InitializeComponent();
     }
 
@@ -122,13 +125,16 @@ public sealed partial class RequestPage : Page
         base.OnNavigatedTo(e);
         if (e.Parameter is RequestItem request)
         {
+            ViewModel = viewModelLocator.CreateRequestModel(request.RequestId);
             ViewModel.IsExistingRequest = true;
-            ViewModel.Initialize(request);
+            ViewModel.Initialize(request.RequestId, request);
             txtRawBody.TextDocument.SetText(Microsoft.UI.Text.TextSetOptions.None, request.RawBody);
         }
         else
         {
-            ViewModel.Initialize(null);
+            var requesId = Guid.NewGuid().ToString();
+            ViewModel = viewModelLocator.CreateRequestModel(requesId);
+            ViewModel.Initialize(requesId);
         }
 
         currentRequestDataGrid = dtgridParameters;

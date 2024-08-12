@@ -11,7 +11,7 @@ using Microsoft.UI.Xaml.Media;
 
 namespace mywinui3app.ViewModels;
 
-public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IRecipient<string>, IRecipient<ParameterItem>, IRecipient<HeaderCommandMessage>, IRecipient<BodyItem>
+public partial class RequestViewModel : ObservableRecipient
 {
     [ObservableProperty]
     public string requestId;
@@ -55,6 +55,9 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     public ResponseViewModel response;
     public bool IsExistingRequest;
 
+
+    private WeakReferenceMessenger _messenger;
+
     private Stopwatch Stopwatch = new();
 
     public RequestViewModel()
@@ -62,7 +65,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     }
 
-    public void Initialize(RequestItem request)
+    public void Initialize(string requestId, RequestItem? request = null)
     {
         this.AddMethods();
         this.AddBodyTypes();
@@ -70,13 +73,37 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         if (IsExistingRequest)
             InitializeExistingRequest(request);
         else
-            InitializeRequest();
+        {
+            InitializeRequest(requestId);
+            _messenger.Register<RequestViewModel, RequestMessage>(this, (r, m) =>
+            {
+                var message = m as RequestMessage;
+                switch (message.Name)
+                {
+                    case Command.RefreshURL:
+                        RefreshURL();
+                        break;
+                    case Command.DeleteParameterItem:
+                        Parameters.Remove(m.ParameterItem);
+                        SetParameterCount();
+                        RefreshURL();
+                        break;
+                    case Command.GetDateTimeInUTC:
+                        message.HeaderItem.Value = DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'");
+                        break;
 
-        StrongReferenceMessenger.Default.Register<URL>(this);
-        StrongReferenceMessenger.Default.Register<string>(this);
-        StrongReferenceMessenger.Default.Register<ParameterItem>(this);
-        StrongReferenceMessenger.Default.Register<HeaderCommandMessage>(this);
-        StrongReferenceMessenger.Default.Register<BodyItem>(this);
+                    case Command.DeleteHeaderItem:
+                        DeleteHeaderItem(message.HeaderItem);
+                        break;
+                    case Command.DeleteBodyItem:
+                        DeleteBodyItem(message.BodyItem);
+                        break;
+                    case Command.RefreshParameters:
+                        RefreshParameters();
+                        break;
+                }
+            });
+        }
     }
 
     public void AddBodyTypes()
@@ -84,15 +111,21 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         BodyTypes = new ObservableCollection<string>() { "None", "Form", "Json", "Xml", "Text" };
     }
 
-    private void InitializeRequest()
+    public void InitializeMessenger(string tabKey, MessengerService messengerService)
     {
-        var foregroundColorHelper = new MethodForegroundColor();
+        _messenger = messengerService.GetMessenger(tabKey);
+    }
+
+    private void InitializeRequest(string requestId)
+    {
+        RequestId = requestId;
         IsExistingRequest = false;
         Name = "Untitled request";
         TabIconVisibility = "Visible";
+        var foregroundColorHelper = new MethodForegroundColor();
         TabMethodForegroundColor = foregroundColorHelper.GET;
         IsMethodComboEnabled = "true";
-        URL = new URL() { RawURL = "" };
+        URL = new URL(_messenger) { RawURL = "" };
         Parameters = new ObservableCollection<ParameterItem>();
         Headers = new ObservableCollection<HeaderItem>();
         Body = new ObservableCollection<BodyItem>();
@@ -106,17 +139,12 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void InitializeExistingRequest(RequestItem request)
     {
+        RequestId = request.RequestId;
         Name = request.Name;
         TabIconVisibility = request.TabIconVisibility;
         TabMethodForegroundColor = request.TabMethodForegroundColor;
         IsMethodComboEnabled = request.IsMethodComboEnabled;
-        URL = request.URL;
-        Parameters = request.Parameters;
-        Headers = request.Headers;
-        Body = request.Body;
-        Response = new ResponseViewModel();
-        Response.Visibility = request.ResponseVisibility;
-        IsBodyComboEnabled = request.IsBodyComboEnabled;
+        URL = new URL(_messenger) { RawURL = request.URL.RawURL };
 
         foreach (MethodsItemViewModel item in Methods)
         {
@@ -124,31 +152,40 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                 SelectedMethod = item;
         }
 
-        if (Parameters is not null)
-        {
-            foreach (ParameterItem item in Parameters)
-                item.PropertyChanged += Parameter_PropertyChanged;
+        Parameters = new ObservableCollection<ParameterItem>();
+        foreach (var item in request.Parameters)
+            Parameters.Add(new ParameterItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
 
+        foreach (ParameterItem item in Parameters)
+            item.PropertyChanged += Parameter_PropertyChanged;
+
+        if (Parameters.Count > 0)
+        {
             isParametersEditing = true;
             RefreshURL();
             isParametersEditing = false;
         }
         SetParameterCount();
 
-        if (Headers is not null)
-        {
-            foreach (HeaderItem item in Headers)
-                item.PropertyChanged += Header_PropertyChanged;
+        Headers = new ObservableCollection<HeaderItem>();
+        foreach (var item in request.Headers)
+            Headers.Add(new HeaderItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
 
-        }
+        foreach (HeaderItem item in Headers)
+            item.PropertyChanged += Header_PropertyChanged;
         SetHeaderCount();
 
-        if (Body is not null)
-        {
-            foreach (BodyItem item in Body)
-                item.PropertyChanged += BodyItem_PropertyChanged;
-        }
+        Body = new ObservableCollection<BodyItem>();
+        foreach (var item in request.Body)
+            Body.Add(new BodyItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
+
+        foreach (BodyItem item in Body)
+            item.PropertyChanged += BodyItem_PropertyChanged;
         SetBodyItemCount();
+
+        Response = new ResponseViewModel();
+        Response.Visibility = request.ResponseVisibility;
+        IsBodyComboEnabled = request.IsBodyComboEnabled;
     }
 
     public void AddMethods()
@@ -168,7 +205,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void AddNewParameter(bool isEnabled = false, string key = "", string value = "", string description = "", string deleteButtonVisibility = "Collapsed", string isKeyReadonly = "false", string isDescriptionReadyOnly = "false")
     {
-        var Parameter = new ParameterItem() { IsEnabled = isEnabled, Key = key, Value = value, Description = description, DeleteButtonVisibility = deleteButtonVisibility, IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
+        var Parameter = new ParameterItem(_messenger) { IsEnabled = isEnabled, Key = key, Value = value, Description = description, DeleteButtonVisibility = deleteButtonVisibility, IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
         Parameter.PropertyChanged += Parameter_PropertyChanged;
         Parameters.Add(Parameter);
         SetParameterCount();
@@ -236,7 +273,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void AddNewHeader(string isKeyReadonly = "false", string isDescriptionReadyOnly = "false")
     {
-        var Header = new HeaderItem() { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", HideDatePickerButtonVisibility = "Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed", IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
+        var Header = new HeaderItem(_messenger) { IsEnabled = false, Key = "", Value = "", Description = "", UTCVisibility = "Collapsed", DateTextboxVisibility = "Visible", DatePickerButtonVisibility = "Collapsed", HideDatePickerButtonVisibility = "Collapsed", DatePickerVisibility = "Collapsed", DeleteButtonVisibility = "Collapsed", IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
         Header.PropertyChanged += Header_PropertyChanged;
         Headers.Add(Header);
         SetHeaderCount();
@@ -308,7 +345,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
 
     public void AddNewBodyItem(string isKeyReadonly = "false", string isDescriptionReadyOnly = "false")
     {
-        var BodyItem = new BodyItem() { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed", IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
+        var BodyItem = new BodyItem(_messenger) { IsEnabled = false, Key = "", Value = "", Description = "", DeleteButtonVisibility = "Collapsed", IsKeyReadyOnly = isKeyReadonly, IsDescriptionReadyOnly = isDescriptionReadyOnly };
         BodyItem.PropertyChanged += BodyItem_PropertyChanged;
         Body.Add(BodyItem);
         SetBodyItemCount();
@@ -352,50 +389,12 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         item.PropertyChanged += BodyItem_PropertyChanged;
     }
 
-    public void Receive(string message)
-    {
-        RefreshURL();
-    }
-
-    public void Receive(ParameterItem item)
-    {
-        DeleteParameterItem(item);
-    }
-
-    public void Receive(HeaderItem item)
-    {
-    }
-
-    public void Receive(HeaderCommandMessage message)
-    {
-        switch (message.CommandName)
-        {
-            case "GetDateTimeInUTC":
-                message.Item.Value = DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'");
-                break;
-
-            case "DeleteHeaderItem":
-                DeleteHeaderItem(message.Item);
-                break;
-        }
-    }
-
     public void SetMsDate(HeaderItem item, DateTimeOffset date)
     {
         item.Value = date.ToString("yyyy-MM-dd");
     }
 
-    public void Receive(BodyItem item)
-    {
-        DeleteBodyItem(item);
-    }
-
-    public void Receive(URL item)
-    {
-        RefreshParameters(item);
-    }
-
-    [RelayCommand]
+     [RelayCommand]
     public async Task<string> SendRequestAsync()
     {
         using HttpClient client = new HttpClient();
@@ -582,7 +581,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
         return totalSize;
     }
 
-    private void RefreshParameters(URL item)
+    private void RefreshParameters()
     {
         if (isURLEditing)
         {
@@ -608,7 +607,7 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
                     var equalsMarkIndex = parameterSplit[i].IndexOf("=");
 
                     if (parameterSplit[i] == "")
-                        AddNewParameter(isEnabled: true, deleteButtonVisibility: IsExistingRequest? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                        AddNewParameter(isEnabled: true, deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
                     else if (equalsMarkIndex == -1)
                         AddNewParameter(isEnabled: true, key: parameterSplit[i], deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
                     else
@@ -680,6 +679,24 @@ public partial class RequestViewModel : ObservableRecipient, IRecipient<URL>, IR
     }
 
 }
+public class ViewModelLocator
+{
+    private readonly MessengerService _messengerService = new();
+
+    public RequestViewModel CreateRequestModel(string tabKey)
+    {
+        var viewModel = new RequestViewModel();
+        viewModel.InitializeMessenger(tabKey, _messengerService);
+        return viewModel;
+    }
+
+    public ParameterItem CreateChildViewModel(string tabKey)
+    {
+        var messenger = _messengerService.GetMessenger(tabKey);
+        return new ParameterItem(messenger);
+    }
+}
+
 
 public partial class URL : ObservableRecipient
 {
@@ -693,10 +710,23 @@ public partial class URL : ObservableRecipient
     public ICollection<string> path;
     [ObservableProperty]
     public IDictionary<string, string> variables;
+    private readonly WeakReferenceMessenger _messenger;
+    public URL()
+    {
+    }
+
+    public URL(WeakReferenceMessenger messenger)
+    {
+        _messenger = messenger;
+    }
 
     partial void OnRawURLChanged(string value)
     {
-        StrongReferenceMessenger.Default.Send(this);
+        if (_messenger is not null)
+        {
+            var message = new RequestMessage(Command.RefreshParameters);
+            _messenger.Send(message);
+        }
     }
 }
 
@@ -717,20 +747,42 @@ public partial class ParameterItem : ObservableRecipient
     [ObservableProperty]
     public string deleteButtonVisibility;
 
+    private readonly WeakReferenceMessenger _messenger;
+    public ParameterItem()
+    {
+    }
+
+    public ParameterItem(WeakReferenceMessenger messenger)
+    {
+        _messenger = messenger;
+    }
+
     partial void OnKeyChanged(string value)
     {
-        StrongReferenceMessenger.Default.Send("KeyChanged");
+        if (_messenger is not null)
+        {
+            var message = new RequestMessage(Command.RefreshURL);
+            _messenger.Send(message);
+        }
     }
 
     partial void OnValueChanged(string value)
     {
-        StrongReferenceMessenger.Default.Send("ValueChanged");
+        if (_messenger is not null)
+        {
+            var message = new RequestMessage(Command.RefreshURL);
+            _messenger.Send(message);
+        }
     }
 
     [RelayCommand]
     public void DeleteParameterItem(ParameterItem item)
     {
-        StrongReferenceMessenger.Default.Send(item);
+        if (_messenger is not null)
+        {
+            var message = new RequestMessage(Command.DeleteParameterItem, parameterItem: item);
+            _messenger.Send(message);
+        }
     }
 }
 
@@ -761,19 +813,35 @@ public partial class HeaderItem : ObservableRecipient
     [ObservableProperty]
     public string datePickerVisibility = "Collapsed";
 
+    private readonly WeakReferenceMessenger _messenger;
+
+    public HeaderItem()
+    {
+    }
+
+    public HeaderItem(WeakReferenceMessenger messenger)
+    {
+        _messenger = messenger;
+    }
 
     [RelayCommand]
     public void GetDateTimeInUTC(HeaderItem item)
     {
-        var message = new HeaderCommandMessage("GetDateTimeInUTC", item);
-        StrongReferenceMessenger.Default.Send(message);
+        if (_messenger is not null)
+        {
+            var message = new RequestMessage(Command.GetDateTimeInUTC, headerItem: item);
+            _messenger.Send(message);
+        }
     }
 
     [RelayCommand]
     public void DeleteHeaderItem(HeaderItem item)
     {
-        var message = new HeaderCommandMessage("DeleteHeaderItem", item);
-        StrongReferenceMessenger.Default.Send(message);
+        if (_messenger is not null)
+        {
+            var message = new RequestMessage(Command.DeleteHeaderItem, headerItem: item);
+            _messenger.Send(message);
+        }
     }
 
     [RelayCommand]
@@ -792,7 +860,6 @@ public partial class HeaderItem : ObservableRecipient
         item.DatePickerVisibility = "Collapsed";
         item.DatePickerButtonVisibility = "Visible";
         item.HideDatePickerButtonVisibility = "Collapsed";
-        //item.Value = "";
     }
 }
 
@@ -812,11 +879,26 @@ public partial class BodyItem : ObservableRecipient
     public string isDescriptionReadyOnly;
     [ObservableProperty]
     public string deleteButtonVisibility;
+    private readonly WeakReferenceMessenger _messenger;
+
+    public BodyItem()
+    {
+    }
+
+    public BodyItem(WeakReferenceMessenger messenger)
+    {
+        _messenger = messenger;
+    }
+
 
     [RelayCommand]
     public void DeleteBodyItem(BodyItem item)
     {
-        StrongReferenceMessenger.Default.Send(item);
+        if (_messenger is not null)
+        {
+            var message = new RequestMessage(Command.DeleteBodyItem, bodyItem: item);
+            _messenger.Send(message);
+        }
     }
 }
 
@@ -846,20 +928,42 @@ public partial class TabsViewModel : ObservableRecipient
     }
 }
 
-public class HeaderCommandMessage
+public class RequestMessage
 {
-    public string CommandName
+    public Command Name
     {
         get;
     }
-    public HeaderItem Item
+    public ParameterItem? ParameterItem
+    {
+        get;
+    }
+    public HeaderItem? HeaderItem
+    {
+        get;
+    }
+    public BodyItem? BodyItem
     {
         get;
     }
 
-    public HeaderCommandMessage(string commandName, HeaderItem item)
+    public RequestMessage(Command commandName, ParameterItem? parameterItem = null, HeaderItem? headerItem = null, BodyItem? bodyItem = null)
     {
-        CommandName = commandName;
-        Item = item;
+        Name = commandName;
+        ParameterItem = parameterItem;
+        HeaderItem = headerItem;
+        BodyItem = bodyItem;
     }
+}
+
+public enum Command
+{
+    RefreshURL,
+    RefreshParameters,
+    DeleteParameterItem,
+    GetDateTimeInUTC,
+    ShowDatePickerItem,
+    HideDatePickerItem,
+    DeleteHeaderItem,
+    DeleteBodyItem
 }

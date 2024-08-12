@@ -23,6 +23,7 @@ public partial class CollectionsViewModel : ObservableRecipient
         var foregroundColorHelper = new MethodForegroundColor();
         var request = new RequestItem()
         {
+            RequestId = Guid.NewGuid().ToString(),
             IsExistingRequest = true,
             Name = "List Containers",
             URL = new URL() { RawURL = "https://myaccount.blob.core.windows.net/" },
@@ -53,6 +54,7 @@ public partial class CollectionsViewModel : ObservableRecipient
 
         request = new RequestItem()
         {
+            RequestId = Guid.NewGuid().ToString(),
             IsExistingRequest = true,
             Name = "Set Blob Service Properties",
             URL = new URL() { RawURL = "https://account-name.blob.core.windows.net/" },
@@ -81,6 +83,7 @@ public partial class CollectionsViewModel : ObservableRecipient
 
         request = new RequestItem()
         {
+            RequestId = Guid.NewGuid().ToString(),
             IsExistingRequest = true,
             Name = "Get Blob Service Properties",
             URL = new URL() { RawURL = "https://<account-name>.blob.core.windows.net/?restype=service&comp=properties" },
@@ -108,6 +111,7 @@ public partial class CollectionsViewModel : ObservableRecipient
 
         request = new RequestItem()
         {
+            RequestId = Guid.NewGuid().ToString(),
             IsExistingRequest = true,
             Name = "Preflight Blob Request",
             URL = new URL() { RawURL = "http://<account-name>.blob.core.windows.net/<blob-resource>" },
@@ -153,6 +157,7 @@ public partial class CollectionsViewModel : ObservableRecipient
 
         request = new RequestItem()
         {
+            RequestId = Guid.NewGuid().ToString(),
             IsExistingRequest = true,
             Name = "Get Account Information",
             URL = new URL() { RawURL = "https://myaccount.blob.core.windows.net/?restype=account&comp=properties" },
@@ -179,6 +184,7 @@ public partial class CollectionsViewModel : ObservableRecipient
 
         request = new RequestItem()
         {
+            RequestId = Guid.NewGuid().ToString(),
             IsExistingRequest = true,
             Name = "Get User Delegation Key",
             URL = new URL() { RawURL = "https://myaccount.blob.core.windows.net/?restype=service&comp=userdelegationkey" },
@@ -237,6 +243,7 @@ public partial class CollectionItem : ObservableRecipient
 
 public partial class RequestItem : ObservableRecipient
 {
+    public string RequestId { get; set; }    
     public bool IsExistingRequest { get; set; }
     [ObservableProperty]
     public string name;
