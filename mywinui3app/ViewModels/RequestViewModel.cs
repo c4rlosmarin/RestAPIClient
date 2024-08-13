@@ -71,7 +71,26 @@ public partial class RequestViewModel : ObservableRecipient
         this.AddBodyTypes();
 
         if (IsExistingRequest)
+        {
+            _messenger.Register<RequestViewModel, RequestMessage>(this, (r, m) =>
+            {
+                var message = m as RequestMessage;
+                switch (message.Name)
+                {
+                    case Command.RefreshURL:
+                        RefreshURL();
+                        break;
+                    case Command.GetDateTimeInUTC:
+                        message.HeaderItem.Value = DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'");
+                        break;
+                    case Command.RefreshParameters:
+                        RefreshParameters();
+                        break;
+                }
+            });
+
             InitializeExistingRequest(request);
+        }
         else
         {
             InitializeRequest(requestId);
@@ -169,7 +188,7 @@ public partial class RequestViewModel : ObservableRecipient
 
         Headers = new ObservableCollection<HeaderItem>();
         foreach (var item in request.Headers)
-            Headers.Add(new HeaderItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
+            Headers.Add(new HeaderItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility, UTCVisibility = item.UTCVisibility, DatePickerButtonVisibility = item.DatePickerButtonVisibility });
 
         foreach (HeaderItem item in Headers)
             item.PropertyChanged += Header_PropertyChanged;
@@ -394,7 +413,7 @@ public partial class RequestViewModel : ObservableRecipient
         item.Value = date.ToString("yyyy-MM-dd");
     }
 
-     [RelayCommand]
+    [RelayCommand]
     public async Task<string> SendRequestAsync()
     {
         using HttpClient client = new HttpClient();
@@ -586,40 +605,49 @@ public partial class RequestViewModel : ObservableRecipient
         if (isURLEditing)
         {
             int questionMarkIndex = URL.RawURL.IndexOf('?');
+
+
             List<List<string>> disabledParameters = new List<List<string>>();
             foreach (var parameter in Parameters)
             {
                 if (parameter.IsEnabled == false)
-                {
                     disabledParameters.Add(new List<string> { parameter.Key, parameter.Value, parameter.Description, parameter.DeleteButtonVisibility });
-                }
             }
 
             Parameters.Clear();
 
-            var rawParameters = URL.RawURL.Substring(questionMarkIndex + 1, URL.RawURL.Length - questionMarkIndex - 1);
-            var parameterSplit = rawParameters.Split("&");
-
-            if (parameterSplit.Length > 0)
+            if (questionMarkIndex != -1)
             {
-                for (int i = 0; i < parameterSplit.Length; i++)
+                var rawParameters = URL.RawURL.Substring(questionMarkIndex + 1, URL.RawURL.Length - questionMarkIndex - 1);
+                var parameterSplit = rawParameters.Split("&");
+
+                if (parameterSplit.Length > 0)
                 {
-                    var equalsMarkIndex = parameterSplit[i].IndexOf("=");
+                    foreach (var item in parameterSplit)
+                    {
+                        var equalsSplit = item.Split('=');
+                        var equalsMarkIndex = item.IndexOf("=");
 
-                    if (parameterSplit[i] == "")
-                        AddNewParameter(isEnabled: true, deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
-                    else if (equalsMarkIndex == -1)
-                        AddNewParameter(isEnabled: true, key: parameterSplit[i], deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
-                    else
-                        AddNewParameter(isEnabled: true, key: parameterSplit[i].Substring(0, equalsMarkIndex), value: parameterSplit[i].Substring(equalsMarkIndex + 1, parameterSplit[i].Length - equalsMarkIndex - 1), deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                        if (equalsSplit.Length == 1)
+                        {
+                            if (equalsMarkIndex == -1)
+                                AddNewParameter(isEnabled: true, key: equalsSplit[0], deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                            else
+                                AddNewParameter(isEnabled: true, key: equalsSplit[0], value: equalsSplit[1], deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                        }
+                        else
+                        {
+                            if (equalsMarkIndex != -1)
+                                AddNewParameter(isEnabled: true, key: equalsSplit[0], value: equalsSplit[1], deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                        }
+                    }
                 }
-            }
 
-            foreach (var parameter in disabledParameters)
-            {
-                AddNewParameter(isEnabled: false, key: parameter[0], value: parameter[1], description: parameter[2], deleteButtonVisibility: parameter[3], isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
+                foreach (var parameter in disabledParameters)
+                    AddNewParameter(isEnabled: false, key: parameter[0], value: parameter[1], description: parameter[2], deleteButtonVisibility: parameter[3], isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
             }
-            //disabledParameters = null;
+            else
+                AddNewParameter(isEnabled: false, deleteButtonVisibility: IsExistingRequest ? "Collapsed" : "Visible", isKeyReadonly: IsExistingRequest ? "True" : "False", isDescriptionReadyOnly: IsExistingRequest ? "True" : "False");
         }
     }
 
