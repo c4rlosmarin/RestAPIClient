@@ -133,6 +133,7 @@ public partial class CollectionsViewModel : ObservableRecipient
 
         request = new RequestItem()
         {
+            RequestId = Guid.NewGuid().ToString(),
             IsExistingRequest = true,
             Name = "Get Blob Service Stats",
             URL = new URL() { RawURL = "https://myaccount-secondary.blob.core.windows.net/?restype=service&comp=stats" },

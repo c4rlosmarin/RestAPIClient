@@ -163,6 +163,7 @@ public partial class RequestViewModel : ObservableRecipient
         TabIconVisibility = request.TabIconVisibility;
         TabMethodForegroundColor = request.TabMethodForegroundColor;
         IsMethodComboEnabled = request.IsMethodComboEnabled;
+        SelectedMethod = request.SelectedMethod;
         URL = new URL(_messenger) { RawURL = request.URL.RawURL };
 
         foreach (MethodsItemViewModel item in Methods)
@@ -172,34 +173,48 @@ public partial class RequestViewModel : ObservableRecipient
         }
 
         Parameters = new ObservableCollection<ParameterItem>();
-        foreach (var item in request.Parameters)
-            Parameters.Add(new ParameterItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
 
-        foreach (ParameterItem item in Parameters)
-            item.PropertyChanged += Parameter_PropertyChanged;
-
-        if (Parameters.Count > 0)
+        if (request.Parameters is not null)
         {
-            isParametersEditing = true;
-            RefreshURL();
-            isParametersEditing = false;
+            foreach (var item in request.Parameters)
+                Parameters.Add(new ParameterItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
+
+            foreach (ParameterItem item in Parameters)
+                item.PropertyChanged += Parameter_PropertyChanged;
+
+            if (Parameters.Count > 0)
+            {
+                isParametersEditing = true;
+                RefreshURL();
+                isParametersEditing = false;
+            }
         }
+
         SetParameterCount();
 
         Headers = new ObservableCollection<HeaderItem>();
-        foreach (var item in request.Headers)
-            Headers.Add(new HeaderItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility, UTCVisibility = item.UTCVisibility, DatePickerButtonVisibility = item.DatePickerButtonVisibility });
 
-        foreach (HeaderItem item in Headers)
-            item.PropertyChanged += Header_PropertyChanged;
+        if (request.Headers is not null)
+        {
+            foreach (var item in request.Headers)
+                Headers.Add(new HeaderItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility, UTCVisibility = item.UTCVisibility, DatePickerButtonVisibility = item.DatePickerButtonVisibility });
+
+            foreach (HeaderItem item in Headers)
+                item.PropertyChanged += Header_PropertyChanged;
+        }
         SetHeaderCount();
 
         Body = new ObservableCollection<BodyItem>();
-        foreach (var item in request.Body)
-            Body.Add(new BodyItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
 
-        foreach (BodyItem item in Body)
-            item.PropertyChanged += BodyItem_PropertyChanged;
+        if (request.Body is not null)
+        {
+            foreach (var item in request.Body)
+                Body.Add(new BodyItem(_messenger) { IsEnabled = item.IsEnabled, Key = item.Key, Value = item.Value, Description = item.Description, IsKeyReadyOnly = item.IsKeyReadyOnly, IsDescriptionReadyOnly = item.IsDescriptionReadyOnly, DeleteButtonVisibility = item.DeleteButtonVisibility });
+
+            foreach (BodyItem item in Body)
+                item.PropertyChanged += BodyItem_PropertyChanged;
+        }
+
         SetBodyItemCount();
 
         Response = new ResponseViewModel();

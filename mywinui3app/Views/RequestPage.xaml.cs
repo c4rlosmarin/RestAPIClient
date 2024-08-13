@@ -15,6 +15,7 @@ using mywinui3app.Helpers;
 using Windows.Foundation.Metadata;
 using System.Diagnostics.Eventing.Reader;
 using Windows.UI.WebUI;
+using System.Runtime.CompilerServices;
 
 namespace mywinui3app.Views;
 public sealed partial class RequestPage : Page
@@ -38,8 +39,8 @@ public sealed partial class RequestPage : Page
 
     public RequestPage()
     {
-        
-        
+
+
         ViewModel = App.GetService<RequestViewModel>();
 
         this.InitializeComponent();
@@ -258,6 +259,8 @@ public sealed partial class RequestPage : Page
 
                     if (row.GetIndex() <= itemCount - 1)
                     {
+                        //TODO: Fix bug of tab navigation within the datagrid after pasting a value in the url input
+
                         if (currentRequestDataGrid.CurrentColumn.DisplayIndex < currentRequestDataGrid.Columns.Count - 2)
                         {
                             selectedColumnIndex = currentRequestDataGrid.CurrentColumn.DisplayIndex + 1;
