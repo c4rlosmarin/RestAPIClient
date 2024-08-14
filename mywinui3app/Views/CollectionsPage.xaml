@@ -43,7 +43,7 @@
                 <local:MenuItemDataTemplateSelector x:Key="ItemTemplateSelector" RequestTemplate="{StaticResource RequestMenuItemTemplate}" CollectionTemplate="{StaticResource CollectionMenuItemTemplate}" />-->
 
                 <DataTemplate x:Key="CollectionTemplate" x:DataType="viewmodels:CollectionItem">
-                    <TreeViewItem AutomationProperties.Name="{x:Bind Name}" ItemsSource="{x:Bind Requests}">
+                    <TreeViewItem AutomationProperties.Name="{x:Bind Name}" ItemsSource="{x:Bind Groups}">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xE8A5;" />
                             <TextBlock Margin="0,0,10,0"/>
@@ -51,6 +51,18 @@
                         </StackPanel>
                         <ToolTipService.ToolTip>
                             <TextBlock Text="{x:Bind Name}"/>
+                        </ToolTipService.ToolTip>
+                    </TreeViewItem>
+                </DataTemplate>
+
+                <DataTemplate x:Key="GroupTemplate" x:DataType="viewmodels:GroupItem">
+                    <TreeViewItem AutomationProperties.Name="{x:Bind Name}" ItemsSource="{x:Bind Requests}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,10,0"/>
+                            <TextBlock Text="{x:Bind Name, Mode=TwoWay}" TextTrimming="CharacterEllipsis"  Width="248"/>
+                        </StackPanel>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{x:Bind Name, Mode=TwoWay}"/>
                         </ToolTipService.ToolTip>
                     </TreeViewItem>
                 </DataTemplate>
@@ -67,7 +79,7 @@
                     </TreeViewItem>
                 </DataTemplate>
 
-                <local:ExplorerItemTemplateSelector x:Key="ExplorerItemTemplateSelector" RequestTemplate="{StaticResource RequestTemplate}" CollectionTemplate="{StaticResource CollectionTemplate}" />
+                <local:ExplorerItemTemplateSelector x:Key="ExplorerItemTemplateSelector" CollectionTemplate="{StaticResource CollectionTemplate}" GroupTemplate="{StaticResource GroupTemplate}"  RequestTemplate="{StaticResource RequestTemplate}" />
 
                 <DataTemplate x:Name="TabViewItemHeaderTemplate" x:DataType="viewmodels:TabItem">
                     <Grid>
@@ -94,7 +106,7 @@
             <TabView Grid.Column="1" Name="tabView" Margin="0" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
             </NavigationView>-->
 
-            <TreeView x:Name="treeCollections" Grid.Column="0" Grid.Row="1" ItemsSource="{x:Bind ViewModel.Collections, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}" Width="324" SelectionChanged="treeCollections_SelectionChanged"/>
+            <TreeView x:Name="treeCollections" Grid.Column="0" Grid.Row="1" ItemsSource="{x:Bind ViewModel.Collections, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}" SelectionChanged="treeCollections_SelectionChanged" Width="324"/>
 
             <TabView x:Name="tabView" Grid.Column="1" Grid.Row ="1" TabItemsSource="{x:Bind TabsViewModel.Tabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{x:Bind TabsViewModel.SelectedTabItem, Mode=TwoWay}" Margin="0,-11" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" SelectionChanged="tabView_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <TabView.TabItemTemplate>

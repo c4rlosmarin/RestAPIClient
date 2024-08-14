@@ -18,7 +18,10 @@ public partial class CollectionsViewModel : ObservableRecipient
     {
         var collection = new CollectionItem();
         collection.Name = "Blob Service REST API";
-        collection.Requests = new ObservableCollection<RequestItem>();
+        collection.Groups = new ObservableCollection<GroupItem>();
+        
+        var group = new GroupItem() { Name = "Operations on the Account (Blob Service)" };
+        group.Requests = new ObservableCollection<RequestItem>();
 
         var foregroundColorHelper = new MethodForegroundColor();
         var request = new RequestItem()
@@ -50,7 +53,7 @@ public partial class CollectionsViewModel : ObservableRecipient
             ResponseVisibility = "Collapsed"
         };
 
-        collection.Requests.Add(request);
+        group.Requests.Add(request);
 
         request = new RequestItem()
         {
@@ -79,7 +82,7 @@ public partial class CollectionsViewModel : ObservableRecipient
             ResponseVisibility = "Collapsed"
         };
 
-        collection.Requests.Add(request);
+        group.Requests.Add(request);
 
         request = new RequestItem()
         {
@@ -107,7 +110,7 @@ public partial class CollectionsViewModel : ObservableRecipient
             ResponseVisibility = "Collapsed"
         };
 
-        collection.Requests.Add(request);
+        group.Requests.Add(request);
 
         request = new RequestItem()
         {
@@ -129,7 +132,7 @@ public partial class CollectionsViewModel : ObservableRecipient
             SelectedBodyType = "None",
             ResponseVisibility = "Collapsed"
         };
-        collection.Requests.Add(request);
+        group.Requests.Add(request);
 
         request = new RequestItem()
         {
@@ -154,7 +157,7 @@ public partial class CollectionsViewModel : ObservableRecipient
             ResponseVisibility = "Collapsed"
         };
 
-        collection.Requests.Add(request);
+        group.Requests.Add(request);
 
         request = new RequestItem()
         {
@@ -181,7 +184,7 @@ public partial class CollectionsViewModel : ObservableRecipient
             ResponseVisibility = "Collapsed"
         };
 
-        collection.Requests.Add(request);
+        group.Requests.Add(request);
 
         request = new RequestItem()
         {
@@ -210,20 +213,9 @@ public partial class CollectionsViewModel : ObservableRecipient
             ResponseVisibility = "Collapsed"
         };
 
-        collection.Requests.Add(request);
+        group.Requests.Add(request);
+        collection.Groups.Add(group);
 
-        Collections.Add(collection);
-
-        collection = new CollectionItem() { Name = "Data Lake Storage Gen2 REST API" };
-        Collections.Add(collection);
-
-        collection = new CollectionItem() { Name = "Queue Storage REST API" };
-        Collections.Add(collection);
-
-        collection = new CollectionItem() { Name = "Table Storage REST API" };
-        Collections.Add(collection);
-
-        collection = new CollectionItem() { Name = "Azure Files REST API" };
         Collections.Add(collection);
     }
 }
@@ -238,6 +230,14 @@ public partial class CollectionItem : ObservableRecipient
     public DateTime? creationTime;
     [ObservableProperty]
     public DateTime? lastModifiedTime;
+    [ObservableProperty]
+    public ObservableCollection<GroupItem> groups;
+}
+
+public partial class GroupItem : ObservableRecipient
+{
+    [ObservableProperty]
+    public string name;
     [ObservableProperty]
     public ObservableCollection<RequestItem> requests;
 }

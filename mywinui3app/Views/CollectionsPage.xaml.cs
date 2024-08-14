@@ -1,9 +1,7 @@
-﻿using CommunityToolkit.WinUI.UI;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using mywinui3app.ViewModels;
 using mywinui3app.Helpers;
+using mywinui3app.ViewModels;
 
 namespace mywinui3app.Views;
 
@@ -76,6 +74,72 @@ public sealed partial class CollectionsPage : Page
         tabView.SelectedItem = originalSelectedItem;
     }
 
+    private void RefreshSelectedCollection()
+    {
+        if (tabView.SelectedItem != null)
+        {
+            var node = FindTreeViewItemByName(treeCollections, ((TabItem)tabView.SelectedItem).Title);
+
+            if (node is not null)
+                treeCollections.SelectedItem = node.DataContext;
+            else
+                treeCollections.SelectedItem = null;
+        }
+        else if (treeCollections.SelectedNode != null)
+        {
+            if (treeCollections.SelectedNode.Parent != null)
+                treeCollections.SelectedNode = treeCollections.SelectedNode.Parent;
+        }
+    }
+
+    private TreeViewItem FindTreeViewItemByName(TreeView treeView, string name)
+    {
+        foreach (var rootNode in treeView.RootNodes)
+        {
+            var result = FindTreeViewItemByNameRecursive((TreeViewItem)treeView.ContainerFromNode(rootNode), name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    private TreeViewItem FindTreeViewItemByNameRecursive(TreeViewItem treeViewItem, string name)
+    {
+        if (treeViewItem == null) return null;
+
+        var viewModel = treeViewItem.DataContext;
+
+        switch (viewModel)
+        {
+            case CollectionItem:
+                if (viewModel != null && ((CollectionItem)viewModel).Name == name)
+                    return treeViewItem;
+                break;
+            case ViewModels.GroupItem:
+                if (viewModel != null && ((ViewModels.GroupItem)viewModel).Name == name)
+                    return treeViewItem;
+                break;
+            case RequestItem:
+                if (viewModel != null && ((ViewModels.RequestItem)viewModel).Name == name)
+                    return treeViewItem;
+                break;
+        }
+
+        var node = treeCollections.NodeFromContainer(treeViewItem);
+        foreach (var childNode in node.Children)
+        {
+            var childTreeViewItem = treeCollections.ContainerFromNode(childNode) as TreeViewItem;
+            var result = FindTreeViewItemByNameRecursive(childTreeViewItem, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        return null;
+    }
+
     #endregion
 
     #region << Events >>
@@ -119,28 +183,31 @@ public sealed partial class CollectionsPage : Page
 
     private void tabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
     {
-        TabsViewModel.Tabs.Remove(TabsViewModel.SelectedTabItem);
+        TabsViewModel.Tabs.Remove((TabItem)args.Item);
+    }
+    private void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        RefreshSelectedCollection();
     }
 
     private void treeCollections_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
     {
-        var selectedNode = (sender as TreeView).SelectedNode.Content;
-        if (selectedNode is RequestItem)
+        if (treeCollections.SelectedNode is not null)
         {
-            var request = (RequestItem)selectedNode;
-            CreateRequestTab(request);
-
+            var selectedTreeviewItem = treeCollections.SelectedNode.Content;
+            if (selectedTreeviewItem is not null)
+            {
+                if (selectedTreeviewItem is RequestItem)
+                {
+                    var request = (RequestItem)selectedTreeviewItem;
+                    CreateRequestTab(request);
+                }
+            }
         }
     }
 
-    private void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        var tabView = sender as TabView;
-
-    }
-
     #endregion
-
+    
 }
 
 #region << Internal Classes >>
@@ -173,6 +240,12 @@ internal class ExplorerItemTemplateSelector : DataTemplateSelector
     {
         get; set;
     }
+
+    public DataTemplate? GroupTemplate
+    {
+        get; set;
+    }
+
     public DataTemplate? RequestTemplate
     {
         get; set;
@@ -183,6 +256,7 @@ internal class ExplorerItemTemplateSelector : DataTemplateSelector
         return item switch
         {
             CollectionItem => CollectionTemplate,
+            ViewModels.GroupItem => GroupTemplate,
             RequestItem => RequestTemplate,
             _ => null,
         };
