@@ -7,15 +7,11 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using mywinui3app.Helpers;
 using mywinui3app.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Text;
-using mywinui3app.Helpers;
-using Windows.Foundation.Metadata;
-using System.Diagnostics.Eventing.Reader;
-using Windows.UI.WebUI;
-using System.Runtime.CompilerServices;
 
 namespace mywinui3app.Views;
 public sealed partial class RequestPage : Page

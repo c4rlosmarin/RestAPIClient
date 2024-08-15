@@ -220,6 +220,9 @@ public partial class RequestViewModel : ObservableRecipient
         Response = new ResponseViewModel();
         Response.Visibility = request.ResponseVisibility;
         IsBodyComboEnabled = request.IsBodyComboEnabled;
+        SelectedBodyType = request.SelectedBodyType;
+        RawBody = request.RawBody;
+
     }
 
     public void AddMethods()
@@ -833,6 +836,8 @@ public partial class HeaderItem : ObservableRecipient
 {
     [ObservableProperty]
     public bool isEnabled;
+    [ObservableProperty]
+    public bool isEnabled2 = true;
     [ObservableProperty]
     public string key;
     [ObservableProperty]
