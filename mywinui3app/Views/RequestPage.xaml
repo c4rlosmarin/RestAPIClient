@@ -156,15 +156,13 @@
                 </controls:DataGrid.Resources>
                 <controls:DataGrid.Columns>
 
-                    <!--<controls:DataGridTemplateColumn Header="" Width="30">
+                    <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>-->
-
-                    <controls:DataGridCheckBoxColumn Binding="{Binding IsEnabled2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </controls:DataGridTemplateColumn>
 
                     <controls:DataGridTemplateColumn Header="Header" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
