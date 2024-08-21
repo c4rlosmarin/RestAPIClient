@@ -100,13 +100,14 @@
             <controls:DataGrid Grid.Row="3" x:Name="dtgridParameters" ItemsSource="{x:Bind ViewModel.Parameters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,15" AutoGenerateColumns="False" LoadingRow="dtgridRequest_LoadingRow" SizeChanged="dtgridRequest_SizeChanged" GotFocus="dtgridParameters_GotFocus" LostFocus="dtgridParameters_LostFocus" Height="275" MinHeight="28" MaxHeight="605" CanDrag="False" CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="False" ClipboardCopyMode="ExcludeHeader">
                 <controls:DataGrid.Resources>
                     <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundColor" Color="Transparent" />
+                    <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush" Color="Transparent"/>
                 </controls:DataGrid.Resources>
                 <controls:DataGrid.Columns>
 
                     <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0"/>
+                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0" IsThreeState="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -130,7 +131,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -159,7 +160,7 @@
                     <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0"/>
+                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay}" Margin="5,0,5,0" IsThreeState="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -167,7 +168,7 @@
                     <controls:DataGridTemplateColumn Header="Header" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -176,7 +177,7 @@
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <TextBox Grid.Column="0" Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{x:Bind DateTextboxVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                    <TextBox Grid.Column="0" Text="{x:Bind Value, Mode=TwoWay}" Visibility="{x:Bind DateTextboxVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                                     <DatePicker Name="datepickValue" Grid.Column="0" Visibility="{x:Bind DatePickerVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
 
                                     <Grid Grid.Column="1" ColumnDefinitions="5,Auto,5" Visibility="{x:Bind UTCVisibility, Mode=TwoWay}">
@@ -216,7 +217,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay}"  IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -245,7 +246,7 @@
                     <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0"/>
+                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay}" Margin="5,0,5,0" IsThreeState="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -253,7 +254,7 @@
                     <controls:DataGridTemplateColumn Header="Key" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsKeyReadyOnly}"  KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay}" IsReadOnly="{x:Bind IsKeyReadyOnly}"  KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -261,7 +262,7 @@
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Value, Mode=TwoWay}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -269,7 +270,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>

@@ -35,11 +35,9 @@ public sealed partial class RequestPage : Page
 
     public RequestPage()
     {
-
-
         ViewModel = App.GetService<RequestViewModel>();
-
         this.InitializeComponent();
+        this.Loaded += Page_Loaded;
     }
 
     #endregion
@@ -113,9 +111,162 @@ public sealed partial class RequestPage : Page
         }
     }
 
+    private void RefreshBodyTabContent()
+    {
+        switch (comboBodyType.SelectedValue)
+        {
+            case "None":
+                if (dtgridBodyItems is not null)
+                {
+                    dtgridBodyItems.Visibility = Visibility.Collapsed;
+                    txtRawBody.Visibility = Visibility.Collapsed;
+                    txtEmpty.Visibility = Visibility.Visible;
+                    dtgridContentSizer.TargetControl = txtEmpty;
+                }
+                break;
+            case "Form":
+                if (dtgridBodyItems is not null)
+                {
+                    dtgridBodyItems.Visibility = Visibility.Visible;
+                    txtRawBody.Visibility = Visibility.Collapsed;
+                    txtEmpty.Visibility = Visibility.Collapsed;
+                    dtgridContentSizer.TargetControl = dtgridBodyItems;
+                }
+                break;
+            default:
+                txtRawBody.Visibility = Visibility.Visible;
+                dtgridBodyItems.Visibility = Visibility.Collapsed;
+                txtEmpty.Visibility = Visibility.Collapsed;
+                dtgridContentSizer.TargetControl = txtRawBody;
+                break;
+        }
+    }
+
+    private void ApplyJsonFormatting(Microsoft.UI.Text.RichEditTextDocument document)
+    {
+        string text;
+        document.GetText(Microsoft.UI.Text.TextGetOptions.None, out text);
+
+        // Simple JSON syntax highlighting
+        var keywords = new[] { "{", "}", "[", "]", ":", "," };
+        var keywordColor = Windows.UI.Color.FromArgb(255, 157, 221, 252);
+        var stringColor = Windows.UI.Color.FromArgb(255, 205, 144, 122);
+
+        foreach (var keyword in keywords)
+        {
+            int startIndex = 0;
+            while ((startIndex = text.IndexOf(keyword, startIndex)) != -1)
+            {
+                var range = document.GetRange(startIndex, startIndex + keyword.Length);
+                range.CharacterFormat.ForegroundColor = keywordColor;
+                startIndex += keyword.Length;
+            }
+        }
+
+        // Highlight strings
+        int stringStart = -1;
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '\"')
+            {
+                if (stringStart == -1)
+                {
+                    stringStart = i;
+                }
+                else
+                {
+                    var range = document.GetRange(stringStart, i + 1);
+                    range.CharacterFormat.ForegroundColor = stringColor;
+                    stringStart = -1;
+                }
+            }
+        }
+    }
+
+    private void ApplyXmlFormatting(Microsoft.UI.Text.RichEditTextDocument document)
+    {
+        string text;
+        document.GetText(Microsoft.UI.Text.TextGetOptions.None, out text);
+
+        // Simple XML syntax highlighting
+        var tagColor = Windows.UI.Color.FromArgb(255, 157, 221, 252);
+        var attributeColor = Windows.UI.Color.FromArgb(255, 205, 144, 122);
+        var valueColor = Windows.UI.Color.FromArgb(255, 182, 205, 170);
+
+        // Highlight tags
+        int tagStart = -1;
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '<')
+            {
+                tagStart = i;
+            }
+            else if (text[i] == '>' && tagStart != -1)
+            {
+                var range = document.GetRange(tagStart, i + 1);
+                range.CharacterFormat.ForegroundColor = tagColor;
+                tagStart = -1;
+            }
+        }
+
+        // Highlight attributes and values
+        bool inAttribute = false;
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '=')
+            {
+                var range = document.GetRange(i - 1, i);
+                range.CharacterFormat.ForegroundColor = attributeColor;
+                inAttribute = true;
+            }
+            else if (text[i] == '\"' && inAttribute)
+            {
+                int valueStart = i;
+                i++;
+                while (i < text.Length && text[i] != '\"')
+                {
+                    i++;
+                }
+                var range = document.GetRange(valueStart, i + 1);
+                range.CharacterFormat.ForegroundColor = valueColor;
+                inAttribute = false;
+            }
+        }
+    }
+
+    private void RemoveAllFormatting(Microsoft.UI.Text.RichEditTextDocument document)
+    {
+        Microsoft.UI.Text.ITextRange range = document.GetRange(0, Microsoft.UI.Text.TextConstants.MaxUnitCount);
+
+        // Reset character formatting
+        range.CharacterFormat.Bold = Microsoft.UI.Text.FormatEffect.Off;
+        range.CharacterFormat.Italic = Microsoft.UI.Text.FormatEffect.Off;
+        range.CharacterFormat.Underline = Microsoft.UI.Text.UnderlineType.None;
+        range.CharacterFormat.Strikethrough = Microsoft.UI.Text.FormatEffect.Off;
+        range.CharacterFormat.ForegroundColor = Microsoft.UI.Colors.White;
+        range.CharacterFormat.BackgroundColor = Microsoft.UI.Colors.Transparent;
+        range.CharacterFormat.FontStretch = FontStretch.Normal;
+        range.CharacterFormat.FontStyle = FontStyle.Normal;
+        range.CharacterFormat.Size = 12; // Default size
+
+        // Reset paragraph formatting
+        range.ParagraphFormat.Alignment = Microsoft.UI.Text.ParagraphAlignment.Left;
+        range.ParagraphFormat.RightIndent = 0;
+        range.ParagraphFormat.SpaceAfter = 0;
+        range.ParagraphFormat.SpaceBefore = 0;
+    }
+
     #endregion
 
     #region << Events >>
+
+    private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        // Code to execute when the page is loaded
+        dtgridParameters.Visibility = Visibility.Collapsed;
+        dtgridParameters.Visibility = Visibility.Visible;
+
+    }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
@@ -504,151 +655,6 @@ public sealed partial class RequestPage : Page
         ViewModel.RawBody = rawBody;
     }
 
-    #endregion
-
-    private void RefreshBodyTabContent()
-    {
-        switch (comboBodyType.SelectedValue)
-        {
-            case "None":
-                if (dtgridBodyItems is not null)
-                {
-                    dtgridBodyItems.Visibility = Visibility.Collapsed;
-                    txtRawBody.Visibility = Visibility.Collapsed;
-                    txtEmpty.Visibility = Visibility.Visible;
-                    dtgridContentSizer.TargetControl = txtEmpty;
-                }
-                break;
-            case "Form":
-                if (dtgridBodyItems is not null)
-                {
-                    dtgridBodyItems.Visibility = Visibility.Visible;
-                    txtRawBody.Visibility = Visibility.Collapsed;
-                    txtEmpty.Visibility = Visibility.Collapsed;
-                    dtgridContentSizer.TargetControl = dtgridBodyItems;
-                }
-                break;
-            default:
-                txtRawBody.Visibility = Visibility.Visible;
-                dtgridBodyItems.Visibility = Visibility.Collapsed;
-                txtEmpty.Visibility = Visibility.Collapsed;
-                dtgridContentSizer.TargetControl = txtRawBody;
-                break;
-        }
-    }
-
-    private void ApplyJsonFormatting(Microsoft.UI.Text.RichEditTextDocument document)
-    {
-        string text;
-        document.GetText(Microsoft.UI.Text.TextGetOptions.None, out text);
-
-        // Simple JSON syntax highlighting
-        var keywords = new[] { "{", "}", "[", "]", ":", "," };
-        var keywordColor = Windows.UI.Color.FromArgb(255, 157, 221, 252);
-        var stringColor = Windows.UI.Color.FromArgb(255, 205, 144, 122);
-
-        foreach (var keyword in keywords)
-        {
-            int startIndex = 0;
-            while ((startIndex = text.IndexOf(keyword, startIndex)) != -1)
-            {
-                var range = document.GetRange(startIndex, startIndex + keyword.Length);
-                range.CharacterFormat.ForegroundColor = keywordColor;
-                startIndex += keyword.Length;
-            }
-        }
-
-        // Highlight strings
-        int stringStart = -1;
-        for (int i = 0; i < text.Length; i++)
-        {
-            if (text[i] == '\"')
-            {
-                if (stringStart == -1)
-                {
-                    stringStart = i;
-                }
-                else
-                {
-                    var range = document.GetRange(stringStart, i + 1);
-                    range.CharacterFormat.ForegroundColor = stringColor;
-                    stringStart = -1;
-                }
-            }
-        }
-    }
-
-    private void ApplyXmlFormatting(Microsoft.UI.Text.RichEditTextDocument document)
-    {
-        string text;
-        document.GetText(Microsoft.UI.Text.TextGetOptions.None, out text);
-
-        // Simple XML syntax highlighting
-        var tagColor = Windows.UI.Color.FromArgb(255, 157, 221, 252);
-        var attributeColor = Windows.UI.Color.FromArgb(255, 205, 144, 122);
-        var valueColor = Windows.UI.Color.FromArgb(255, 182, 205, 170);
-
-        // Highlight tags
-        int tagStart = -1;
-        for (int i = 0; i < text.Length; i++)
-        {
-            if (text[i] == '<')
-            {
-                tagStart = i;
-            }
-            else if (text[i] == '>' && tagStart != -1)
-            {
-                var range = document.GetRange(tagStart, i + 1);
-                range.CharacterFormat.ForegroundColor = tagColor;
-                tagStart = -1;
-            }
-        }
-
-        // Highlight attributes and values
-        bool inAttribute = false;
-        for (int i = 0; i < text.Length; i++)
-        {
-            if (text[i] == '=')
-            {
-                var range = document.GetRange(i - 1, i);
-                range.CharacterFormat.ForegroundColor = attributeColor;
-                inAttribute = true;
-            }
-            else if (text[i] == '\"' && inAttribute)
-            {
-                int valueStart = i;
-                i++;
-                while (i < text.Length && text[i] != '\"')
-                {
-                    i++;
-                }
-                var range = document.GetRange(valueStart, i + 1);
-                range.CharacterFormat.ForegroundColor = valueColor;
-                inAttribute = false;
-            }
-        }
-    }
-
-    private void RemoveAllFormatting(Microsoft.UI.Text.RichEditTextDocument document)
-    {
-        Microsoft.UI.Text.ITextRange range = document.GetRange(0, Microsoft.UI.Text.TextConstants.MaxUnitCount);
-
-        // Reset character formatting
-        range.CharacterFormat.Bold = Microsoft.UI.Text.FormatEffect.Off;
-        range.CharacterFormat.Italic = Microsoft.UI.Text.FormatEffect.Off;
-        range.CharacterFormat.Underline = Microsoft.UI.Text.UnderlineType.None;
-        range.CharacterFormat.Strikethrough = Microsoft.UI.Text.FormatEffect.Off;
-        range.CharacterFormat.ForegroundColor = Microsoft.UI.Colors.White;
-        range.CharacterFormat.BackgroundColor = Microsoft.UI.Colors.Transparent;
-        range.CharacterFormat.FontStretch = FontStretch.Normal;
-        range.CharacterFormat.FontStyle = FontStyle.Normal;
-        range.CharacterFormat.Size = 12; // Default size
-
-        // Reset paragraph formatting
-        range.ParagraphFormat.Alignment = Microsoft.UI.Text.ParagraphAlignment.Left;
-        range.ParagraphFormat.RightIndent = 0;
-        range.ParagraphFormat.SpaceAfter = 0;
-        range.ParagraphFormat.SpaceBefore = 0;
-    }
+    #endregion    
 
 }
