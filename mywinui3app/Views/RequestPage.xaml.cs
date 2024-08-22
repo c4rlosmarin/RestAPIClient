@@ -262,7 +262,7 @@ public sealed partial class RequestPage : Page
 
     private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        // Code to execute when the page is loaded
+        // TODO: Code to execute when the page is loaded, trying to fix the datagrid header bug
         dtgridParameters.Visibility = Visibility.Collapsed;
         dtgridParameters.Visibility = Visibility.Visible;
 
@@ -275,8 +275,8 @@ public sealed partial class RequestPage : Page
         {
             ViewModel = viewModelLocator.CreateRequestModel(request.RequestId);
             ViewModel.IsExistingRequest = true;
-            ViewModel.Initialize(request.RequestId, request);
-            txtRawBody.TextDocument.SetText(Microsoft.UI.Text.TextSetOptions.None, request.RawBody);
+            ViewModel.Initialize(request:request);
+            txtRawBody.TextDocument.SetText(Microsoft.UI.Text.TextSetOptions.None, ViewModel.RawBody);
         }
         else
         {
