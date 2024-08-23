@@ -50,7 +50,7 @@ public sealed partial class CollectionsPage : Page
         {
             foreach (TabItem item in tabView.TabItems)
             {
-                if (item.Title == request.Name)
+                if (item.Id == request.RequestId)
                 {
                     TabViewItem existingItem = tabView.ContainerFromItem(item) as TabViewItem;
                     existingItem.IsSelected = true;
@@ -58,7 +58,7 @@ public sealed partial class CollectionsPage : Page
                 }
             }
 
-            TabsViewModel.Tabs.Add(new TabItem() { Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(request.SelectedMethod.Name)) });
+            TabsViewModel.Tabs.Add(new TabItem() { Id = request.RequestId, Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(request.SelectedMethod.Name)) });
             frame.Navigate(typeof(RequestPage), request);
         }
 
@@ -192,6 +192,7 @@ public sealed partial class CollectionsPage : Page
 
     private void treeCollections_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
     {
+        treeCollections.SelectionChanged -= treeCollections_SelectionChanged;
         if (treeCollections.SelectedNode is not null)
         {
             var selectedTreeviewItem = treeCollections.SelectedNode.Content;
@@ -204,6 +205,7 @@ public sealed partial class CollectionsPage : Page
                 }
             }
         }
+        treeCollections.SelectionChanged += treeCollections_SelectionChanged;
     }
 
     #endregion

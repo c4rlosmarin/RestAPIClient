@@ -168,7 +168,7 @@
                     <controls:DataGridTemplateColumn Header="Header" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
