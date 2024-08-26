@@ -263,9 +263,9 @@ public sealed partial class RequestPage : Page
     private void Page_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         // TODO: Code to execute when the page is loaded, trying to fix the datagrid header bug
-        dtgridParameters.Visibility = Visibility.Collapsed;
-        dtgridParameters.Visibility = Visibility.Visible;
-
+        // TODO: Warning, this caused a bug while leaving it fixed to the dtgridParameters control
+        //dtgridParameters.Visibility = Visibility.Collapsed;
+        //dtgridParameters.Visibility = Visibility.Visible;
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

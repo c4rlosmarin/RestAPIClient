@@ -111,7 +111,7 @@
             <TabView x:Name="tabView" Grid.Column="1" Grid.Row ="1" TabItemsSource="{x:Bind TabsViewModel.Tabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{x:Bind TabsViewModel.SelectedTabItem, Mode=TwoWay}" Margin="0,-58" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" SelectionChanged="tabView_SelectionChanged" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <TabView.TabItemTemplate>
                     <DataTemplate x:DataType="viewmodels:TabItem">
-                        <TabViewItem HeaderTemplate="{StaticResource TabViewItemHeaderTemplate}" />
+                        <TabViewItem HeaderTemplate="{StaticResource TabViewItemHeaderTemplate}"/>
                     </DataTemplate>
                 </TabView.TabItemTemplate>
             </TabView>

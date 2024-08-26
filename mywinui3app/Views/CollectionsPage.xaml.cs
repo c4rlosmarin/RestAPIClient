@@ -40,10 +40,12 @@ public sealed partial class CollectionsPage : Page
         var foregroundColorHelper = new MethodForegroundColor();
         //TODO: Implementar el estilo y texto del tabViewItem de forma dinámica
         Frame frame = new Frame();
+        TabItem newTabItem;
 
         if (request == null)
         {
-            TabsViewModel.Tabs.Add(new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GET) });
+            newTabItem = new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GET) };
+            TabsViewModel.Tabs.Add(newTabItem);
             frame.Navigate(typeof(RequestPage));
         }
         else
@@ -52,33 +54,37 @@ public sealed partial class CollectionsPage : Page
             {
                 if (item.Id == request.RequestId)
                 {
-                    TabViewItem existingItem = tabView.ContainerFromItem(item) as TabViewItem;
-                    existingItem.IsSelected = true;
+                    TabsViewModel.SelectedTabItem = item;
                     return;
                 }
             }
 
-            TabsViewModel.Tabs.Add(new TabItem() { Id = request.RequestId, Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(request.SelectedMethod.Name)) });
+            newTabItem = new TabItem() { Id = request.RequestId, Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(request.SelectedMethod.Name)) };
+            TabsViewModel.Tabs.Add(newTabItem);
             frame.Navigate(typeof(RequestPage), request);
         }
 
-        tabView.SelectedIndex = TabsViewModel.Tabs.Count - 1;
-        tabView.UpdateLayout();
+        tabView.SelectionChanged -= tabView_SelectionChanged;
+
+        TabsViewModel.SelectedTabItem = newTabItem;
 
         TabViewItem newItem = tabView.ContainerFromItem(tabView.SelectedItem) as TabViewItem;
         newItem.Content = frame;
-        newItem.IsSelected = true;
 
         var originalSelectedItem = tabView.SelectedItem;
         tabView.SelectedItem = null;
         tabView.SelectedItem = originalSelectedItem;
+
+        tabView.SelectionChanged += tabView_SelectionChanged;
     }
 
     private void RefreshSelectedCollection()
     {
+        treeCollections.SelectionChanged -= treeCollections_SelectionChanged;
+
         if (tabView.SelectedItem != null)
         {
-            var node = FindTreeViewItemByName(treeCollections, ((TabItem)tabView.SelectedItem).Title);
+            var node = FindTreeViewItemByName(treeCollections, ((TabItem)tabView.SelectedItem).Id, ((TabItem)tabView.SelectedItem).Title);
 
             if (node is not null)
                 treeCollections.SelectedItem = node.DataContext;
@@ -90,13 +96,16 @@ public sealed partial class CollectionsPage : Page
             if (treeCollections.SelectedNode.Parent != null)
                 treeCollections.SelectedNode = treeCollections.SelectedNode.Parent;
         }
+
+        treeCollections.SelectionChanged += treeCollections_SelectionChanged;
     }
 
-    private TreeViewItem FindTreeViewItemByName(TreeView treeView, string name)
+    private TreeViewItem FindTreeViewItemByName(TreeView treeView, string requestId, string name)
     {
         foreach (var rootNode in treeView.RootNodes)
         {
-            var result = FindTreeViewItemByNameRecursive((TreeViewItem)treeView.ContainerFromNode(rootNode), name);
+            var result = FindTreeViewItemByNameRecursive((TreeViewItem)treeView.ContainerFromNode(rootNode), requestId, name);
+
             if (result != null)
             {
                 return result;
@@ -105,24 +114,24 @@ public sealed partial class CollectionsPage : Page
         return null;
     }
 
-    private TreeViewItem FindTreeViewItemByNameRecursive(TreeViewItem treeViewItem, string name)
+    private TreeViewItem FindTreeViewItemByNameRecursive(TreeViewItem treeViewItem, string requestId, string name)
     {
         if (treeViewItem == null) return null;
 
-        var viewModel = treeViewItem.DataContext;
+        var item = treeViewItem.DataContext;
 
-        switch (viewModel)
+        switch (item)
         {
             case CollectionItem:
-                if (viewModel != null && ((CollectionItem)viewModel).Name == name)
+                if (item != null && ((CollectionItem)item).Name == name)
                     return treeViewItem;
                 break;
             case ViewModels.GroupItem:
-                if (viewModel != null && ((ViewModels.GroupItem)viewModel).Name == name)
+                if (item != null && ((ViewModels.GroupItem)item).Name == name)
                     return treeViewItem;
                 break;
             case RequestItem:
-                if (viewModel != null && ((ViewModels.RequestItem)viewModel).Name == name)
+                if (item != null && ((RequestItem)item).Name == name && ((RequestItem)item).RequestId == requestId)
                     return treeViewItem;
                 break;
         }
@@ -131,7 +140,7 @@ public sealed partial class CollectionsPage : Page
         foreach (var childNode in node.Children)
         {
             var childTreeViewItem = treeCollections.ContainerFromNode(childNode) as TreeViewItem;
-            var result = FindTreeViewItemByNameRecursive(childTreeViewItem, name);
+            var result = FindTreeViewItemByNameRecursive(childTreeViewItem, requestId, name);
             if (result != null)
             {
                 return result;
@@ -178,7 +187,11 @@ public sealed partial class CollectionsPage : Page
 
     private void tabView_AddTabButtonClick(TabView sender, object args)
     {
+        tabView.SelectionChanged -= tabView_SelectionChanged;
+
         CreateRequestTab(null);
+
+        tabView.SelectionChanged += tabView_SelectionChanged;
     }
 
     private void tabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
@@ -187,7 +200,11 @@ public sealed partial class CollectionsPage : Page
     }
     private void tabView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        tabView.SelectionChanged -= tabView_SelectionChanged;
+
         RefreshSelectedCollection();
+
+        tabView.SelectionChanged += tabView_SelectionChanged;
     }
 
     private void treeCollections_SelectionChanged(TreeView sender, TreeViewSelectionChangedEventArgs args)
