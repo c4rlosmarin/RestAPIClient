@@ -16,7 +16,10 @@ using Windows.UI.Text;
 namespace mywinui3app.Views;
 public sealed partial class RequestPage : Page
 {
-    //TODO: Implementar readonly feature para requests existentes
+    //TODO: Implementar readonly feature para value fields en requests existentes
+    //TODO: Agregar método al título del menú requestItem
+    //TODO: Agregar feature de validación para cancelar la edición de la URL cuando salga de los parámetros permitidos según la documentación. Agreagar notificación post validación
+
     #region << Variables >>
 
     public RequestViewModel? ViewModel
@@ -266,6 +269,7 @@ public sealed partial class RequestPage : Page
         // TODO: Warning, this caused a bug while leaving it fixed to the dtgridParameters control
         //dtgridParameters.Visibility = Visibility.Collapsed;
         //dtgridParameters.Visibility = Visibility.Visible;
+
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -518,13 +522,18 @@ public sealed partial class RequestPage : Page
         double newJsonPanelHeight;
         double newHeadersPanelHeight;
 
+        if (newRequestDataGridHeight >= 665)
+            newRequestDataGridHeight = 675;
+        else if (newRequestDataGridHeight <= 38)
+            newRequestDataGridHeight = 28;
+
         if (newRequestDataGridHeight > datagridHeight)
         {
-            newJsonPanelHeight = gridResponseJson.Height - (newRequestDataGridHeight - datagridHeight);
+            newJsonPanelHeight = gridResponseJson.ActualHeight - (newRequestDataGridHeight - datagridHeight);
             if (newJsonPanelHeight >= 0)
                 gridResponseJson.Height -= (newRequestDataGridHeight - datagridHeight);
 
-            newHeadersPanelHeight = gridResponseHeaders.Height - (newRequestDataGridHeight - datagridHeight);
+            newHeadersPanelHeight = gridResponseHeaders.ActualHeight - (newRequestDataGridHeight - datagridHeight);
             if (newHeadersPanelHeight >= 0)
                 gridResponseHeaders.Height -= (newRequestDataGridHeight - datagridHeight);
         }
@@ -533,6 +542,7 @@ public sealed partial class RequestPage : Page
             gridResponseJson.Height += (datagridHeight - newRequestDataGridHeight);
             gridResponseHeaders.Height += (datagridHeight - newRequestDataGridHeight);
         }
+
         datagridHeight = newRequestDataGridHeight;
         dtgridParameters.Height = datagridHeight;
         dtgridHeaders.Height = datagridHeight;

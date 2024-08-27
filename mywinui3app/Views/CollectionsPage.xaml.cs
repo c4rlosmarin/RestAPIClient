@@ -76,6 +76,8 @@ public sealed partial class CollectionsPage : Page
         tabView.SelectedItem = originalSelectedItem;
 
         tabView.SelectionChanged += tabView_SelectionChanged;
+
+        treeCollections.SelectedItem = null;
     }
 
     private void RefreshSelectedCollection()

@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using static System.Net.WebRequestMethods;
 
 namespace mywinui3app.ViewModels;
 
@@ -109,50 +108,5 @@ public partial class CollectionsViewModel : ObservableRecipient
         collection.Groups.Add(group);
 
         Collections.Add(collection);
-    }
-}
-
-public partial class CollectionItem : ObservableRecipient
-{
-    [ObservableProperty]
-    public string name;
-    [ObservableProperty]
-    public string description;
-    [ObservableProperty]
-    public DateTime? creationTime;
-    [ObservableProperty]
-    public DateTime? lastModifiedTime;
-    [ObservableProperty]
-    public ObservableCollection<GroupItem> groups;
-}
-
-public partial class GroupItem : ObservableRecipient
-{
-    [ObservableProperty]
-    public string name;
-    [ObservableProperty]
-    public ObservableCollection<RequestItem> requests;
-    [ObservableProperty]
-    public ObservableCollection<string> requestsList;
-}
-
-public partial class RequestItem : ObservableRecipient
-{
-    public string RequestId
-    {
-        get; set;
-    }
-
-    [ObservableProperty]
-    public string name;
-
-    public bool IsExistingRequest
-    {
-        get; set;
-    }
-    
-    public MethodsItemViewModel SelectedMethod
-    {
-        get; set;
     }
 }
