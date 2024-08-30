@@ -49,7 +49,6 @@ public sealed partial class RequestPage : Page
 
     private void SetTabViewHeaderTemplate(object sender, bool IsEditing)
     {
-        var foregroundColorHelper = new MethodForegroundColor();
         TabView? myTabView = null;
 
         DependencyObject parent = null;
@@ -76,7 +75,7 @@ public sealed partial class RequestPage : Page
 
             if (item != null)
             {
-                item.Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(ViewModel.SelectedMethod.Name));
+                item.Foreground = ColorHelper.CreateSolidColorBrushFromHex(ForegroundColorHelper.GetColorByMethod(ViewModel.SelectedMethod.Name));
                 item.Method = ViewModel.SelectedMethod.Name;
             }
         }

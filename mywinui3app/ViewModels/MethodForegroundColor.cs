@@ -1,16 +1,16 @@
 ﻿namespace mywinui3app.ViewModels;
 
-public class MethodForegroundColor
+public static class ForegroundColorHelper
 {
-    public string GET = "#22B14C";
-    public string POST = "#218BEB";
-    public string PUT = "FF8C00";
-    public string PATCH = "#A347D1";
-    public string DELETE = "#ED2B2B";
-    public string OPTIONS = "#FF6593";
-    public string HEAD = "#2E7817";
+    public static string GET = "#22B14C";
+    public static string POST = "#218BEB";
+    public static string PUT = "#FF8C00";
+    public static string PATCH = "#A347D1";
+    public static string DELETE = "#ED2B2B";
+    public static string OPTIONS = "#FF6593";
+    public static string HEAD = "#6BA10C";
 
-    public string GetColorByMethod(string method)
+    public static string GetColorByMethod(string method)
     {
         switch (method)
         {
@@ -30,4 +30,15 @@ public class MethodForegroundColor
                 return HEAD;
         }
     }
+}
+
+public enum Method
+{
+    GET,
+    POST,
+    PUT,
+    PATCH,
+    DELETE,
+    OPTIONS,
+    HEAD
 }

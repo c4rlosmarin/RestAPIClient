@@ -17,7 +17,7 @@ public partial class RequestItem : ObservableRecipient
         get; set;
     }
     
-    public MethodsItemViewModel SelectedMethod
+    public MethodsItemViewModel Method
     {
         get; set;
     }

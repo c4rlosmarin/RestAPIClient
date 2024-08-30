@@ -37,14 +37,13 @@ public sealed partial class CollectionsPage : Page
 
     private void CreateRequestTab(RequestItem? request)
     {
-        var foregroundColorHelper = new MethodForegroundColor();
         //TODO: Implementar el estilo y texto del tabViewItem de forma dinámica
         Frame frame = new Frame();
         TabItem newTabItem;
 
         if (request == null)
         {
-            newTabItem = new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GET) };
+            newTabItem = new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(ForegroundColorHelper.GET) };
             TabsViewModel.Tabs.Add(newTabItem);
             frame.Navigate(typeof(RequestPage));
         }
@@ -59,7 +58,7 @@ public sealed partial class CollectionsPage : Page
                 }
             }
 
-            newTabItem = new TabItem() { Id = request.RequestId, Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.SelectedMethod.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(foregroundColorHelper.GetColorByMethod(request.SelectedMethod.Name)) };
+            newTabItem = new TabItem() { Id = request.RequestId, Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.Method.Name, Foreground = ColorHelper.CreateSolidColorBrushFromHex(ForegroundColorHelper.GetColorByMethod(request.Method.Name)) };
             TabsViewModel.Tabs.Add(newTabItem);
             frame.Navigate(typeof(RequestPage), request);
         }

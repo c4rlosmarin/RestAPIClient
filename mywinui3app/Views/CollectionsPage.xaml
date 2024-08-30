@@ -70,7 +70,7 @@
                 <DataTemplate x:Key="RequestTemplate" x:DataType="viewmodels:RequestItem">
                     <TreeViewItem AutomationProperties.Name="{x:Bind Name}">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="0,0,10,0"/>
+                            <TextBlock Text="{x:Bind Method.Name}" Foreground="{x:Bind Method.Foreground}" Margin="0,0,10,0"/>
                             <TextBlock Text="{x:Bind Name, Mode=TwoWay}" TextTrimming="CharacterEllipsis"  Width="248"/>
                         </StackPanel>
                         <ToolTipService.ToolTip>
