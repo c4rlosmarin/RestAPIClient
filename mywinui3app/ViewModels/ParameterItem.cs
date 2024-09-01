@@ -24,7 +24,6 @@ public partial class ParameterItem : ObservableRecipient
     public string isDescriptionReadyOnly;
     [ObservableProperty]
     public string deleteButtonVisibility;
-
     private readonly WeakReferenceMessenger _messenger;
     public ParameterItem()
     {

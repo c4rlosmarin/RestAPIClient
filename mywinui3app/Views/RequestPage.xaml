@@ -135,7 +135,7 @@
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
 
-                    <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
+                    <controls:DataGridTemplateColumn IsReadOnly="True" Width="50" Visibility="{x:Bind ViewModel.DeleteColumnVisibility}">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
                                 <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Command="{x:Bind DeleteParameterItemCommand}" CommandParameter="{x:Bind}">
@@ -176,7 +176,7 @@
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <TextBox Grid.Column="0" Text="{x:Bind Value, Mode=TwoWay}" Visibility="{x:Bind DateTextboxVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                    <TextBox Grid.Column="0" Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{x:Bind DateTextboxVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
                                     <DatePicker Name="datepickValue" Grid.Column="0" Visibility="{x:Bind DatePickerVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
 
                                     <Grid Grid.Column="1" ColumnDefinitions="5,Auto,5" Visibility="{x:Bind UTCVisibility, Mode=TwoWay}">
@@ -221,7 +221,7 @@
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
 
-                    <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
+                    <controls:DataGridTemplateColumn IsReadOnly="True" Width="50" Visibility="{x:Bind ViewModel.DeleteColumnVisibility}">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Command="{x:Bind DeleteHeaderItemCommand}" CommandParameter="{x:Bind}">
@@ -274,7 +274,7 @@
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
 
-                    <controls:DataGridTemplateColumn IsReadOnly="True" Width="50">
+                    <controls:DataGridTemplateColumn IsReadOnly="True" Width="50" Visibility="{x:Bind ViewModel.DeleteColumnVisibility}">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
                                 <Button x:Name="btnDeleteParameter" HorizontalAlignment="Center" Visibility="{x:Bind DeleteButtonVisibility, Mode=OneWay}" Command="{x:Bind DeleteBodyItemCommand}" CommandParameter="{x:Bind}">
