@@ -1,5 +1,6 @@
 using CommunityToolkit.WinUI.UI.Automation.Peers;
 using CommunityToolkit.WinUI.UI.Controls;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Automation.Provider;
@@ -10,15 +11,14 @@ using Microsoft.UI.Xaml.Navigation;
 using mywinui3app.Helpers;
 using mywinui3app.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Devices.Display;
+using Windows.Devices.Enumeration;
 using Windows.System;
 using Windows.UI.Text;
 
 namespace mywinui3app.Views;
 public sealed partial class RequestPage : Page
 {
-    //TODO: Implementar readonly feature para value fields en requests existentes
-    //TODO: Agregar método al título del menú requestItem
-    //TODO: Agregar feature de validación para cancelar la edición de la URL cuando salga de los parámetros permitidos según la documentación. Agreagar notificación post validación
 
     #region << Variables >>
 
@@ -278,7 +278,7 @@ public sealed partial class RequestPage : Page
         {
             ViewModel = viewModelLocator.CreateRequestModel(request.RequestId);
             ViewModel.IsExistingRequest = true;
-            ViewModel.Initialize(request:request);
+            ViewModel.Initialize(request: request);
             txtRawBody.TextDocument.SetText(Microsoft.UI.Text.TextSetOptions.None, ViewModel.RawBody);
         }
         else
@@ -517,32 +517,33 @@ public sealed partial class RequestPage : Page
 
     private void dtgridRequest_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        var newRequestDataGridHeight = e.NewSize.Height;
+        var currentRequestDataGridHeight = e.NewSize.Height;
+        var maximumDatagridHeight = App.MainWindow.Height - 380;
         double newJsonPanelHeight;
         double newHeadersPanelHeight;
 
-        if (newRequestDataGridHeight >= 665)
-            newRequestDataGridHeight = 675;
-        else if (newRequestDataGridHeight <= 38)
-            newRequestDataGridHeight = 28;
+        if (currentRequestDataGridHeight >= maximumDatagridHeight)
+            currentRequestDataGridHeight = maximumDatagridHeight;
+        else if (currentRequestDataGridHeight <= 38)
+            currentRequestDataGridHeight = 28;
 
-        if (newRequestDataGridHeight > datagridHeight)
+        if (currentRequestDataGridHeight > datagridHeight)
         {
-            newJsonPanelHeight = gridResponseJson.ActualHeight - (newRequestDataGridHeight - datagridHeight);
+            newJsonPanelHeight = gridResponseJson.ActualHeight - (currentRequestDataGridHeight - datagridHeight);
             if (newJsonPanelHeight >= 0)
-                gridResponseJson.Height -= (newRequestDataGridHeight - datagridHeight);
+                gridResponseJson.Height -= (currentRequestDataGridHeight - datagridHeight);
 
-            newHeadersPanelHeight = gridResponseHeaders.ActualHeight - (newRequestDataGridHeight - datagridHeight);
+            newHeadersPanelHeight = gridResponseHeaders.ActualHeight - (currentRequestDataGridHeight - datagridHeight);
             if (newHeadersPanelHeight >= 0)
-                gridResponseHeaders.Height -= (newRequestDataGridHeight - datagridHeight);
+                gridResponseHeaders.Height -= (currentRequestDataGridHeight - datagridHeight);
         }
-        else if (newRequestDataGridHeight < datagridHeight)
+        else if (currentRequestDataGridHeight < datagridHeight)
         {
-            gridResponseJson.Height += (datagridHeight - newRequestDataGridHeight);
-            gridResponseHeaders.Height += (datagridHeight - newRequestDataGridHeight);
+            gridResponseJson.Height += (datagridHeight - currentRequestDataGridHeight);
+            gridResponseHeaders.Height += (datagridHeight - currentRequestDataGridHeight);
         }
 
-        datagridHeight = newRequestDataGridHeight;
+        datagridHeight = currentRequestDataGridHeight;
         dtgridParameters.Height = datagridHeight;
         dtgridHeaders.Height = datagridHeight;
         dtgridBodyItems.Height = datagridHeight;
