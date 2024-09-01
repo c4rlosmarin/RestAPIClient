@@ -9,11 +9,15 @@ public partial class ParameterItem : ObservableRecipient
     [ObservableProperty]
     public bool isEnabled;
     [ObservableProperty]
+    public string isEnabledActive = "true";
+    [ObservableProperty]
     public string key;
     [ObservableProperty]
-    public string isKeyReadyOnly;
+    public string isKeyReadyOnly = "false";
     [ObservableProperty]
     public string value;
+    [ObservableProperty]
+    public string isValueReadyOnly = "false";
     [ObservableProperty]
     public string description;
     [ObservableProperty]
@@ -39,6 +43,7 @@ public partial class ParameterItem : ObservableRecipient
             _messenger.Send(message);
         }
     }
+
 
     partial void OnValueChanged(string value)
     {

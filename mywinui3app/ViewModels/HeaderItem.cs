@@ -9,6 +9,8 @@ public partial class HeaderItem : ObservableRecipient
     [ObservableProperty]
     public bool isEnabled;
     [ObservableProperty]
+    public string isEnabledActive = "true";
+    [ObservableProperty]
     public string key;
     [ObservableProperty]
     public string isKeyReadyOnly;
