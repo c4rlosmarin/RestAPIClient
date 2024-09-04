@@ -1,18 +1,16 @@
 using CommunityToolkit.WinUI.UI.Automation.Peers;
 using CommunityToolkit.WinUI.UI.Controls;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
 using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using mywinui3app.Helpers;
 using mywinui3app.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Devices.Display;
-using Windows.Devices.Enumeration;
 using Windows.System;
 using Windows.UI.Text;
 
@@ -32,6 +30,11 @@ public sealed partial class RequestPage : Page
     DataPackage dataPackage = new DataPackage();
 
     ViewModelLocator viewModelLocator = new ViewModelLocator();
+    TextPointer startPointer;
+    TextPointer endPointer;
+    Windows.Foundation.Rect startRect;
+    Windows.Foundation.Rect endRect;
+    string selectedText;
     #endregion
 
     #region << Constructor >>
@@ -631,6 +634,25 @@ public sealed partial class RequestPage : Page
         }
     }
 
+    private void txtJson_SelectionChanged(object sender, RoutedEventArgs e)
+    {
+        selectedText = txtJson.SelectedText;
+        if (!string.IsNullOrEmpty(selectedText))
+        {
+            startPointer = txtJson.SelectionStart;
+            endPointer = txtJson.SelectionEnd;
+            startRect = startPointer.GetCharacterRect(LogicalDirection.Forward);
+            endRect = endPointer.GetCharacterRect(LogicalDirection.Forward);
+
+            if (startPointer.LogicalDirection == LogicalDirection.Backward && endPointer.LogicalDirection == LogicalDirection.Forward)
+                // Selection starts from the begining
+                scrollResponseBody.ChangeView(null, endRect.Top, null);
+            else
+                // Selection starts from the end
+                scrollResponseBody.ChangeView(null, startRect.Top, null);
+        }
+    }
+
     private void TabViewItem_Loaded(object sender, RoutedEventArgs e)
     {
         if (sender is TabViewItem tabViewItem)
@@ -665,6 +687,8 @@ public sealed partial class RequestPage : Page
         ViewModel.RawBody = rawBody;
     }
 
-    #endregion    
 
+    #endregion
+
+    
 }
