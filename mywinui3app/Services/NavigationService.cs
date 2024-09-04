@@ -1,10 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-
-using CommunityToolkit.WinUI.UI.Animations;
-
+using CommunityToolkit.WinUI.Animations;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-
 using mywinui3app.Contracts.Services;
 using mywinui3app.Contracts.ViewModels;
 using mywinui3app.Helpers;
