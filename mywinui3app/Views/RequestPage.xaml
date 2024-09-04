@@ -347,10 +347,10 @@
                 </Grid>
             </Grid>
 
-            <Grid x:Name="gridResponseJson" Grid.Row="2">
+            <Grid x:Name="gridResponseBody" Grid.Row="2">
                 <ScrollViewer x:Name="scrollResponseBody" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" VerticalAlignment="Stretch">
                     <Border VerticalAlignment="Stretch">
-                        <RichTextBlock x:Name="txtJson" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="txtJson_SelectionChanged">
+                        <RichTextBlock x:Name="txtResponseBody" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="txtResponseBody_SelectionChanged">
                             <Paragraph>
                                 <Run Text="{x:Bind ViewModel.Response.Body, Mode=OneWay}"/>
                             </Paragraph>

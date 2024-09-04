@@ -163,6 +163,6 @@
     <value>About</value>
   </data>
   <data name="Settings_AboutContact.Text" xml:space="preserve">
-    <value>Please contact camarin@microsoft.com for additional information.</value>
+    <value>Please contact Carlos Marin at camarin@microsoft.com for additional information.</value>
   </data>
 </root>

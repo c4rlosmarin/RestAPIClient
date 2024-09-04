@@ -12,10 +12,10 @@
     <Grid Margin="35,0">
         <StackPanel Margin="{StaticResource XSmallTopMargin}">
             <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" />
-            <TextBlock x:Uid="Settings_AboutDescription" Margin="{StaticResource XSmallTopMargin}" Style="{ThemeResource BodyTextBlockStyle}" />
+            <!--<TextBlock x:Uid="Settings_AboutDescription" Margin="{StaticResource XSmallTopMargin}" Style="{ThemeResource BodyTextBlockStyle}" />-->
             <TextBlock x:Uid="Settings_AboutContact" Margin="{StaticResource XSmallTopMargin}" Style="{ThemeResource BodyTextBlockStyle}" />
             
-            <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
+            <!--<HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />-->
         </StackPanel>
     </Grid>
 </Page>

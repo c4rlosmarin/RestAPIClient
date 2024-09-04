@@ -532,9 +532,9 @@ public sealed partial class RequestPage : Page
 
         if (currentRequestDataGridHeight > datagridHeight)
         {
-            newJsonPanelHeight = gridResponseJson.ActualHeight - (currentRequestDataGridHeight - datagridHeight);
+            newJsonPanelHeight = gridResponseBody.ActualHeight - (currentRequestDataGridHeight - datagridHeight);
             if (newJsonPanelHeight >= 0)
-                gridResponseJson.Height -= (currentRequestDataGridHeight - datagridHeight);
+                gridResponseBody.Height -= (currentRequestDataGridHeight - datagridHeight);
 
             newHeadersPanelHeight = gridResponseHeaders.ActualHeight - (currentRequestDataGridHeight - datagridHeight);
             if (newHeadersPanelHeight >= 0)
@@ -542,7 +542,7 @@ public sealed partial class RequestPage : Page
         }
         else if (currentRequestDataGridHeight < datagridHeight)
         {
-            gridResponseJson.Height += (datagridHeight - currentRequestDataGridHeight);
+            gridResponseBody.Height += (datagridHeight - currentRequestDataGridHeight);
             gridResponseHeaders.Height += (datagridHeight - currentRequestDataGridHeight);
         }
 
@@ -624,23 +624,23 @@ public sealed partial class RequestPage : Page
         switch (tabResponse.SelectedIndex)
         {
             case 0:
-                gridResponseJson.Visibility = Visibility.Visible;
+                gridResponseBody.Visibility = Visibility.Visible;
                 gridResponseHeaders.Visibility = Visibility.Collapsed;
                 break;
             case 1:
-                gridResponseJson.Visibility = Visibility.Collapsed;
+                gridResponseBody.Visibility = Visibility.Collapsed;
                 gridResponseHeaders.Visibility = Visibility.Visible;
                 break;
         }
     }
 
-    private void txtJson_SelectionChanged(object sender, RoutedEventArgs e)
+    private void txtResponseBody_SelectionChanged(object sender, RoutedEventArgs e)
     {
-        selectedText = txtJson.SelectedText;
+        selectedText = txtResponseBody.SelectedText;
         if (!string.IsNullOrEmpty(selectedText))
         {
-            startPointer = txtJson.SelectionStart;
-            endPointer = txtJson.SelectionEnd;
+            startPointer = txtResponseBody.SelectionStart;
+            endPointer = txtResponseBody.SelectionEnd;
             startRect = startPointer.GetCharacterRect(LogicalDirection.Forward);
             endRect = endPointer.GetCharacterRect(LogicalDirection.Forward);
 
