@@ -1,4 +1,4 @@
-# PostClient
+# ![PostClient](PostClient/Assets/SmallIcon.png) PostClient
 
 An Azure oriented application designed to streamline our workflow by providing a user-friendly interface for making REST API calls.
 
@@ -48,3 +48,11 @@ We have an exciting roadmap of features planned for PostClient, including:
 **Secure Local Collections:** We also plan to add a feature that allows users to save request collections securely and locally. These collections will be encrypted to ensure the privacy and integrity of your data. With this feature, you can organize and manage your requests in a more structured manner, enhancing productivity and collaboration within the team. You'll be able to save your work, share collections with team members, and maintain a history of requests and responses for future reference.
 
 These features will be designed to further improve the usability and functionality of PostClient, making it an even more powerful tool for our development and customer support efforts. I look forward to your feedback and suggestions as I work towards implementing these enhancements in time.
+
+# Reporting Issues and Feedback
+
+### Issues
+If you find any bugs when using PostClient, file an issue in our [GitHub repo](https://github.com/c4rlosmarin/PostClient/issues). Fill out the issue template with the appropriate information.
+
+### Feedback
+If there is a feature you would like to see in PostClient, file an issue in our [GitHub repo](https://github.com/c4rlosmarin/PostClient/issues).
