@@ -42,6 +42,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Private.Uri" Version="4.3.2" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
@@ -78,9 +79,5 @@
   
   <ItemGroup>
     <Resource Remove="Views\AboutPage.xaml" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\PostClient.Core\PostClient.Core.csproj" />
   </ItemGroup>
 </Project>

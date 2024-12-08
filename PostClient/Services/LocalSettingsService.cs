@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
-
 using PostClient.Contracts.Services;
-using PostClient.Core.Contracts.Services;
-using PostClient.Core.Helpers;
 using PostClient.Helpers;
 using PostClient.Models;
 

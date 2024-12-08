@@ -1,12 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
 using PostClient.Activation;
 using PostClient.Contracts.Services;
-using PostClient.Core.Contracts.Services;
-using PostClient.Core.Services;
-using PostClient.Helpers;
 using PostClient.Models;
 using PostClient.Services;
 using PostClient.ViewModels;
@@ -66,7 +62,7 @@ public partial class App : Application
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Core Services
-            services.AddSingleton<ISampleDataService, SampleDataService>();
+            //services.AddSingleton<ISampleDataService, SampleDataService>();
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
