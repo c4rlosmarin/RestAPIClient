@@ -6,9 +6,9 @@ PostClient offers several advantages that I believe will significantly enhance o
 
 **User-Friendly Interface:** PostClient is built with ease of use in mind. Its intuitive design allows team members to quickly understand and navigate the tool, reducing the time needed to make REST API calls. This user-friendly approach means that even those who are less familiar with API interactions can start using PostClient with minimal effort.
 
-**Handy Shortcuts:** The tool includes convenient shortcuts for common request parameters and headers, which will save us time and reduce the potential for errors. These shortcuts are designed to make our work faster and more accurate.
+**Handy Shortcuts:** The tool includes convenient features for common request parameters and headers, which will save us time and reduce the potential for errors. These shortcuts are designed to make our work faster and more accurate.
 
-**Enhanced Security with Offline Functionality:** PostClient operates entirely offline, ensuring that no data is ever stored in the cloud. By keeping all data local, we can guarantee the highest level of security and privacy for our projects. This is particularly important for our team as we handle sensitive information and need to maintain strict confidentiality.
+**Enhanced Security with Offline Functionality:** PostClient operates entirely offline, ensuring that no data is ever stored outside our working machines. By keeping all data local, we can guarantee the highest level of security and privacy during our support efforts. This is particularly important for our team as we handle sensitive information and need to maintain strict confidentiality.
 
 **Storage REST API Templates:** PostClient comes with a template of the Storage REST API definitions, allowing users to quickly navigate through and understand the API structure. This feature is particularly useful for those who are new to the Storage REST API.
 
@@ -33,9 +33,7 @@ PostClient is particularly beneficial for team members who need to interact with
 
 **Iterate as Needed:** Make any necessary adjustments to your requests and resend them as needed. PostClient makes it easy to modify and resend requests for testing and development purposes.
 
-**Provide Feedback:** As you use PostClient, please share your feedback and suggestions for improvement. Your input is valuable in helping us enhance the tool to better meet your needs.
-
-By following these steps, you should be able to quickly get up to speed with interacting with Azure REST APIs using PostClient. If you have any questions or need assistance, please do not hesitate to reach out.
+By following these steps, you should be able to quickly get up to speed with interacting with Azure REST APIs using PostClient.
 
 # Roadmap
 
@@ -55,4 +53,6 @@ These features will be designed to further improve the usability and functionali
 If you find any bugs when using PostClient, file an issue in our [GitHub repo](https://github.com/c4rlosmarin/PostClient/issues). Fill out the issue template with the appropriate information.
 
 ### Feedback
+**Provide Feedback:** As you use PostClient, please share your feedback and suggestions for improvement. Your input is valuable in helping us enhance the tool to better meet your needs.
+
 If there is a feature you would like to see in PostClient, file an issue in our [GitHub repo](https://github.com/c4rlosmarin/PostClient/issues).
