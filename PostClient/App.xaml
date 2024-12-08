@@ -1,0 +1,92 @@
+﻿<Application
+    x:Class="PostClient.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="/Styles/FontSizes.xaml" />
+                <ResourceDictionary Source="/Styles/Thickness.xaml" />
+                <ResourceDictionary Source="/Styles/TextBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Style x:Key="MyFontIconStyle" TargetType="FontIcon">
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}"/>
+                    </Style>
+
+                    <Style x:Key="MyTextBlockAccentStyle" TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Key="Dark">
+                    <Style x:Key="MyFontIconStyle" TargetType="FontIcon">
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorLight2}" />
+                    </Style>
+
+                    <Style x:Key="MyTextBlockAccentStyle" TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorLight2}"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <Style TargetType="TreeViewItem">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+            
+            <Style TargetType="RichTextBlock">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="ComboBox">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="ToolTip">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="13" />
+            </Style>
+
+            <Style x:Key="TitleTextBlockStyle2" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                <Setter Property="FontSize" Value="{StaticResource TitleTextBlockFontSize}" />
+                <Setter Property="Margin" Value="-20,0,0,0" />
+            </Style>
+
+            <Style x:Key="MyStatusCodeSuccessfulStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#22B14C"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
+            <Style x:Key="MyStatusCodeWarningStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="DarkOrange"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
+            <Style x:Key="MyStatusCodeErrorStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#ED2B2B"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
