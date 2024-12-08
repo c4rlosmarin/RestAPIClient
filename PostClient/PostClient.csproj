@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Icon.png" />
+    <Content Remove="Assets\SmallIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Styles\FontIcon.xaml" />
