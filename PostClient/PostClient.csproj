@@ -21,6 +21,9 @@
     <PackageIcon>Icon.ico</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\RequestPage.xaml" />
