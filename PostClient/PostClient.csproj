@@ -5,7 +5,7 @@
     <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>PostClient</RootNamespace>
-    <ApplicationIcon>Assets/WindowIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win-$(Platform)</RuntimeIdentifiers>
     <PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
@@ -18,11 +18,8 @@
     <WindowsPackageType>None</WindowsPackageType>
     <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
     <AssemblyName>Postclient</AssemblyName>
-    <PackageIcon>WindowIcon.ico</PackageIcon>
+    <PackageIcon>Icon.ico</PackageIcon>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Remove="Assets\WindowIcon.ico" />
-  </ItemGroup>
   <ItemGroup>
     <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Views\AboutPage.xaml" />
@@ -51,7 +48,7 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\WindowIcon.ico">
+    <None Update="Assets\Icon.ico">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

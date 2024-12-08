@@ -16,7 +16,7 @@ public sealed partial class MainWindow : WindowEx
         InitializeComponent();
 
         ((OverlappedPresenter)AppWindow.Presenter).Maximize();
-        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
+        AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Icon.ico"));
         Content = null;
         Title = "AppDisplayName".GetLocalized();
 
