@@ -46,7 +46,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox x:Name="txtUrl" Grid.Column="1" Margin="10,0" PlaceholderText="Enter URL" Text="{x:Bind ViewModel.URL.RawURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="txtUrl_GotFocus" LostFocus="txtUrl_LostFocus"/>
+                <TextBox x:Name="txtUrl" Grid.Column="1" Margin="10,0" IsSpellCheckEnabled="False" PlaceholderText="Enter URL" Text="{x:Bind ViewModel.URL.RawURL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" GotFocus="txtUrl_GotFocus" LostFocus="txtUrl_LostFocus"/>
                 <Button x:Name="btnSend" Grid.Column="2" Margin="0,0,-5,0" Content="Send" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.SendRequestCommand}" FontSize="13"/>
             </Grid>
             <Grid Grid.Row="2" ColumnDefinitions ="Auto,10, Auto">
@@ -114,7 +114,7 @@
                     <controls:DataGridTemplateColumn Header="Parameter" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -122,7 +122,7 @@
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsValueReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsValueReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -130,7 +130,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -167,16 +167,27 @@
                     <controls:DataGridTemplateColumn Header="Header" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{x:Bind IsKeyReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
+
+                    <!--<controls:DataGridTemplateColumn Header="Header with password" Width="*">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate x:DataType="viewmodels:HeaderItem">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <PasswordBox Grid.Column="0" Password="{x:Bind Key, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PasswordRevealMode="Hidden"/>
+                                    <CheckBox Grid.Column="1" Margin="10,0,0,0" Name="revealModeCheckBox" IsChecked="False"/>
+                                </Grid>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>-->
 
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <TextBox Grid.Column="0" Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{x:Bind DateTextboxVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                    <TextBox Grid.Column="0" Text="{x:Bind Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{x:Bind DateTextboxVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                                     <DatePicker Name="datepickValue" Grid.Column="0" Visibility="{x:Bind DatePickerVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
 
                                     <Grid Grid.Column="1" ColumnDefinitions="5,Auto,5" Visibility="{x:Bind UTCVisibility, Mode=TwoWay}">
@@ -216,7 +227,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:HeaderItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay}"  IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay}"  IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -253,7 +264,7 @@
                     <controls:DataGridTemplateColumn Header="Key" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Key, Mode=TwoWay}" IsReadOnly="{x:Bind IsKeyReadyOnly}"  KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Key, Mode=TwoWay}" IsReadOnly="{x:Bind IsKeyReadyOnly}"  KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -261,7 +272,7 @@
                     <controls:DataGridTemplateColumn Header="Value" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Value, Mode=TwoWay}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Value, Mode=TwoWay}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
@@ -269,7 +280,7 @@
                     <controls:DataGridTemplateColumn Header="Description" Width="*">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:BodyItem">
-                                <TextBox Text="{x:Bind Description, Mode=TwoWay}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown"/>
+                                <TextBox Text="{x:Bind Description, Mode=TwoWay}" IsReadOnly="{x:Bind IsDescriptionReadyOnly}" KeyDown="TextBoxDatagridCell_KeyDown" IsSpellCheckEnabled="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
