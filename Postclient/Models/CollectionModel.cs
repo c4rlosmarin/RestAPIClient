@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PostClient.Models;
+namespace Postclient.Models;
 public class CollectionModel
 {
     public string CollectionId { get; set; }

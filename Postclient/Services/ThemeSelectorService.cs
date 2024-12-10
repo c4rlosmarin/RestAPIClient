@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
 
-using PostClient.Contracts.Services;
-using PostClient.Helpers;
+using Postclient.Contracts.Services;
+using Postclient.Helpers;
 
-namespace PostClient.Services;
+namespace Postclient.Services;
 
 public class ThemeSelectorService : IThemeSelectorService
 {

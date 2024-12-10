@@ -1,10 +1,10 @@
 ﻿using System.Text;
 
-using PostClient.Contracts.Services;
+using Postclient.Contracts.Services;
 
 using Newtonsoft.Json;
 
-namespace PostClient.Services;
+namespace Postclient.Services;
 
 public class FileService : IFileService
 {

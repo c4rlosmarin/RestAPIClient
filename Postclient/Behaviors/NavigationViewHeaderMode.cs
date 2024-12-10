@@ -1,4 +1,4 @@
-﻿namespace PostClient.Behaviors;
+﻿namespace Postclient.Behaviors;
 
 public enum NavigationViewHeaderMode
 {

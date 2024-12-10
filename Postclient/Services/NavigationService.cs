@@ -2,11 +2,11 @@
 using CommunityToolkit.WinUI.Animations;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using PostClient.Contracts.Services;
-using PostClient.Contracts.ViewModels;
-using PostClient.Helpers;
+using Postclient.Contracts.Services;
+using Postclient.Contracts.ViewModels;
+using Postclient.Helpers;
 
-namespace PostClient.Services;
+namespace Postclient.Services;
 
 // For more information on navigation between pages see
 // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md

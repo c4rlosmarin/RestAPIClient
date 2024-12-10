@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
 
-using PostClient.Contracts.Services;
-using PostClient.ViewModels;
+using Postclient.Contracts.Services;
+using Postclient.ViewModels;
 
-namespace PostClient.Activation;
+namespace Postclient.Activation;
 
 public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
 {

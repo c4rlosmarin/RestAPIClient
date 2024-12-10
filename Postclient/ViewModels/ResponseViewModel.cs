@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace PostClient.ViewModels;
+namespace Postclient.ViewModels;
 
 public partial class ResponseViewModel : ObservableRecipient
 {

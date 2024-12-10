@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace PostClient.Helpers;
+namespace Postclient.Helpers;
 
 public static class FrameExtensions
 {

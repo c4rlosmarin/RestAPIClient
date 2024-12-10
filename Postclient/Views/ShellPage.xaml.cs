@@ -1,12 +1,12 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using PostClient.Contracts.Services;
-using PostClient.Helpers;
-using PostClient.ViewModels;
+using Postclient.Contracts.Services;
+using Postclient.Helpers;
+using Postclient.ViewModels;
 using Windows.System;
 
-namespace PostClient.Views;
+namespace Postclient.Views;
 
 // TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
 public sealed partial class ShellPage : Page

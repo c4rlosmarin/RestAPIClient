@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 
-namespace PostClient.Helpers;
+namespace Postclient.Helpers;
 
 public class RuntimeHelper
 {

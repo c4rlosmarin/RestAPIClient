@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace PostClient.Helpers;
+namespace Postclient.Helpers;
 
 // Helper class to set the navigation target for a NavigationViewItem.
 //

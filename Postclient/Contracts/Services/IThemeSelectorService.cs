@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 
-namespace PostClient.Contracts.Services;
+namespace Postclient.Contracts.Services;
 
 public interface IThemeSelectorService
 {

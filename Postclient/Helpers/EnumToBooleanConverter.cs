@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 
-namespace PostClient.Helpers;
+namespace Postclient.Helpers;
 
 public class EnumToBooleanConverter : IValueConverter
 {

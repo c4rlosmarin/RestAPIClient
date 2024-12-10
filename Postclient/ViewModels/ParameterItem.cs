@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace PostClient.ViewModels;
+namespace Postclient.ViewModels;
 
 public partial class ParameterItem : ObservableRecipient
 {

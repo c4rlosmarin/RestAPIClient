@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace PostClient.Contracts.Services;
+namespace Postclient.Contracts.Services;
 
 public interface INavigationViewService
 {

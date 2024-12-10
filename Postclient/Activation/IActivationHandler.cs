@@ -1,4 +1,4 @@
-﻿namespace PostClient.Activation;
+﻿namespace Postclient.Activation;
 
 public interface IActivationHandler
 {

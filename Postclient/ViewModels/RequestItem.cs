@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace PostClient.ViewModels;
+namespace Postclient.ViewModels;
 
 public partial class RequestItem : ObservableRecipient
 {

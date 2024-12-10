@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
-using PostClient.Contracts.Services;
+using Postclient.Contracts.Services;
 
-namespace PostClient.ViewModels;
+namespace Postclient.ViewModels;
 
 public partial class SettingsViewModel : ObservableRecipient
 {

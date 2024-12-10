@@ -1,4 +1,4 @@
-﻿namespace PostClient.Models;
+﻿namespace Postclient.Models;
 
 public class LocalSettingsOptions
 {

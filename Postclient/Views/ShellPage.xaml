@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="PostClient.Views.ShellPage"
+    x:Class="Postclient.Views.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:helpers="using:PostClient.Helpers"
-    xmlns:behaviors="using:PostClient.Behaviors"
+    xmlns:helpers="using:Postclient.Helpers"
+    xmlns:behaviors="using:Postclient.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     Loaded="OnLoaded">
 
@@ -37,12 +37,12 @@
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             AlwaysShowHeader="False">
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="Shell_Collections" helpers:NavigationHelper.NavigateTo="PostClient.ViewModels.CollectionsViewModel">
+                <NavigationViewItem x:Uid="Shell_Collections" helpers:NavigationHelper.NavigateTo="Postclient.ViewModels.CollectionsViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe8a4;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Environments" helpers:NavigationHelper.NavigateTo="PostClient.ViewModels.EnvironmentsViewModel">
+                <NavigationViewItem x:Uid="Shell_Environments" helpers:NavigationHelper.NavigateTo="Postclient.ViewModels.EnvironmentsViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe909;"/>
                     </NavigationViewItem.Icon>
@@ -50,7 +50,7 @@
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem x:Uid="Shell_About" helpers:NavigationHelper.NavigateTo="PostClient.ViewModels.AboutViewModel">
+                <NavigationViewItem x:Uid="Shell_About" helpers:NavigationHelper.NavigateTo="Postclient.ViewModels.AboutViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe946;"/>
                     </NavigationViewItem.Icon>

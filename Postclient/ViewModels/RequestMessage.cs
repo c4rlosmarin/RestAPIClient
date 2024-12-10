@@ -1,4 +1,4 @@
-﻿namespace PostClient.ViewModels;
+﻿namespace Postclient.ViewModels;
 
 public class RequestMessage
 {

@@ -1,4 +1,4 @@
-﻿namespace PostClient.Contracts.Services;
+﻿namespace Postclient.Contracts.Services;
 
 public interface IFileService
 {

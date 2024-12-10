@@ -1,4 +1,4 @@
-﻿namespace PostClient.Contracts.ViewModels;
+﻿namespace Postclient.Contracts.ViewModels;
 
 public interface INavigationAware
 {

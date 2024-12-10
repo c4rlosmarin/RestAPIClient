@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Windowing;
-using PostClient.Helpers;
+using Postclient.Helpers;
 
 using Windows.UI.ViewManagement;
 
-namespace PostClient;
+namespace Postclient;
 
 public sealed partial class MainWindow : WindowEx
 {

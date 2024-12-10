@@ -2,10 +2,10 @@
 
 using Microsoft.UI.Xaml.Navigation;
 
-using PostClient.Contracts.Services;
-using PostClient.Views;
+using Postclient.Contracts.Services;
+using Postclient.Views;
 
-namespace PostClient.ViewModels;
+namespace Postclient.ViewModels;
 
 public partial class ShellViewModel : ObservableRecipient
 {
