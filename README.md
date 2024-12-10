@@ -1,4 +1,4 @@
-# ![PostClient](PostClient/Assets/SmallIcon.png) PostClient
+# ![PostClient](Postclient/Assets/SmallIcon.png) PostClient
 
 An Azure oriented application designed to streamline our workflow by providing a user-friendly interface for making REST API calls.
 
