@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostClient", "PostClient\PostClient.csproj", "{C24AE763-F473-44C3-845F-A78B5EFA74E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postclient", "Postclient\Postclient.csproj", "{C24AE763-F473-44C3-845F-A78B5EFA74E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
