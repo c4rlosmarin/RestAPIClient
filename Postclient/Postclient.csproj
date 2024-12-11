@@ -1,0 +1,158 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetName>Postclient</TargetName>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>Postclient</RootNamespace>
+    <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
+    <Platforms>x86;x64;arm64</Platforms>
+    <RuntimeIdentifiers>win-$(Platform)</RuntimeIdentifiers>
+    <PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
+    <!--<PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>-->
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <WindowsPackageType>None</WindowsPackageType>
+    <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
+    <AssemblyName>Postclient</AssemblyName>
+    <PackageIcon>Icon.ico</PackageIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\Icon.png" />
+    <Content Remove="Assets\SmallIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Styles\FontIcon.xaml" />
+    <None Remove="Views\AboutPage.xaml" />
+    <None Remove="Views\RequestPage.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.1.240916" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.1.240916" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="WinUIEx" Version="2.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Icon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <Page Update="Styles\FontIcon.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\RequestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Views\AboutPage.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Resource Remove="Views\AboutPage.xaml" />
+  </ItemGroup>
+
+    <UsingTask TaskName="GenerateAppManifestFromAppx" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+        <ParameterGroup>
+            <RedirectDlls ParameterType="System.Boolean" Required="true" />
+            <MsixContentDir ParameterType="System.String" Required="true" />
+            <InAppxManifest ParameterType="System.String" Required="true" />
+            <OutAppManifest ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.Collections.Generic" />
+            <Using Namespace="System.IO" />
+            <Using Namespace="System.Linq" />
+            <Using Namespace="System.Text" />
+            <Using Namespace="System.Xml" />
+            <Code Type="Fragment" Language="cs">
+                <![CDATA[
+            var headerF = @"<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly manifestVersion='1.0'
+    xmlns:asmv3='urn:schemas-microsoft-com:asm.v3'
+    xmlns:winrtv1='urn:schemas-microsoft-com:winrt.v1'
+    xmlns='urn:schemas-microsoft-com:asm.v1'>";
+            var sb = new StringBuilder();
+            sb.AppendLine(headerF);
+            
+            var dllFileFormat = RedirectDlls ? 
+                @"    <asmv3:file name='{0}' loadFrom='%MICROSOFT_WINDOWSAPPRUNTIME_BASE_DIRECTORY%{0}'>" :
+                @"    <asmv3:file name='{0}'>";
+
+            if (!string.IsNullOrEmpty(InAppxManifest))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(InAppxManifest);
+                var nsmgr = new XmlNamespaceManager(doc.NameTable);
+                nsmgr.AddNamespace("m", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
+                var xQuery = "./m:Package/m:Extensions/m:Extension/m:InProcessServer";
+                var dllFiles = (from di in (new DirectoryInfo(MsixContentDir).EnumerateFiles("*.dll")) select di.Name).ToList();
+                foreach (XmlNode winRTFactory in doc.SelectNodes(xQuery, nsmgr))
+                {
+                    var dllFileNode = winRTFactory.SelectSingleNode("./m:Path", nsmgr);
+                    var dllFile = dllFileNode.InnerText;
+                    var typesNames = winRTFactory.SelectNodes("./m:ActivatableClass", nsmgr).OfType<XmlNode>();
+                    sb.AppendFormat(dllFileFormat, dllFile);
+                    sb.AppendLine();
+                    foreach (var typeNode in typesNames)
+                    {
+                        var attribs = typeNode.Attributes.OfType<XmlAttribute>().ToArray();
+                        var typeName = attribs
+                            .OfType<XmlAttribute>()
+                            .SingleOrDefault(x => x.Name == "ActivatableClassId")
+                            .InnerText;
+                        var xmlEntryFormat =
+@"        <winrtv1:activatableClass name='{0}' threadingModel='both'/>";
+                        sb.AppendFormat(xmlEntryFormat, typeName);
+                        sb.AppendLine();
+                        dllFiles.RemoveAll(e => e.Equals(dllFile, StringComparison.OrdinalIgnoreCase));
+                    }
+                    sb.AppendLine(@"    </asmv3:file>");
+                }
+                if(RedirectDlls)
+                {
+                    foreach (var dllFile in dllFiles)
+                    {
+                        sb.AppendFormat(dllFileFormat, dllFile);
+                        sb.AppendLine(@"</asmv3:file>");
+                    }
+                }
+            }
+            sb.AppendLine(@"</assembly>");
+            var manifestContent = sb.ToString();
+            File.WriteAllText(OutAppManifest, manifestContent, Encoding.UTF8);
+]]>
+            </Code>
+        </Task>
+    </UsingTask>
+
+</Project>

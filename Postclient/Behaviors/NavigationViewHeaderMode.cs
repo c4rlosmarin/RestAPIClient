@@ -1,0 +1,8 @@
+﻿namespace Postclient.Behaviors;
+
+public enum NavigationViewHeaderMode
+{
+    Always,
+    Never,
+    Minimal
+}
