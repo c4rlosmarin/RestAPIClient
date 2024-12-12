@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Windowing;
-using Postclient.Helpers;
+using RestAPIClient.Helpers;
 
 using Windows.UI.ViewManagement;
 
-namespace Postclient;
+namespace RestAPIClient;
 
 public sealed partial class MainWindow : WindowEx
 {

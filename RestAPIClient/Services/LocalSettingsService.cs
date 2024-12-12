@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
-using Postclient.Contracts.Services;
-using Postclient.Helpers;
-using Postclient.Models;
+using RestAPIClient.Contracts.Services;
+using RestAPIClient.Helpers;
+using RestAPIClient.Models;
 
 using Windows.ApplicationModel;
 using Windows.Storage;
 
-namespace Postclient.Services;
+namespace RestAPIClient.Services;
 
 public class LocalSettingsService : ILocalSettingsService
 {

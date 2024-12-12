@@ -1,4 +1,4 @@
-﻿namespace Postclient.Models;
+﻿namespace RestAPIClient.Models;
 
 public class LocalSettingsOptions
 {

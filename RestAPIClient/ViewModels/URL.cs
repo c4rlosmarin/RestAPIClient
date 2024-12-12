@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace Postclient.ViewModels;
+namespace RestAPIClient.ViewModels;
 
 public partial class URL : ObservableRecipient
 {

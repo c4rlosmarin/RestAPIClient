@@ -2,11 +2,11 @@
 
 using Microsoft.UI.Xaml.Controls;
 
-using Postclient.Contracts.Services;
-using Postclient.Helpers;
-using Postclient.ViewModels;
+using RestAPIClient.Contracts.Services;
+using RestAPIClient.Helpers;
+using RestAPIClient.ViewModels;
 
-namespace Postclient.Services;
+namespace RestAPIClient.Services;
 
 public class NavigationViewService : INavigationViewService
 {

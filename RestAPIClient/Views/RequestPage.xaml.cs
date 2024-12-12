@@ -8,13 +8,13 @@ using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using Postclient.Helpers;
-using Postclient.ViewModels;
+using RestAPIClient.Helpers;
+using RestAPIClient.ViewModels;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Text;
 
-namespace Postclient.Views;
+namespace RestAPIClient.Views;
 public sealed partial class RequestPage : Page
 {
 

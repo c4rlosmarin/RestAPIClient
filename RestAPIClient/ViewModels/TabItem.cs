@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media;
 
-namespace Postclient.ViewModels;
+namespace RestAPIClient.ViewModels;
 
 public partial class TabItem : ObservableRecipient
 {

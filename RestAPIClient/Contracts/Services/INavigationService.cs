@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
-namespace Postclient.Contracts.Services;
+namespace RestAPIClient.Contracts.Services;
 
 public interface INavigationService
 {

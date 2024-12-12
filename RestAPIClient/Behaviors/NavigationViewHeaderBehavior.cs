@@ -3,9 +3,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Xaml.Interactivity;
 
-using Postclient.Contracts.Services;
+using RestAPIClient.Contracts.Services;
 
-namespace Postclient.Behaviors;
+namespace RestAPIClient.Behaviors;
 
 public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 {

@@ -1,4 +1,4 @@
-﻿namespace Postclient.ViewModels;
+﻿namespace RestAPIClient.ViewModels;
 public class ParameterItemMessage
 {
     public ParameterItem Item

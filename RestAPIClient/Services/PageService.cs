@@ -2,11 +2,11 @@
 
 using Microsoft.UI.Xaml.Controls;
 
-using Postclient.Contracts.Services;
-using Postclient.ViewModels;
-using Postclient.Views;
+using RestAPIClient.Contracts.Services;
+using RestAPIClient.ViewModels;
+using RestAPIClient.Views;
 
-namespace Postclient.Services;
+namespace RestAPIClient.Services;
 
 public class PageService : IPageService
 {

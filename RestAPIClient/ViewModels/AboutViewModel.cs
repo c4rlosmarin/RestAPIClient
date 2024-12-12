@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Postclient.Helpers;
+using RestAPIClient.Helpers;
 using Windows.ApplicationModel;
 
-namespace Postclient.ViewModels;
+namespace RestAPIClient.ViewModels;
 public partial class AboutViewModel : ObservableRecipient
 {
     [ObservableProperty]

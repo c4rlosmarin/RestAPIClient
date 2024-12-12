@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetName>Postclient</TargetName>
+    <TargetName>RestAPIClient</TargetName>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <RootNamespace>Postclient</RootNamespace>
+    <RootNamespace>RestAPIClient</RootNamespace>
     <ApplicationIcon>Assets\Icon.ico</ApplicationIcon>
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win-$(Platform)</RuntimeIdentifiers>
@@ -17,7 +17,7 @@
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <WindowsPackageType>None</WindowsPackageType>
     <SupportedOSPlatformVersion>10.0.22621.0</SupportedOSPlatformVersion>
-    <AssemblyName>Postclient</AssemblyName>
+    <AssemblyName>RestAPIClient</AssemblyName>
     <PackageIcon>Icon.ico</PackageIcon>
   </PropertyGroup>
   <ItemGroup>

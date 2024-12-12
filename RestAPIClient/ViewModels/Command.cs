@@ -1,4 +1,4 @@
-﻿namespace Postclient.ViewModels;
+﻿namespace RestAPIClient.ViewModels;
 
 public enum Command
 {

@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-using Postclient.Activation;
-using Postclient.Contracts.Services;
-using Postclient.Models;
-using Postclient.Services;
-using Postclient.ViewModels;
-using Postclient.Views;
+using RestAPIClient.Activation;
+using RestAPIClient.Contracts.Services;
+using RestAPIClient.Models;
+using RestAPIClient.Services;
+using RestAPIClient.ViewModels;
+using RestAPIClient.Views;
 
-namespace Postclient;
+namespace RestAPIClient;
 
 // To learn more about WinUI 3, see https://docs.microsoft.com/windows/apps/winui/winui3/.
 public partial class App : Application

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Postclient.ViewModels;
+namespace RestAPIClient.ViewModels;
 
 public partial class TabsViewModel : ObservableRecipient
 {

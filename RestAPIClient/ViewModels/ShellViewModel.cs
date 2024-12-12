@@ -2,10 +2,10 @@
 
 using Microsoft.UI.Xaml.Navigation;
 
-using Postclient.Contracts.Services;
-using Postclient.Views;
+using RestAPIClient.Contracts.Services;
+using RestAPIClient.Views;
 
-namespace Postclient.ViewModels;
+namespace RestAPIClient.ViewModels;
 
 public partial class ShellViewModel : ObservableRecipient
 {

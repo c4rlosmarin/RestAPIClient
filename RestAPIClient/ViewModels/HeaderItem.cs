@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace Postclient.ViewModels;
+namespace RestAPIClient.ViewModels;
 
 public partial class HeaderItem : ObservableRecipient
 {

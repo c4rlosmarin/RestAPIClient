@@ -1,6 +1,6 @@
 ﻿using Microsoft.Windows.ApplicationModel.Resources;
 
-namespace Postclient.Helpers;
+namespace RestAPIClient.Helpers;
 
 public static class ResourceExtensions
 {

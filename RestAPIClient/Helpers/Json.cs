@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Postclient.Helpers;
+namespace RestAPIClient.Helpers;
 
 public static class Json
 {

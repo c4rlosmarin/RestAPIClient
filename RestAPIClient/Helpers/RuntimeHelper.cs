@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Postclient.Helpers;
+namespace RestAPIClient.Helpers;
 
 public class RuntimeHelper
 {

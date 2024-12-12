@@ -1,11 +1,11 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-using Postclient.Activation;
-using Postclient.Contracts.Services;
-using Postclient.Views;
+using RestAPIClient.Activation;
+using RestAPIClient.Contracts.Services;
+using RestAPIClient.Views;
 
-namespace Postclient.Services;
+namespace RestAPIClient.Services;
 
 public class ActivationService : IActivationService
 {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
 
-using Postclient.Contracts.Services;
-using Postclient.ViewModels;
+using RestAPIClient.Contracts.Services;
+using RestAPIClient.ViewModels;
 
-namespace Postclient.Activation;
+namespace RestAPIClient.Activation;
 
 public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
 {

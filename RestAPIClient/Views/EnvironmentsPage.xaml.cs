@@ -1,8 +1,8 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-using Postclient.ViewModels;
+using RestAPIClient.ViewModels;
 
-namespace Postclient.Views;
+namespace RestAPIClient.Views;
 
 public sealed partial class EnvironmentsPage : Page
 {

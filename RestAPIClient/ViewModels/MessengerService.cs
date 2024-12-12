@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 
-namespace Postclient.ViewModels;
+namespace RestAPIClient.ViewModels;
 public class MessengerService
 {
     private readonly Dictionary<string, WeakReferenceMessenger> _messengers = new();

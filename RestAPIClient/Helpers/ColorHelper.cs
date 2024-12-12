@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Media;
 using Windows.UI;
 
-namespace Postclient.Helpers;
+namespace RestAPIClient.Helpers;
 public static class ColorHelper
 {
     public static Color ConvertHexToColor(string hex)

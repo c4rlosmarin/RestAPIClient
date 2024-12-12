@@ -1,9 +1,9 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Postclient.Helpers;
-using Postclient.ViewModels;
+using RestAPIClient.Helpers;
+using RestAPIClient.ViewModels;
 
-namespace Postclient.Views;
+namespace RestAPIClient.Views;
 
 public sealed partial class CollectionsPage : Page
 {
