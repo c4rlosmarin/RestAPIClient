@@ -41,20 +41,22 @@ By following these steps, you should be able to quickly get up to speed with int
 
 We have an exciting roadmap of features planned for REST API Client, including:
 
-**Variable Support:** We plan to introduce a feature that allows the use of variables as part of the request definition. This will enable dynamic request construction, making it easier to manage and reuse requests with different parameters. For example, you could define a variable for the base URL and use it across multiple requests, simplifying the process of switching between different environments or endpoints.
+**Variable Support:** I plan to introduce a feature that allows the use of variables as part of the request definition. This will enable dynamic request construction, making it easier to manage and reuse requests with different parameters. For example, you could define a variable for the base URL and use it across multiple requests, simplifying the process of switching between different environments or endpoints.
 
 **Working Environments:** Another upcoming feature is the ability to define working environments. This will allow users to switch between different sets of configurations, such as development, testing, and production, with ease. By defining environment-specific variables and settings, you can ensure that your requests are always sent to the correct endpoint with the appropriate parameters.
 
-**Secure Local Collections:** We also plan to add a feature that allows users to save request collections securely and locally. These collections will be encrypted to ensure the privacy and integrity of your data. With this feature, you can organize and manage your requests in a more structured manner, enhancing productivity and collaboration within the team. You'll be able to save your work, share collections with team members, and maintain a history of requests and responses for future reference.
+**Secure Local Collections:** I also plan to add a feature that allows users to save request collections securely and locally. These collections will be encrypted to ensure the privacy and integrity of your data. With this feature, you can organize and manage your requests in a more structured manner, enhancing productivity and collaboration within the team. You'll be able to save your work, share collections with team members, and maintain a history of requests and responses for future reference.
+
+**Performance and code maintainability enhancements:** It has been quite a journy developing this app in such a short time, I'm aware that there are some opportunities to improve performance and code maintainability, I'll be working on that as time allows me to 😁
 
 These features will be designed to further improve the usability and functionality of REST API Client, making it an even more powerful tool for our development and customer support efforts. I look forward to your feedback and suggestions as I work towards implementing these enhancements in time.
 
 # Reporting Issues and Feedback
 
 ### Issues
-If you find any bugs when using REST API Client, file an issue in our [GitHub repo](https://github.com/c4rlosmarin/REST API Client/issues). Fill out the issue template with the appropriate information.
+If you find any bugs when using REST API Client, file an issue in my [GitHub repo](https://github.com/c4rlosmarin/RestAPIClient/issues). Fill out the issue template with the appropriate information.
 
 ### Feedback
 **Provide Feedback:** As you use REST API Client, please share your feedback and suggestions for improvement. Your input is valuable in helping us enhance the tool to better meet your needs.
 
-If there is a feature you would like to see in REST API Client, file an issue in our [GitHub repo](https://github.com/c4rlosmarin/REST API Client/issues).
+If there is a feature you would like to see in REST API Client, file an issue in my [GitHub repo](https://github.com/c4rlosmarin/RestAPIClient/issues).
