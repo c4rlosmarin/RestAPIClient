@@ -1,6 +1,6 @@
 # ![RestAPIClient](RestAPIClient/Assets/SmallIcon.png) REST API Client
 
-An Azure oriented application designed to streamline our workflow by providing a user-friendly interface for making REST API calls.
+An application designed to streamline our workflow by providing a user-friendly interface for making REST API calls.
 
 REST API Client offers several advantages that I believe will significantly enhance our development process:
 
