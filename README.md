@@ -19,7 +19,7 @@ REST API Client offers several advantages that I believe will significantly enha
 
 REST API Client is particularly beneficial for team members who need to interact with Azure REST APIs. With its user-friendly interface, REST API Client simplifies the process of constructing and sending API requests. The built-in templates for Storage REST API definitions provide a quick start for understanding the API structure and available operations. This allows team members to focus on the logic of their interactions rather than the intricacies of API syntax.
 
-**Download the [Rest API Client] (https://github.com/c4rlosmarin/RestAPIClient/releases/download/v1.0.0/RestAPIClient.exe) tool**
+**Download the [Rest API Client](https://github.com/c4rlosmarin/RestAPIClient/releases/download/v1.0.0/RestAPIClient.exe) tool**
 
 **Launch REST API Client:** Open the REST API Client application from your workstation.
 
