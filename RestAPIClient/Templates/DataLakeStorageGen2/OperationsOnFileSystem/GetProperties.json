@@ -1,0 +1,145 @@
+{
+	"RequestId": null,
+	"Name": "Filesystem - Get Properties",
+	"TabIconVisibility": "Collapsed",
+	"SelectedMethod": {
+		"Name": "HEAD",
+		"Foreground": "#6BA10C",
+		"IsActive": false
+	},
+	"IsMethodComboEnabled": "false",
+	"URL": {
+		"RawURL": "https://{accountName}.{dnsSuffix}/{filesystem}?resource=filesystem",
+		"Protocol": null,
+		"Host": null,
+		"Path": null,
+		"Variables": null,
+		"IsActive": false
+	},
+	"Parameters": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "resource",
+			"IsKeyReadyOnly": "true",
+			"Value": "filesystem",
+			"IsValueReadyOnly": "true",
+			"Description": "Required. The value must be \u0022filesystem\u0022 for all filesystem operations.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "timeout",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Optional. An optional operation timeout value in seconds. The period begins when the request is received by the service. If the timeout value elapses before the operation completes, the operation fails.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"ParametersCount": null,
+	"Headers": [
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "Authorization",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Specifies the authorization scheme, storage account name, and signature. For more information, see Authorize requests to Azure Storage.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-client-request-id",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "A UUID recorded in the analytics logs for troubleshooting and correlation.\r\n\r\nRegex pattern: ^[{(]?[0-9a-f]{8}[-]?([0-9a-f]{4}[-]?){3}[0-9a-f]{12}[)}]?$",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-date",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Specifies the Coordinated Universal Time (UTC) for the request. This is required when using shared key authorization.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Visible",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-version",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Specifies the version of the REST protocol used for processing the request. This is required when using shared key authorization.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Visible",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"HeadersCount": null,
+	"SelectedBodyType": "None",
+	"BodyTypes": [
+		"None",
+		"Form",
+		"Json",
+		"Xml",
+		"Text"
+	],
+	"IsBodyComboEnabled": "false",
+	"Body": null,
+	"RawBody": null,
+	"BodyItemsCount": null,
+	"DeleteColumnVisibility": "Collapsed",
+	"Response": {
+		"StatusCode": null,
+		"StatusStyleKey": "MyTextBlockAccentStyle",
+		"Time": null,
+		"Size": null,
+		"Body": null,
+		"Headers": null,
+		"HeadersCount": null,
+		"Visibility": "Collapsed",
+		"BannerVisibility": "Visible",
+		"IsActive": false
+	},
+	"SendRequestCommand": {
+		"ExecutionTask": null,
+		"CanBeCanceled": false,
+		"IsCancellationRequested": false,
+		"IsRunning": false
+	},
+	"IsActive": false
+}
