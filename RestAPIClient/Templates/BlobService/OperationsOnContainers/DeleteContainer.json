@@ -1,0 +1,161 @@
+{
+	"RequestId": null,
+	"Name": "Delete Container",
+	"TabIconVisibility": "Collapsed",
+	"SelectedMethod": {
+		"Name": "DELETE",
+		"Foreground": "#ED2B2B",
+		"IsActive": false
+	},
+	"IsMethodComboEnabled": "false",
+	"URL": {
+		"RawURL": "https://myaccount.blob.core.windows.net/mycontainer?restype=container",
+		"Protocol": null,
+		"Host": null,
+		"Path": null,
+		"Variables": null,
+		"IsActive": false
+	},
+	"Parameters": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "restype",
+			"IsKeyReadyOnly": "true",
+			"Value": "container",
+			"IsValueReadyOnly": "true",
+			"Description": null,
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "timeout",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Optional. The timeout parameter is expressed in seconds",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"ParametersCount": null,
+	"Headers": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "true",
+			"Key": "Authorization",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Specifies the authorization scheme, account name, and signature",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "x-ms-date",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required. Specifies the Coordinated Universal Time (UTC) for the request",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Visible",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-lease-id",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required for version 2012-02-12 and later if the container has an active lease. To call Delete Container on a container that has an active lease, specify the lease ID in this header. If this header isn\u0027t specified when there is an active lease, Delete Container returns a 409 (Conflict) error. If you specify the wrong lease ID, or a lease ID on a container that doesn\u0027t have an active lease, Delete Container returns a 412 (Precondition failed) error.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-version",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required for all authorized requests. Specifies the version of the operation to use for this request.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Visible",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-client-request-id",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that\u0027s recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"HeadersCount": null,
+	"SelectedBodyType": "None",
+	"BodyTypes": [
+		"None",
+		"Form",
+		"Json",
+		"Xml",
+		"Text"
+	],
+	"IsBodyComboEnabled": "false",
+	"Body": null,
+	"RawBody": null,
+	"BodyItemsCount": null,
+	"DeleteColumnVisibility": "Collapsed",
+	"Response": {
+		"StatusCode": null,
+		"StatusStyleKey": "MyTextBlockAccentStyle",
+		"Time": null,
+		"Size": null,
+		"Body": null,
+		"Headers": null,
+		"HeadersCount": null,
+		"Visibility": "Collapsed",
+		"BannerVisibility": "Visible",
+		"IsActive": false
+	},
+	"SendRequestCommand": {
+		"ExecutionTask": null,
+		"CanBeCanceled": false,
+		"IsCancellationRequested": false,
+		"IsRunning": false
+	},
+	"IsActive": false
+}

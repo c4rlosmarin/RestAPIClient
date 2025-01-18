@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Styles\FontIcon.xaml" />
+    <None Remove="Templates\ListContainers.json" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\RequestPage.xaml" />
   </ItemGroup>
@@ -79,6 +80,129 @@
   
   <ItemGroup>
     <Resource Remove="Views\AboutPage.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobLegalHold.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\BlobBatch.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\DeleteBlobImmutabilityPolicy.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobImmutabilityPolicy.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobTier.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\AbortCopyBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\UndeleteBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\DeleteBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\CopyBlobFromURL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\FindBlobsByTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\CopyBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SnapshotBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\LeaseBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\GetBlobTags.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\GetBlobMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\GetBlobProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\GetBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\PutBlobFromURL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\FindBlobsByTagsInContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\ListBlobs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\RestoreContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\LeaseContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\DeleteContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\SetContainerACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\GetContainerACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\SetContainerMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\GetContainerMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\GetContainerProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnContainers\CreateContainer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\PutBlob.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnTheAccount\GetBlobServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnTheAccount\GetBlobServiceStats.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnTheAccount\GetAccountInformation.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnTheAccount\PreflightBlobRequest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnTheAccount\GetUserDelegationKey.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnTheAccount\SetBlobServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\BlobService\OperationsOnTheAccount\ListContainers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
     <UsingTask TaskName="GenerateAppManifestFromAppx" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">

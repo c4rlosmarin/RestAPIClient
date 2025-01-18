@@ -1,0 +1,151 @@
+{
+	"RequestId": null,
+	"Name": "Set Blob Service Properties",
+	"TabIconVisibility": "Collapsed",
+	"SelectedMethod": {
+		"Name": "PUT",
+		"Foreground": "#FF8C00",
+		"IsActive": false
+	},
+	"IsMethodComboEnabled": "false",
+	"URL": {
+		"RawURL": "https://account-name.blob.core.windows.net/",
+		"Protocol": null,
+		"Host": null,
+		"Path": null,
+		"Variables": null,
+		"IsActive": false
+	},
+	"Parameters": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "restype",
+			"IsKeyReadyOnly": "true",
+			"Value": "service",
+			"IsValueReadyOnly": "true",
+			"Description": "restype=service\u0026comp=properties | Required. The combination of both query strings is required to set the storage service properties.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "comp",
+			"IsKeyReadyOnly": "true",
+			"Value": "properties",
+			"IsValueReadyOnly": "true",
+			"Description": "restype=service\u0026comp=properties | Required. The combination of both query strings is required to set the storage service properties.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "timeout",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Optional. The timeout parameter is expressed in seconds",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"ParametersCount": null,
+	"Headers": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "true",
+			"Key": "Authorization",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Specifies the authorization scheme, account name, and signature",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "x-ms-date",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required. Specifies the Coordinated Universal Time (UTC) for the request",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Visible",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "x-ms-version",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required for all authorized requests. Specifies the version of the operation to use for this request.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Visible",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-client-request-id",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that\u0027s recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"HeadersCount": null,
+	"SelectedBodyType": "Xml",
+	"BodyTypes": [
+		"None",
+		"Form",
+		"Json",
+		"Xml",
+		"Text"
+	],
+	"IsBodyComboEnabled": "false",
+	"Body": null,
+	"RawBody": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E  \r\n\u003CStorageServiceProperties\u003E  \r\n    \u003CLogging\u003E  \r\n        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r\n        \u003CDelete\u003Etrue|false\u003C/Delete\u003E  \r\n        \u003CRead\u003Etrue|false\u003C/Read\u003E  \r\n        \u003CWrite\u003Etrue|false\u003C/Write\u003E  \r\n        \u003CRetentionPolicy\u003E  \r\n            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r\n        \u003C/RetentionPolicy\u003E  \r\n    \u003C/Logging\u003E  \r\n    \u003CHourMetrics\u003E  \r\n        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n        \u003CIncludeAPIs\u003Etrue|false\u003C/IncludeAPIs\u003E  \r\n        \u003CRetentionPolicy\u003E  \r\n            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r\n        \u003C/RetentionPolicy\u003E  \r\n    \u003C/HourMetrics\u003E  \r\n    \u003CMinuteMetrics\u003E  \r\n        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n        \u003CIncludeAPIs\u003Etrue|false\u003C/IncludeAPIs\u003E  \r\n        \u003CRetentionPolicy\u003E  \r\n            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r\n        \u003C/RetentionPolicy\u003E  \r\n    \u003C/MinuteMetrics\u003E  \r\n    \u003CCors\u003E  \r\n        \u003CCorsRule\u003E  \r\n            \u003CAllowedOrigins\u003Ecomma-separated-list-of-allowed-origins\u003C/AllowedOrigins\u003E  \r\n            \u003CAllowedMethods\u003Ecomma-separated-list-of-HTTP-verbs\u003C/AllowedMethods\u003E  \r\n            \u003CMaxAgeInSeconds\u003Emax-caching-age-in-seconds\u003C/MaxAgeInSeconds\u003E  \r\n            \u003CExposedHeaders\u003Ecomma-separated-list-of-response-headers\u003C/ExposedHeaders\u003E  \r\n            \u003CAllowedHeaders\u003Ecomma-separated-list-of-request-headers\u003C/AllowedHeaders\u003E  \r\n        \u003C/CorsRule\u003E  \r\n    \u003C/Cors\u003E    \r\n    \u003CDefaultServiceVersion\u003Edefault-service-version-string\u003C/DefaultServiceVersion\u003E\r\n    \u003CDeleteRetentionPolicy\u003E\r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E\r\n        \u003CDays\u003Enumber-of-days\u003C/Days\u003E\r\n    \u003C/DeleteRetentionPolicy\u003E\r\n    \u003CStaticWebsite\u003E\r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E\r\n        \u003CIndexDocument\u003Edefault-name-of-index-page-under-each-directory\u003C/IndexDocument\u003E\r\n        \u003CDefaultIndexDocumentPath\u003Eabsolute-path-of-the-default-index-page\u003C/DefaultIndexDocumentPath\u003E\r\n        \u003CErrorDocument404Path\u003Eabsolute-path-of-the-custom-404-page\u003C/ErrorDocument404Path\u003E\r\n    \u003C/StaticWebsite\u003E\r\n\u003C/StorageServiceProperties\u003E",
+	"BodyItemsCount": null,
+	"DeleteColumnVisibility": "Collapsed",
+	"Response": {
+		"StatusCode": null,
+		"StatusStyleKey": "MyTextBlockAccentStyle",
+		"Time": null,
+		"Size": null,
+		"Body": null,
+		"Headers": null,
+		"HeadersCount": null,
+		"Visibility": "Collapsed",
+		"BannerVisibility": "Visible",
+		"IsActive": false
+	},
+	"IsActive": false
+}

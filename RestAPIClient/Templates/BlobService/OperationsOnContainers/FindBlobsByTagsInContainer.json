@@ -1,0 +1,193 @@
+{
+	"RequestId": null,
+	"Name": "Find Blobs by Tags in Container",
+	"TabIconVisibility": "Collapsed",
+	"SelectedMethod": {
+		"Name": "GET",
+		"Foreground": "#22B14C",
+		"IsActive": false
+	},
+	"IsMethodComboEnabled": "false",
+	"URL": {
+		"RawURL": "https://myaccount.blob.core.windows.net/mycontainer?restype=container\u0026comp=blobs\u0026where=expression",
+		"Protocol": null,
+		"Host": null,
+		"Path": null,
+		"Variables": null,
+		"IsActive": false
+	},
+	"Parameters": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "restype",
+			"IsKeyReadyOnly": "true",
+			"Value": "container",
+			"IsValueReadyOnly": "true",
+			"Description": null,
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "comp",
+			"IsKeyReadyOnly": "true",
+			"Value": "blobs",
+			"IsValueReadyOnly": "true",
+			"Description": null,
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "where",
+			"IsKeyReadyOnly": "true",
+			"Value": "expression",
+			"IsValueReadyOnly": "false",
+			"Description": "Required. Filters the result set to include only blobs whose tags match the specified expression.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "marker",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Optional. A string value that identifies the portion of the result set to be returned with the next operation. The operation returns a marker value within the response body if the returned result set was not complete. The marker value can then be used in a subsequent call to request the next set of items.\r\n\r\nThe marker value is opaque to the client.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "maxresults",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Optional. Specifies the maximum number of blobs to return. If the request doesn\u0027t specify maxresults or specifies a value greater than 5,000, the server returns up to 5,000 items. If there are additional results to return, the service returns a continuation token in the NextMarker response element. In certain cases, the service might return fewer results than maxresults specifies but still return a continuation token.\r\n\r\nSetting maxresults to a value less than or equal to zero results in error response code 400 (Bad Request).",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "timeout",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Optional. Expressed in seconds.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"ParametersCount": null,
+	"Headers": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "true",
+			"Key": "Authorization",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Specifies the authorization scheme, account name, and signature",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "x-ms-date",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required. Specifies the Coordinated Universal Time (UTC) for the request",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Visible",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-version",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required for all authorized requests, but optional for anonymous requests. Specifies the version of the operation to use for this request.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Visible",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-client-request-id",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that\u0027s recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"HeadersCount": null,
+	"SelectedBodyType": "None",
+	"BodyTypes": [
+		"None",
+		"Form",
+		"Json",
+		"Xml",
+		"Text"
+	],
+	"IsBodyComboEnabled": "false",
+	"Body": null,
+	"RawBody": null,
+	"BodyItemsCount": null,
+	"DeleteColumnVisibility": "Collapsed",
+	"Response": {
+		"StatusCode": null,
+		"StatusStyleKey": "MyTextBlockAccentStyle",
+		"Time": null,
+		"Size": null,
+		"Body": null,
+		"Headers": null,
+		"HeadersCount": null,
+		"Visibility": "Collapsed",
+		"BannerVisibility": "Visible",
+		"IsActive": false
+	},
+	"SendRequestCommand": {
+		"ExecutionTask": null,
+		"CanBeCanceled": false,
+		"IsCancellationRequested": false,
+		"IsRunning": false
+	},
+	"IsActive": false
+}

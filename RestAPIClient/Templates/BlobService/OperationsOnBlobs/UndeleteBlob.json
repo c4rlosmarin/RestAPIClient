@@ -1,0 +1,161 @@
+{
+	"RequestId": null,
+	"Name": "Undelete Blob",
+	"TabIconVisibility": "Collapsed",
+	"SelectedMethod": {
+		"Name": "PUT",
+		"Foreground": "#FF8C00",
+		"IsActive": false
+	},
+	"IsMethodComboEnabled": "false",
+	"URL": {
+		"RawURL": "https://myaccount.blob.core.windows.net/mycontainer/myblob?comp=undelete",
+		"Protocol": null,
+		"Host": null,
+		"Path": null,
+		"Variables": null,
+		"IsActive": false
+	},
+	"Parameters": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "comp",
+			"IsKeyReadyOnly": "true",
+			"Value": "undelete",
+			"IsValueReadyOnly": "true",
+			"Description": "Required",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "timeout",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Optional. The timeout parameter is expressed in seconds. For more information, see Setting timeouts for Blob Storage operations.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"ParametersCount": null,
+	"Headers": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "true",
+			"Key": "Authorization",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Specifies the authorization scheme, account name, and signature. For more information, see Authorize requests to Azure Storage.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "x-ms-date",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required. Specifies the Coordinated Universal Time (UTC) for the request. For more information, see Authorize requests to Azure Storage.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Visible",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-version",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required for all authorized requests. Specifies the version of the operation to use for this request. For more information, see Versioning for the Azure Storage services.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Visible",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-undelete-source",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Version 2020-08-04 and later. Only for accounts enabled with hierarchical namespace. The path of the soft-deleted blob to undelete. The format is blobPath?deletionid=\u003Cid\u003E. The account and container name aren\u0027t included in the path. DeletionId is the unique identifier of the soft-deleted blob. You can retrieve it by listing soft-deleted blobs with the List Blobs REST API for accounts enable with hierarchical namespace. The path should be percent encoded.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "x-ms-client-request-id",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that\u0027s recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives. For more information, see Monitor Azure Blob Storage.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"HeadersCount": null,
+	"SelectedBodyType": "None",
+	"BodyTypes": [
+		"None",
+		"Form",
+		"Json",
+		"Xml",
+		"Text"
+	],
+	"IsBodyComboEnabled": "false",
+	"Body": null,
+	"RawBody": null,
+	"BodyItemsCount": null,
+	"DeleteColumnVisibility": "Collapsed",
+	"Response": {
+		"StatusCode": null,
+		"StatusStyleKey": "MyTextBlockAccentStyle",
+		"Time": null,
+		"Size": null,
+		"Body": null,
+		"Headers": null,
+		"HeadersCount": null,
+		"Visibility": "Collapsed",
+		"BannerVisibility": "Visible",
+		"IsActive": false
+	},
+	"SendRequestCommand": {
+		"ExecutionTask": null,
+		"CanBeCanceled": false,
+		"IsCancellationRequested": false,
+		"IsRunning": false
+	},
+	"IsActive": false
+}

@@ -1,0 +1,104 @@
+{
+	"RequestId": null,
+	"Name": "Preflight Blob Request",
+	"TabIconVisibility": "Collapsed",
+	"SelectedMethod": {
+		"Name": "OPTIONS",
+		"Foreground": "#FF6593",
+		"IsActive": false
+	},
+	"IsMethodComboEnabled": "false",
+	"URL": {
+		"RawURL": "http://\u003Caccount-name\u003E.blob.core.windows.net/\u003Cblob-resource\u003E",
+		"Protocol": null,
+		"Host": null,
+		"Path": null,
+		"Variables": null,
+		"IsActive": false
+	},
+	"Parameters": null,
+	"ParametersCount": null,
+	"Headers": [
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "Origin",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required. Specifies the origin from which the request will be issued. The origin is checked against the service\u0027s CORS rules to determine the success or failure of the preflight request.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": true,
+			"IsEnabledActive": "false",
+			"Key": "Access-Control-Request-Method",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Required. Specifies the method (or HTTP verb) for the request. The method is checked against the service\u0027s CORS rules to determine the failure or success of the preflight request.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "Access-Control-Request-Headers",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"Description": "Optional. Specifies the request headers that will be sent. If it\u0027s not present, the service assumes that the request doesn\u0027t include headers.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"UTCVisibility": "Collapsed",
+			"DatePickerButtonVisibility": "Collapsed",
+			"HideDatePickerButtonVisibility": "Collapsed",
+			"DateTextboxVisibility": "Visible",
+			"DatePickerVisibility": "Collapsed",
+			"IsActive": false
+		}
+	],
+	"HeadersCount": null,
+	"SelectedBodyType": "None",
+	"BodyTypes": [
+		"None",
+		"Form",
+		"Json",
+		"Xml",
+		"Text"
+	],
+	"IsBodyComboEnabled": "false",
+	"Body": null,
+	"RawBody": null,
+	"BodyItemsCount": null,
+	"DeleteColumnVisibility": "Collapsed",
+	"Response": {
+		"StatusCode": null,
+		"StatusStyleKey": "MyTextBlockAccentStyle",
+		"Time": null,
+		"Size": null,
+		"Body": null,
+		"Headers": null,
+		"HeadersCount": null,
+		"Visibility": "Collapsed",
+		"BannerVisibility": "Visible",
+		"IsActive": false
+	},
+	"SendRequestCommand": {
+		"ExecutionTask": null,
+		"CanBeCanceled": false,
+		"IsCancellationRequested": false,
+		"IsRunning": false
+	},
+	"IsActive": false
+}
