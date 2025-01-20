@@ -42,7 +42,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -78,7 +77,7 @@
 		},
 		{
 			"IsEnabled": true,
-			"IsEnabledActive": "true",
+			"IsEnabledActive": "false",
 			"Key": "x-ms-lease-id",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
@@ -114,7 +113,7 @@
 			"Key": "x-ms-lease-action",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
-			"Description": "acquire: Requests a new lease. If the blob doesn\u0027t have an active lease, Blob Storage creates a lease on the blob, and returns a new lease ID. If the blob has an active lease, you can only request a new lease by using the active lease ID. You can, however, specify a new x-ms-lease-duration, including negative one (-1) for a lease that never expires.\r\n\r\nrenew: Renews the lease. You can renew the lease if the lease ID specified on the request matches that associated with the blob. Note that the lease can be renewed even if it has expired, as long as the blob hasn\u0027t been modified or leased again since the expiration of that lease. When you renew a lease, the lease duration clock resets.\r\n\r\nchange: Version 2012-02-12 and later. Changes the lease ID of an active lease. A change must include the current lease ID in x-ms-lease-id, and a new lease ID in x-ms-proposed-lease-id.\r\n\r\nrelease: Releases the lease. You can release the lease if the lease ID specified on the request matches that associated with the blob. Releasing the lease allows another client to immediately acquire the lease for the blob, as soon as the release is complete.\r\n\r\nbreak: Breaks the lease, if the blob has an active lease. After a lease is broken, it can\u0027t be renewed. Any authorized request can break the lease; the request isn\u0027t required to specify a matching lease ID. When a lease is broken, the lease break period is allowed to elapse, during which time break and release are the only lease operations you can perform on the blob. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired.\r\n\r\nA lease that has been broken can also be released, in which case another client can immediately acquire the lease on the blob.",
+			"Description": "acquire: Requests a new lease. If the blob doesn\u0027t have an active lease, Blob Storage creates a lease on the blob, and returns a new lease ID. If the blob has an active lease, you can only request a new lease by using the active lease ID. You can, however, specify a new x-ms-lease-duration, including negative one (-1) for a lease that never expires.\r\n\r\nrenew: Renews the lease. You can renew the lease if the lease ID specified on the request matches that associated with the blob. Note that the lease can be renewed even if it has expired, as long as the blob hasn\u0027t been modified or leased again since the expiration of that lease. When you renew a lease, the lease duration clock resets.\r\n\r\nchange: Version 2012-02-12 and later. Changes the lease ID of an active lease. A change must include the current lease ID in x-ms-lease-id, and a new lease ID in x-ms-proposed-lease-id.\r\n\r\nrelease: Releases the lease. You can release the lease if the lease ID specified on the request matches that associated with the blob. Releasing the lease allows another client to immediately acquire the lease for the blob, as soon as the release is complete.\r\n\r\nbreak: Breaks the lease, if the blob has an active lease. After a lease is broken, it can\u0027t be renewed. Any authorized request can break the lease, the request isn\u0027t required to specify a matching lease ID. When a lease is broken, the lease break period is allowed to elapse, during which time break and release are the only lease operations you can perform on the blob. When a lease is successfully broken, the response indicates the interval in seconds until a new lease can be acquired.\r\n\r\nA lease that has been broken can also be released, in which case another client can immediately acquire the lease on the blob.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"UTCVisibility": "Collapsed",
@@ -205,20 +204,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "None",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "None",
 	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -230,12 +219,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

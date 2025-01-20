@@ -120,7 +120,7 @@
 			"IsKeyReadyOnly": "true",
 			"Value": null,
 			"IsValueReadyOnly": "false",
-			"Description": "Valid only for flush operations. If \u0022true\u0022, uncommitted data is retained after the flush operation completes; otherwise, the uncommitted data is deleted after the flush operation. The default is false. Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.",
+			"Description": "Valid only for flush operations. If \u0022true\u0022, uncommitted data is retained after the flush operation completes, otherwise, the uncommitted data is deleted after the flush operation. The default is false. Data at offsets less than the specified position are written to the file when flush succeeds, but this optional parameter allows data after the flush position to be retained for a future flush operation.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"IsActive": false
@@ -138,7 +138,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": false,
@@ -370,7 +369,7 @@
 			"Key": "x-ms-acl",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
-			"Description": "Optional and valid only for the setAccessControl and setAccessControlRecursive operations. Required for setAccessControlRecursive operation. Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries that fully replaces the existing access control list (ACL) in case of setAccessControl and \u0022set\u0022 mode of setAccessControlRecursive. \u0022modify\u0022 mode of setAccessControlRecursive updates the pre-existing ACLS. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format \u0022[scope:][type]:[id]:[permissions]\u0022. The scope must be \u0022default\u0022 to indicate the ACE belongs to the default ACL for a directory; otherwise scope is implicit and the ACE belongs to the access ACL. There are four ACE types: \u0022user\u0022 grants rights to the owner or a named user, \u0022group\u0022 grants rights to the owning group or a named group, \u0022mask\u0022 restricts rights granted to named users and the members of groups, and \u0022other\u0022 grants rights to all users not found in any of the other entries. The user or group identifier is omitted for entries of type \u0022mask\u0022 and \u0022other\u0022. The user or group identifier is also omitted for the owner and owning group. The permission field is a 3-character sequence where the first character is \u0027r\u0027 to grant read access, the second character is \u0027w\u0027 to grant write access, and the third character is \u0027x\u0027 to grant execute permission. If access is not granted, the \u0027-\u0027 character is used to denote that the permission is denied. For example, the following ACL grants read, write, and execute rights to the file owner and john.doe@contoso, the read right to the owning group, and nothing to everyone else: \u0022user::rwx,user:john.doe@contoso:rwx,group::r--,other::---,mask=rwx\u0022. Invalid in conjunction with x-ms-permissions. \u0022remove\u0022 mode of setAccessControlRecursive removes the pre-existing ACLs and should not contain permissions in the access control list specified : \u0022user:john.doe@contoso:, mask:\u0022. \u0022set\u0022 mode of setAccessControlRecursive sets the ACLs replacing the pre-existing ACLs of the scope specified and must contain all three - owning user, owning group and other info if access scope is getting set or if either of owning user, owning group or other is being set in default scope. \u0022set\u0022 and \u0022modify\u0022 modes of setAccessControlRecursive must contain permissions as part of access control list.",
+			"Description": "Optional and valid only for the setAccessControl and setAccessControlRecursive operations. Required for setAccessControlRecursive operation. Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries that fully replaces the existing access control list (ACL) in case of setAccessControl and \u0022set\u0022 mode of setAccessControlRecursive. \u0022modify\u0022 mode of setAccessControlRecursive updates the pre-existing ACLS. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format \u0022[scope:][type]:[id]:[permissions]\u0022. The scope must be \u0022default\u0022 to indicate the ACE belongs to the default ACL for a directory, otherwise scope is implicit and the ACE belongs to the access ACL. There are four ACE types: \u0022user\u0022 grants rights to the owner or a named user, \u0022group\u0022 grants rights to the owning group or a named group, \u0022mask\u0022 restricts rights granted to named users and the members of groups, and \u0022other\u0022 grants rights to all users not found in any of the other entries. The user or group identifier is omitted for entries of type \u0022mask\u0022 and \u0022other\u0022. The user or group identifier is also omitted for the owner and owning group. The permission field is a 3-character sequence where the first character is \u0027r\u0027 to grant read access, the second character is \u0027w\u0027 to grant write access, and the third character is \u0027x\u0027 to grant execute permission. If access is not granted, the \u0027-\u0027 character is used to denote that the permission is denied. For example, the following ACL grants read, write, and execute rights to the file owner and john.doe@contoso, the read right to the owning group, and nothing to everyone else: \u0022user::rwx,user:john.doe@contoso:rwx,group::r--,other::---,mask=rwx\u0022. Invalid in conjunction with x-ms-permissions. \u0022remove\u0022 mode of setAccessControlRecursive removes the pre-existing ACLs and should not contain permissions in the access control list specified : \u0022user:john.doe@contoso:, mask:\u0022. \u0022set\u0022 mode of setAccessControlRecursive sets the ACLs replacing the pre-existing ACLs of the scope specified and must contain all three - owning user, owning group and other info if access scope is getting set or if either of owning user, owning group or other is being set in default scope. \u0022set\u0022 and \u0022modify\u0022 modes of setAccessControlRecursive must contain permissions as part of access control list.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"UTCVisibility": "Collapsed",
@@ -589,20 +588,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "Text",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "true",
-	"Body": null,
+	"SelectedBodyType": "Text",
 	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -614,12 +603,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

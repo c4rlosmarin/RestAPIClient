@@ -34,7 +34,7 @@
 			"IsEnabledActive": "false",
 			"Key": "comp",
 			"IsKeyReadyOnly": "true",
-			"Value": "properties",
+			"Value": "stats",
 			"IsValueReadyOnly": "true",
 			"Description": "restype=service\u0026comp=properties | Required. The combination of both query strings is required to set the storage service properties.",
 			"IsDescriptionReadyOnly": "true",
@@ -54,7 +54,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -90,7 +89,7 @@
 		},
 		{
 			"IsEnabled": true,
-			"IsEnabledActive": "false",
+			"IsEnabledActive": "true",
 			"Key": "x-ms-version",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
@@ -121,20 +120,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "None",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "None",
 	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -146,12 +135,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

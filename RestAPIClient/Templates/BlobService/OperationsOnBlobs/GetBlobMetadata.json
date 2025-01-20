@@ -66,7 +66,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -197,20 +196,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "None",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "None",
 	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -222,12 +211,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

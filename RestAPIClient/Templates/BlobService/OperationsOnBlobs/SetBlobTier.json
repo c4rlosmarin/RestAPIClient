@@ -66,7 +66,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -154,7 +153,7 @@
 			"Key": "x-ms-rehydrate-priority",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
-			"Description": "Optional. Indicates the priority with which to rehydrate an archived blob. Supported on version 2019-02-02 and newer for block blobs. Valid values are High/Standard. The priority can be set on a blob only once for versions prior to 2020-06-12; this header will be ignored on subsequent requests. The default priority setting is Standard.\r\n\r\nBeginning with version 2020-06-12, the rehydration priority can be updated after it was previously set. The priority setting can be changed from Standard to High by calling Set Blob Tier with this header set to High and setting x-ms-access-tier to the same value as previously set. The priority setting cannot be lowered from High to Standard.",
+			"Description": "Optional. Indicates the priority with which to rehydrate an archived blob. Supported on version 2019-02-02 and newer for block blobs. Valid values are High/Standard. The priority can be set on a blob only once for versions prior to 2020-06-12, this header will be ignored on subsequent requests. The default priority setting is Standard.\r\n\r\nBeginning with version 2020-06-12, the rehydration priority can be updated after it was previously set. The priority setting can be changed from Standard to High by calling Set Blob Tier with this header set to High and setting x-ms-access-tier to the same value as previously set. The priority setting cannot be lowered from High to Standard.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"UTCVisibility": "Collapsed",
@@ -165,20 +164,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "None",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "None",
 	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -190,12 +179,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

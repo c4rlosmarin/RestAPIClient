@@ -54,7 +54,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -90,7 +89,7 @@
 		},
 		{
 			"IsEnabled": true,
-			"IsEnabledActive": "false",
+			"IsEnabledActive": "true",
 			"Key": "x-ms-version",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
@@ -153,20 +152,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "Xml",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "Xml",
 	"RawBody": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E  \r\n\u003CSignedIdentifiers\u003E  \r\n  \u003CSignedIdentifier\u003E   \r\n    \u003CId\u003Eunique-64-character-value\u003C/Id\u003E  \r\n    \u003CAccessPolicy\u003E  \r\n      \u003CStart\u003Estart-time\u003C/Start\u003E  \r\n      \u003CExpiry\u003Eexpiry-time\u003C/Expiry\u003E  \r\n      \u003CPermission\u003Eabbreviated-permission-list\u003C/Permission\u003E  \r\n    \u003C/AccessPolicy\u003E  \r\n  \u003C/SignedIdentifier\u003E  \r\n\u003C/SignedIdentifiers\u003E",
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -178,12 +167,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

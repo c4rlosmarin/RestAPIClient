@@ -1,5 +1,5 @@
 {
-	"RequestId": "975b53b7-f48f-4682-8434-893f5a324278",
+	"RequestId": null,
 	"Name": "List Containers",
 	"TabIconVisibility": "Collapsed",
 	"SelectedMethod": {
@@ -90,7 +90,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -126,7 +125,7 @@
 		},
 		{
 			"IsEnabled": true,
-			"IsEnabledActive": "false",
+			"IsEnabledActive": "true",
 			"Key": "x-ms-version",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
@@ -157,20 +156,8 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "None",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
 	"Body": [],
-	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -182,6 +169,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"IsActive": false
+	}
 }

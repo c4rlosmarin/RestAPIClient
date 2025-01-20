@@ -54,7 +54,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -90,7 +89,7 @@
 		},
 		{
 			"IsEnabled": true,
-			"IsEnabledActive": "false",
+			"IsEnabledActive": "true",
 			"Key": "x-ms-version",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
@@ -121,20 +120,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "Xml",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "Xml",
 	"RawBody": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E  \r\n\u003CStorageServiceProperties\u003E  \r\n    \u003CLogging\u003E  \r\n        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r\n        \u003CDelete\u003Etrue|false\u003C/Delete\u003E  \r\n        \u003CRead\u003Etrue|false\u003C/Read\u003E  \r\n        \u003CWrite\u003Etrue|false\u003C/Write\u003E  \r\n        \u003CRetentionPolicy\u003E  \r\n            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r\n        \u003C/RetentionPolicy\u003E  \r\n    \u003C/Logging\u003E  \r\n    \u003CHourMetrics\u003E  \r\n        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n        \u003CIncludeAPIs\u003Etrue|false\u003C/IncludeAPIs\u003E  \r\n        \u003CRetentionPolicy\u003E  \r\n            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r\n        \u003C/RetentionPolicy\u003E  \r\n    \u003C/HourMetrics\u003E  \r\n    \u003CMinuteMetrics\u003E  \r\n        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n        \u003CIncludeAPIs\u003Etrue|false\u003C/IncludeAPIs\u003E  \r\n        \u003CRetentionPolicy\u003E  \r\n            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r\n            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r\n        \u003C/RetentionPolicy\u003E  \r\n    \u003C/MinuteMetrics\u003E  \r\n    \u003CCors\u003E  \r\n        \u003CCorsRule\u003E  \r\n            \u003CAllowedOrigins\u003Ecomma-separated-list-of-allowed-origins\u003C/AllowedOrigins\u003E  \r\n            \u003CAllowedMethods\u003Ecomma-separated-list-of-HTTP-verbs\u003C/AllowedMethods\u003E  \r\n            \u003CMaxAgeInSeconds\u003Emax-caching-age-in-seconds\u003C/MaxAgeInSeconds\u003E  \r\n            \u003CExposedHeaders\u003Ecomma-separated-list-of-response-headers\u003C/ExposedHeaders\u003E  \r\n            \u003CAllowedHeaders\u003Ecomma-separated-list-of-request-headers\u003C/AllowedHeaders\u003E  \r\n        \u003C/CorsRule\u003E  \r\n    \u003C/Cors\u003E    \r\n    \u003CDefaultServiceVersion\u003Edefault-service-version-string\u003C/DefaultServiceVersion\u003E\r\n    \u003CDeleteRetentionPolicy\u003E\r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E\r\n        \u003CDays\u003Enumber-of-days\u003C/Days\u003E\r\n    \u003C/DeleteRetentionPolicy\u003E\r\n    \u003CStaticWebsite\u003E\r\n        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E\r\n        \u003CIndexDocument\u003Edefault-name-of-index-page-under-each-directory\u003C/IndexDocument\u003E\r\n        \u003CDefaultIndexDocumentPath\u003Eabsolute-path-of-the-default-index-page\u003C/DefaultIndexDocumentPath\u003E\r\n        \u003CErrorDocument404Path\u003Eabsolute-path-of-the-custom-404-page\u003C/ErrorDocument404Path\u003E\r\n    \u003C/StaticWebsite\u003E\r\n\u003C/StorageServiceProperties\u003E",
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -146,6 +135,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"IsActive": false
+	}
 }

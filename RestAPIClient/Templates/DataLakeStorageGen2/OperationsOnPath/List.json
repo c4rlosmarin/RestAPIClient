@@ -24,7 +24,7 @@
 			"IsKeyReadyOnly": "true",
 			"Value": "{recursive}",
 			"IsValueReadyOnly": "false",
-			"Description": "Required. If \u0022true\u0022, all paths are listed; otherwise, only paths at the root of the filesystem are listed. If \u0022directory\u0022 is specified, the list will only include paths that share the same root.",
+			"Description": "Required. If \u0022true\u0022, all paths are listed, otherwise, only paths at the root of the filesystem are listed. If \u0022directory\u0022 is specified, the list will only include paths that share the same root.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"IsActive": false
@@ -102,7 +102,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": false,
@@ -169,20 +168,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "None",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "None",
 	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -194,12 +183,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

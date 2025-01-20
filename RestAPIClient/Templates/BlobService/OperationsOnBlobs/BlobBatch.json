@@ -54,7 +54,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": true,
@@ -126,7 +125,7 @@
 			"Key": "Content-Type",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
-			"Description": "Required. The value of this header must be multipart/mixed, with a batch boundary. Example header value: multipart/mixed; boundary=batch_a81786c8-e301-4e42-a729-a32ca24ae252.",
+			"Description": "Required. The value of this header must be multipart/mixed, with a batch boundary. Example header value: multipart/mixed, boundary=batch_a81786c8-e301-4e42-a729-a32ca24ae252.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"UTCVisibility": "Collapsed",
@@ -153,20 +152,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "Text",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
+	"SelectedBodyType": "Text",
+	"RawBody": "POST http://account.blob.core.windows.net/?comp=batch HTTP/1.1\r\nContent-Type: multipart/mixed, boundary=batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nx-ms-version: 2018-11-09\r\nAuthorization: SharedKey account:QvaoYDQ\u002B0VcaA/hKFjUmQmIxXv2RT3XwwTsOTHL39HI=\r\nHost: 127.0.0.1:10000\r\nContent-Length: 1569\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\nContent-ID: 0\r\n\r\nDELETE /container0/blob0 HTTP/1.1\r\nx-ms-date: Thu, 14 Jun 2018 16:46:54 GMT\r\nAuthorization: SharedKey account:G4jjBXA7LI/RnWKIOQ8i9xH4p76pAQ\u002B4Fs4R1VxasaE=\r\nContent-Length: 0\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\nContent-ID: 1\r\n\r\nDELETE /container1/blob1 HTTP/1.1\r\nx-ms-date: Thu, 14 Jun 2018 16:46:54 GMT\r\nAuthorization: SharedKey account:IvCoYDQ\u002B0VcaA/hKFjUmQmIxXv2RT3XwwTsOTHL39HI=\r\nContent-Length: 0\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\nContent-ID: 2\r\n\r\nDELETE /container2/blob2 HTTP/1.1\r\nx-ms-date: Thu, 14 Jun 2018 16:46:54 GMT\r\nAuthorization: SharedKey account:S37N2JTjcmOQVLHLbDmp2johz\u002BKpTJvKhbVc4M7\u002BUqI=\r\nContent-Length: 0\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525--",
 	"Body": null,
-	"RawBody": "POST http://account.blob.core.windows.net/?comp=batch HTTP/1.1\r\nContent-Type: multipart/mixed; boundary=batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nx-ms-version: 2018-11-09\r\nAuthorization: SharedKey account:QvaoYDQ\u002B0VcaA/hKFjUmQmIxXv2RT3XwwTsOTHL39HI=\r\nHost: 127.0.0.1:10000\r\nContent-Length: 1569\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\nContent-ID: 0\r\n\r\nDELETE /container0/blob0 HTTP/1.1\r\nx-ms-date: Thu, 14 Jun 2018 16:46:54 GMT\r\nAuthorization: SharedKey account:G4jjBXA7LI/RnWKIOQ8i9xH4p76pAQ\u002B4Fs4R1VxasaE=\r\nContent-Length: 0\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\nContent-ID: 1\r\n\r\nDELETE /container1/blob1 HTTP/1.1\r\nx-ms-date: Thu, 14 Jun 2018 16:46:54 GMT\r\nAuthorization: SharedKey account:IvCoYDQ\u002B0VcaA/hKFjUmQmIxXv2RT3XwwTsOTHL39HI=\r\nContent-Length: 0\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\nContent-ID: 2\r\n\r\nDELETE /container2/blob2 HTTP/1.1\r\nx-ms-date: Thu, 14 Jun 2018 16:46:54 GMT\r\nAuthorization: SharedKey account:S37N2JTjcmOQVLHLbDmp2johz\u002BKpTJvKhbVc4M7\u002BUqI=\r\nContent-Length: 0\r\n\r\n--batch_357de4f7-6d0b-4e02-8cd2-6361411a9525--",
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -178,12 +167,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }

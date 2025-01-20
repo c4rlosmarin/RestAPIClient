@@ -19,7 +19,7 @@
 	"Parameters": [
 		{
 			"IsEnabled": false,
-			"IsEnabledActive": "true",
+			"IsEnabledActive": "false",
 			"Key": "resource",
 			"IsKeyReadyOnly": "true",
 			"Value": "",
@@ -66,7 +66,6 @@
 			"IsActive": false
 		}
 	],
-	"ParametersCount": null,
 	"Headers": [
 		{
 			"IsEnabled": false,
@@ -234,7 +233,7 @@
 			"Key": "x-ms-rename-source",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
-			"Description": "An optional file or directory to be renamed. The value must have the following format: \u0022/{filesystem}/{path}\u0022, or \u0022/{filesystem}/{path}?sastoken\u0022 when using a SAS token. If \u0022x-ms-properties\u0022 is specified, the properties will overwrite the existing properties; otherwise, the existing properties will be preserved. This value must be a URL percent-encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.",
+			"Description": "An optional file or directory to be renamed. The value must have the following format: \u0022/{filesystem}/{path}\u0022, or \u0022/{filesystem}/{path}?sastoken\u0022 when using a SAS token. If \u0022x-ms-properties\u0022 is specified, the properties will overwrite the existing properties, otherwise, the existing properties will be preserved. This value must be a URL percent-encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"UTCVisibility": "Collapsed",
@@ -362,7 +361,7 @@
 			"Key": "x-ms-acl",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
-			"Description": "Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access control rights on files and directories. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format \u0022[scope:][type]:[id]:[permissions]\u0022. The scope must be \u0022default\u0022 to indicate the ACE belongs to the default ACL for a directory; otherwise scope is implicit and the ACE belongs to the access ACL. There are four ACE types: \u0022user\u0022 grants rights to the owner or a named user, \u0022group\u0022 grants rights to the owning group or a named group, \u0022mask\u0022 restricts rights granted to named users and the members of groups, and \u0022other\u0022 grants rights to all users not found in any of the other entries. The user or group identifier is omitted for entries of type \u0022mask\u0022 and \u0022other\u0022. The user or group identifier is also omitted for the owner and owning group. The permission field is a 3-character sequence where the first character is \u0027r\u0027 to grant read access, the second character is \u0027w\u0027 to grant write access, and the third character is \u0027x\u0027 to grant execute permission. If access is not granted, the \u0027-\u0027 character is used to denote that the permission is denied. For example, the following ACL grants read, write, and execute rights to the file owner and john.doe@contoso, the read right to the owning group, and nothing to everyone else: \u0022user::rwx,user:john.doe@contoso:rwx,group::r--,other::---,mask=rwx\u0022. Invalid in conjunction with x-ms-permissions.",
+			"Description": "Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access control rights on files and directories. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format \u0022[scope:][type]:[id]:[permissions]\u0022. The scope must be \u0022default\u0022 to indicate the ACE belongs to the default ACL for a directory, otherwise scope is implicit and the ACE belongs to the access ACL. There are four ACE types: \u0022user\u0022 grants rights to the owner or a named user, \u0022group\u0022 grants rights to the owning group or a named group, \u0022mask\u0022 restricts rights granted to named users and the members of groups, and \u0022other\u0022 grants rights to all users not found in any of the other entries. The user or group identifier is omitted for entries of type \u0022mask\u0022 and \u0022other\u0022. The user or group identifier is also omitted for the owner and owning group. The permission field is a 3-character sequence where the first character is \u0027r\u0027 to grant read access, the second character is \u0027w\u0027 to grant write access, and the third character is \u0027x\u0027 to grant execute permission. If access is not granted, the \u0027-\u0027 character is used to denote that the permission is denied. For example, the following ACL grants read, write, and execute rights to the file owner and john.doe@contoso, the read right to the owning group, and nothing to everyone else: \u0022user::rwx,user:john.doe@contoso:rwx,group::r--,other::---,mask=rwx\u0022. Invalid in conjunction with x-ms-permissions.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"UTCVisibility": "Collapsed",
@@ -661,20 +660,10 @@
 			"IsActive": false
 		}
 	],
-	"HeadersCount": null,
-	"SelectedBodyType": "None",
-	"BodyTypes": [
-		"None",
-		"Form",
-		"Json",
-		"Xml",
-		"Text"
-	],
 	"IsBodyComboEnabled": "false",
-	"Body": null,
+	"SelectedBodyType": "None",
 	"RawBody": null,
-	"BodyItemsCount": null,
-	"DeleteColumnVisibility": "Collapsed",
+	"Body": null,
 	"Response": {
 		"StatusCode": null,
 		"StatusStyleKey": "MyTextBlockAccentStyle",
@@ -686,12 +675,5 @@
 		"Visibility": "Collapsed",
 		"BannerVisibility": "Visible",
 		"IsActive": false
-	},
-	"SendRequestCommand": {
-		"ExecutionTask": null,
-		"CanBeCanceled": false,
-		"IsCancellationRequested": false,
-		"IsRunning": false
-	},
-	"IsActive": false
+	}
 }
