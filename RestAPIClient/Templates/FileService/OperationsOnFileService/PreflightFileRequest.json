@@ -1,0 +1,132 @@
+{
+  "RequestId": null,
+  "Name": "Preflight File Request",
+  "TabIconVisibility": "Collapsed",
+  "SelectedMethod": {
+    "Name": "OPTIONS",
+    "Foreground": "#FF6593",
+    "IsActive": false
+  },
+  "IsMethodComboEnabled": "false",
+  "URL": {
+    "RawURL": "http://\u003Caccount-name\u003E.file.core.windows.net/\u003Cfile-resource\u003E",
+    "Protocol": null,
+    "Host": null,
+    "Path": null,
+    "Variables": null,
+    "IsActive": false
+  },
+  "Parameters": [
+    
+  ],
+  "Headers": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "Origin",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Required. Specifies the origin from which the request will be issued. The origin is checked against the service\u0027s CORS rules to determine the success or failure of the preflight request.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "GetDateTimeInUTCCommand": {},
+      "DeleteHeaderItemCommand": {},
+      "ShowDatePickerItemCommand": {},
+      "HideDatePickerItemCommand": {},
+      "IsActive": false
+    },
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "Access-Control-Request-Method",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Required. Specifies the method (or HTTP verb) for the request. The method is checked against the service\u0027s CORS rules to determine the failure or success of the preflight request.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "GetDateTimeInUTCCommand": {},
+      "DeleteHeaderItemCommand": {},
+      "ShowDatePickerItemCommand": {},
+      "HideDatePickerItemCommand": {},
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "Access-Control-Request-Headers",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Optional. Specifies the request headers that will be sent. If it\u0027s not present, the service assumes that the request doesn\u0027t include headers.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "GetDateTimeInUTCCommand": {},
+      "DeleteHeaderItemCommand": {},
+      "ShowDatePickerItemCommand": {},
+      "HideDatePickerItemCommand": {},
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-allow-trailing-dot",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Optional. Version 2022-11-02 and later. The Boolean value specifies if a trailing dot present in request url should be trimmed or not. For more information, see Naming and referencing shares, directories, files, and metadata.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "GetDateTimeInUTCCommand": {},
+      "DeleteHeaderItemCommand": {},
+      "ShowDatePickerItemCommand": {},
+      "HideDatePickerItemCommand": {},
+      "IsActive": false
+    }
+  ],
+  "IsBodyComboEnabled": "false",
+  "SelectedBodyType": "None",
+  "RawBody": null,
+  "Body": [
+    {
+      "IsEnabled": false,
+      "Key": "",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Collapsed",
+      "DeleteBodyItemCommand": {},
+      "IsActive": false
+    }
+  ],
+  "Response": {
+    "StatusCode": null,
+    "StatusStyleKey": "MyTextBlockAccentStyle",
+    "Time": null,
+    "Size": null,
+    "Body": null,
+    "Headers": null,
+    "HeadersCount": null,
+    "Visibility": "Collapsed",
+    "BannerVisibility": "Visible",
+    "IsActive": false
+  }
+}

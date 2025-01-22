@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using System.Text.Json;
 using RestAPIClient.Models;
+using RestAPIClient.ViewModels;
 
 namespace RestAPIClient.Helpers;
 
@@ -15,6 +17,7 @@ public class TemplateHelper
 
         using StreamReader reader = new StreamReader(stream);
         var jsonString = reader.ReadToEnd();
+        Debug.WriteLine(jsonString);
         return JsonSerializer.Deserialize<RequestModel>(jsonString);
     }
 
@@ -125,7 +128,95 @@ public class TemplateHelper
             case "fd373385-ac1d-49a0-bf38-e79ab98036a5":
                 return GetTemplate("DataLakeStorageGen2.OperationsOnPath.Read");
             case "9f787102-8ff4-419b-af44-de620d842ebc":
-                return GetTemplate("DataLakeStorageGen2.OperationsOnPath.Update");            
+                return GetTemplate("DataLakeStorageGen2.OperationsOnPath.Update");
+            case "fda74fd0-e408-4c6d-894d-4e5dba70afe5":
+                return GetTemplate("FileService.OperationsOnFileService.GetFileServiceProperties");
+            case "d75480b6-7625-4c80-9252-519df187629d":
+                return GetTemplate("FileService.OperationsOnFileService.SetFileServiceProperties");
+            case "7345d46d-1656-4b01-b859-abed3c8346a9":
+                return GetTemplate("FileService.OperationsOnFileService.PreflightFileRequest");
+            case "3efdeb4d-15ad-499a-8116-1f6609c6f74b":
+                return GetTemplate("FileService.OperationsOnFileShares.ListShares");
+            case "b83808d0-c15f-498e-b783-4e18aff7e7a4":
+                return GetTemplate("FileService.OperationsOnFileShares.CreateShare");
+            case "d36d37f4-084a-444c-8412-461a2bea7033":
+                return GetTemplate("FileService.OperationsOnFileShares.SnapshotShare");
+            case "1632ab9f-de7e-4d89-af34-3aa083581c65":
+                return GetTemplate("FileService.OperationsOnFileShares.GetShareProperties");
+            case "84390458-9e19-4bcf-8fd0-0170dc37ce58":
+                return GetTemplate("FileService.OperationsOnFileShares.SetShareProperties");
+            case "d5628fe9-a983-4f2e-89ae-b1a9582e504b":
+                return GetTemplate("FileService.OperationsOnFileShares.GetShareMetadata");
+            case "b93b91c6-c4f4-407d-9e94-caa2a0660027":
+                return GetTemplate("FileService.OperationsOnFileShares.SetShareMetadata");
+            case "79f1c6f1-3acd-463b-ae75-099464837801":
+                return GetTemplate("FileService.OperationsOnFileShares.DeleteShare");
+            case "5a6d906f-e182-4664-8289-785bc64967a3":
+                return GetTemplate("FileService.OperationsOnFileShares.RestoreShare");
+            case "040789bc-8f8e-4f6b-9c22-60197ddac6e0":
+                return GetTemplate("FileService.OperationsOnFileShares.GetShareACL");
+            case "63a6d979-b9b6-4cf3-9d96-185cc8812455":
+                return GetTemplate("FileService.OperationsOnFileShares.SetShareACL");
+            case "c1a70342-0109-4f6c-b631-d0733566fcc0":
+                return GetTemplate("FileService.OperationsOnFileShares.GetShareStats");
+            case "82917fc6-6b51-4a71-a907-dfca8ba1f693":
+                return GetTemplate("FileService.OperationsOnFileShares.CreatePermission");
+            case "c2127ec5-d23e-43ee-beff-9cdc1bd84ffb":
+                return GetTemplate("FileService.OperationsOnFileShares.GetPermission");
+            case "03a0cfd5-e1cd-4c36-b4c3-5219c861279f":
+                return GetTemplate("FileService.OperationsOnFileShares.LeaseShare");
+            case "ba6350a8-fbff-43c1-9b99-ae853d24ccd2":
+                return GetTemplate("FileService.OperationsOnDirectories.ListDirectoriesAndFiles");
+            case "bc5299e9-3ffa-4c5d-8178-0c3f79bff3fa":
+                return GetTemplate("FileService.OperationsOnDirectories.CreateDirectory");
+            case "40f31006-5af9-44a3-a4cc-10f6cef0b17f":
+                return GetTemplate("FileService.OperationsOnDirectories.GetDirectoryProperties");
+            case "0fe35b2c-71ec-4143-a315-374a1d16a827":
+                return GetTemplate("FileService.OperationsOnDirectories.SetDirectoryProperties");
+            case "c56eb257-eca8-4aea-a49e-46c849b4ca62":
+                return GetTemplate("FileService.OperationsOnDirectories.DeleteDirectory");
+            case "a0f4328a-5214-42ce-a392-4e7efed6935f":
+                return GetTemplate("FileService.OperationsOnDirectories.GetDirectoryMetadata");
+            case "cc472edb-7716-4a07-8455-da69c28d1bd0":
+                return GetTemplate("FileService.OperationsOnDirectories.SetDirectoryMetadata");
+            case "0e46e182-febf-460b-a163-99fb63e730c7":
+                return GetTemplate("FileService.OperationsOnDirectories.ListHandles");
+            case "56d9ebf2-5f34-4a4e-8740-b6ff2dcb056d":
+                return GetTemplate("FileService.OperationsOnDirectories.ForceCloseHandles");
+            case "300e7812-c622-414f-a08b-f6ebd7eadb09":
+                return GetTemplate("FileService.OperationsOnDirectories.RenameDirectory");
+            case "7b03ae8e-a105-4dd7-8200-76edbbed397c":
+                return GetTemplate("FileService.OperationsOnFiles.CreateFile");
+            case "1e0e7b2b-3640-4af0-85d1-ccdbd6b22083":
+                return GetTemplate("FileService.OperationsOnFiles.GetFile");
+            case "4b957a6b-5332-490e-be78-e6e7714701dc":
+                return GetTemplate("FileService.OperationsOnFiles.GetFileProperties");
+            case "6b03738c-96b4-4379-85f4-e6a974e0f9a3":
+                return GetTemplate("FileService.OperationsOnFiles.SetFileProperties");
+            case "6434ecbe-9c13-4c61-a213-c445eaed11a5":
+                return GetTemplate("FileService.OperationsOnFiles.PutRange");
+            case "0f174895-4faf-454b-b5f9-87d4f4926b75":
+                return GetTemplate("FileService.OperationsOnFiles.PutRangeFromURL");
+            case "eb89bc63-19cc-4d4f-8b66-7879ec7d5327":
+                return GetTemplate("FileService.OperationsOnFiles.ListRanges");
+            case "15f4e2c0-7449-47c4-829d-2b41ec006117":
+                return GetTemplate("FileService.OperationsOnFiles.GetFileMetadata");
+            case "79a5c844-c46e-4539-91da-9e1561da664c":
+                return GetTemplate("FileService.OperationsOnFiles.SetFileMetadata");
+            case "cba8f8e1-e38b-47fe-9021-db1069ec200e":
+                return GetTemplate("FileService.OperationsOnFiles.DeleteFile");
+            case "2fb2b290-5d68-4a8a-a2b6-883677bb0d89":
+                return GetTemplate("FileService.OperationsOnFiles.CopyFile");
+            case "9c15a57f-a065-41ac-b5b6-0059d22e856f":
+                return GetTemplate("FileService.OperationsOnFiles.AbortCopyFile");
+            case "b9b979dd-1b10-4692-9e5c-c4b90b0df736":
+                return GetTemplate("FileService.OperationsOnFiles.ListHandles");
+            case "15c0a083-2a2f-4cf8-8fdc-4dbca6175923":
+                return GetTemplate("FileService.OperationsOnFiles.ForceCloseHandles");
+            case "56d542e5-82e5-495e-8e23-cf1b365e0153":
+                return GetTemplate("FileService.OperationsOnFiles.LeaseFile");
+            case "1bab907a-a65f-46b9-a28d-3632089dd7f2":
+                return GetTemplate("FileService.OperationsOnFiles.RenameFile");
             default:
                 return null;
 

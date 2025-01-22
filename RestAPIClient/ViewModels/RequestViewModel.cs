@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using RestAPIClient.Helpers;
+using RestAPIClient.Models;
 
 namespace RestAPIClient.ViewModels;
 
@@ -171,8 +172,9 @@ public partial class RequestViewModel : ObservableRecipient
             Headers = requestModel.Headers;
             Body = requestModel.Body;
             IsBodyComboEnabled = requestModel.IsBodyComboEnabled;
+            SelectedBodyType = requestModel.SelectedBodyType;
+            RawBody = requestModel.RawBody;
             Response = requestModel.Response;
-            Response.Visibility = requestModel.Response.Visibility;
         }
 
         foreach (MethodsItemViewModel item in Methods)
@@ -445,6 +447,22 @@ public partial class RequestViewModel : ObservableRecipient
 
         Response.BannerVisibility = "Collapsed";
         Response.Visibility = "Visible";
+
+        //var requestModel = new RequestModel();
+        //requestModel.Name = Name;
+        //requestModel.URL = URL;
+        //requestModel.SelectedMethod = SelectedMethod;
+        //requestModel.IsMethodComboEnabled = "false";
+        //requestModel.TabIconVisibility = "Collapsed";
+        //requestModel.Parameters = Parameters;
+        //requestModel.Headers = Headers;
+        //requestModel.Body = Body;
+        //requestModel.IsBodyComboEnabled = "false";
+        //requestModel.SelectedBodyType = SelectedBodyType;
+        //requestModel.RawBody = RawBody;
+
+        //string jsonString = JsonSerializer.Serialize(requestModel);
+        //Debug.WriteLine(jsonString);
 
         return Response.Body;
     }

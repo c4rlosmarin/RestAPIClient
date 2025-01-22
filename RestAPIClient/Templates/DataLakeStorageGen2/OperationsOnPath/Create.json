@@ -18,7 +18,7 @@
 	},
 	"Parameters": [
 		{
-			"IsEnabled": false,
+			"IsEnabled": true,
 			"IsEnabledActive": "false",
 			"Key": "resource",
 			"IsKeyReadyOnly": "true",

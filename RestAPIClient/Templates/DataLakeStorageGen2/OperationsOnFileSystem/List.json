@@ -32,23 +32,11 @@
 		{
 			"IsEnabled": false,
 			"IsEnabledActive": "true",
-			"Key": "prefix",
-			"IsKeyReadyOnly": "true",
-			"Value": null,
-			"IsValueReadyOnly": "false",
-			"Description": "Filters results to filesystems within the specified prefix.",
-			"IsDescriptionReadyOnly": "true",
-			"DeleteButtonVisibility": "Collapsed",
-			"IsActive": false
-		},
-		{
-			"IsEnabled": false,
-			"IsEnabledActive": "true",
 			"Key": "continuation",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
 			"IsValueReadyOnly": "false",
-			"Description": "Required. The value must be \u0022account\u0022 for all account operations.",
+			"Description": "The number of filesystems returned with each invocation is limited. If the number of filesystems to be returned exceeds this limit, a continuation token is returned in the response header x-ms-continuation. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the list operation to continue listing the filesystems.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"IsActive": false
@@ -61,6 +49,18 @@
 			"Value": null,
 			"IsValueReadyOnly": "false",
 			"Description": "An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items.",
+			"IsDescriptionReadyOnly": "true",
+			"DeleteButtonVisibility": "Collapsed",
+			"IsActive": false
+		},
+		{
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
+			"Key": "prefix",
+			"IsKeyReadyOnly": "true",
+			"Value": null,
+			"IsValueReadyOnly": "false",
+			"Description": "Filters results to filesystems within the specified prefix.",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",
 			"IsActive": false

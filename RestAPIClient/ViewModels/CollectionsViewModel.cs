@@ -108,5 +108,81 @@ public partial class CollectionsViewModel : ObservableRecipient
         collection.Groups.Add(group);
 
         Collections.Add(collection);
+
+
+        collection = new CollectionItem();
+        collection.Name = "File Service REST API";
+        collection.Groups = new ObservableCollection<GroupItem>();
+
+        group = new GroupItem() { Name = "Operations on FileService" };
+        group.Requests =
+        [
+            new RequestItem() { RequestId = "fda74fd0-e408-4c6d-894d-4e5dba70afe5",Name = "Get File Service Properties", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "d75480b6-7625-4c80-9252-519df187629d",Name = "Set File Service Properties", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "7345d46d-1656-4b01-b859-abed3c8346a9",Name = "Preflight File Request", Method = new MethodsItemViewModel("OPTIONS")},
+        ];
+        collection.Groups.Add(group);
+
+        group = new GroupItem() { Name = "Operations on FileShares" };
+        group.Requests =
+        [
+            new RequestItem() { RequestId = "3efdeb4d-15ad-499a-8116-1f6609c6f74b",Name = "List Shares", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "b83808d0-c15f-498e-b783-4e18aff7e7a4",Name = "Create Share", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "d36d37f4-084a-444c-8412-461a2bea7033",Name = "Snapshot Share", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "1632ab9f-de7e-4d89-af34-3aa083581c65",Name = "Get Share Properties", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "84390458-9e19-4bcf-8fd0-0170dc37ce58",Name = "Set Share Properties", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "d5628fe9-a983-4f2e-89ae-b1a9582e504b",Name = "Get Share Metadata", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "b93b91c6-c4f4-407d-9e94-caa2a0660027",Name = "Set Share Metadata", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "79f1c6f1-3acd-463b-ae75-099464837801",Name = "Delete Share", Method = new MethodsItemViewModel("DELETE")},
+            new RequestItem() { RequestId = "5a6d906f-e182-4664-8289-785bc64967a3",Name = "Restore Share", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "040789bc-8f8e-4f6b-9c22-60197ddac6e0",Name = "Get Share ACL", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "63a6d979-b9b6-4cf3-9d96-185cc8812455",Name = "Set Share ACL", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "c1a70342-0109-4f6c-b631-d0733566fcc0",Name = "Get Share Stats", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "82917fc6-6b51-4a71-a907-dfca8ba1f693",Name = "Create Permission", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "c2127ec5-d23e-43ee-beff-9cdc1bd84ffb",Name = "Get Permission", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "03a0cfd5-e1cd-4c36-b4c3-5219c861279f",Name = "Lease Share", Method = new MethodsItemViewModel("PUT")},
+        ];
+        collection.Groups.Add(group);
+
+        group = new GroupItem() { Name = "Operations on Directories" };
+        group.Requests =
+        [
+            new RequestItem() { RequestId = "ba6350a8-fbff-43c1-9b99-ae853d24ccd2",Name = "List Directories and Files", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "bc5299e9-3ffa-4c5d-8178-0c3f79bff3fa",Name = "Create Directory", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "40f31006-5af9-44a3-a4cc-10f6cef0b17f",Name = "Get Directory Properties", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "0fe35b2c-71ec-4143-a315-374a1d16a827",Name = "Set Directory Properties", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "c56eb257-eca8-4aea-a49e-46c849b4ca62",Name = "Delete Directory", Method = new MethodsItemViewModel("DELETE")},
+            new RequestItem() { RequestId = "a0f4328a-5214-42ce-a392-4e7efed6935f",Name = "Get Directory Metadata", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "cc472edb-7716-4a07-8455-da69c28d1bd0",Name = "Set Directory Metadata", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "0e46e182-febf-460b-a163-99fb63e730c7",Name = "List Handles", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "56d9ebf2-5f34-4a4e-8740-b6ff2dcb056d",Name = "Force Close Handles", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "300e7812-c622-414f-a08b-f6ebd7eadb09",Name = "Rename Directory", Method = new MethodsItemViewModel("PUT")},
+
+        ];
+        collection.Groups.Add(group);
+
+        group = new GroupItem() { Name = "Operations on Files" };
+        group.Requests =
+        [
+            new RequestItem() { RequestId = "7b03ae8e-a105-4dd7-8200-76edbbed397c",Name = "Create File", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "1e0e7b2b-3640-4af0-85d1-ccdbd6b22083",Name = "Get File", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "4b957a6b-5332-490e-be78-e6e7714701dc",Name = "Get File Properties", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "6b03738c-96b4-4379-85f4-e6a974e0f9a3",Name = "Set File Properties", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "6434ecbe-9c13-4c61-a213-c445eaed11a5",Name = "Put Range", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "0f174895-4faf-454b-b5f9-87d4f4926b75",Name = "Put Range From URL", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "eb89bc63-19cc-4d4f-8b66-7879ec7d5327",Name = "List Ranges", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "15f4e2c0-7449-47c4-829d-2b41ec006117",Name = "Get File Metadata", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "79a5c844-c46e-4539-91da-9e1561da664c",Name = "Set File Metadata", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "cba8f8e1-e38b-47fe-9021-db1069ec200e",Name = "Delete File", Method = new MethodsItemViewModel("DELETE")},
+            new RequestItem() { RequestId = "2fb2b290-5d68-4a8a-a2b6-883677bb0d89",Name = "Copy File", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "9c15a57f-a065-41ac-b5b6-0059d22e856f",Name = "Abort Copy File", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "b9b979dd-1b10-4692-9e5c-c4b90b0df736",Name = "List Handles", Method = new MethodsItemViewModel("GET")},
+            new RequestItem() { RequestId = "15c0a083-2a2f-4cf8-8fdc-4dbca6175923",Name = "Force Close Handles", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "56d542e5-82e5-495e-8e23-cf1b365e0153",Name = "Lease File", Method = new MethodsItemViewModel("PUT")},
+            new RequestItem() { RequestId = "1bab907a-a65f-46b9-a28d-3632089dd7f2",Name = "Rename File", Method = new MethodsItemViewModel("PUT")},
+
+        ];
+        collection.Groups.Add(group);
+        Collections.Add(collection);
     }
 }

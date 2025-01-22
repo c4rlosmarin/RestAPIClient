@@ -1,0 +1,167 @@
+{
+  "RequestId": null,
+  "Name": "Create Permission",
+  "TabIconVisibility": "Collapsed",
+  "SelectedMethod": {
+    "Name": "PUT",
+    "Foreground": "#FF8C00",
+    "IsActive": false
+  },
+  "IsMethodComboEnabled": "false",
+  "URL": {
+    "RawURL": "https://myaccount.file.core.windows.net/myshare?restype=share\u0026comp=filepermission",
+    "Protocol": null,
+    "Host": null,
+    "Path": null,
+    "Variables": null,
+    "IsActive": false
+  },
+  "Parameters": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "restype",
+      "IsKeyReadyOnly": "true",
+      "Value": "share",
+      "IsValueReadyOnly": "true",
+      "Description": "Required",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "comp",
+      "IsKeyReadyOnly": "true",
+      "Value": "filepermission",
+      "IsValueReadyOnly": "true",
+      "Description": "Required",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "timeout",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Optional. The timeout parameter is expressed in seconds. For more information, see Set time-outs for Queue service operations.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    }
+  ],
+  "Headers": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "Authorization",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Required. Specifies the authorization scheme, storage account name, and signature. For more information, see Authorize requests to Azure Storage.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "x-ms-date",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Required. Specifies the Coordinated Universal Time (UTC) for the request. For more information, see Authorize requests to Azure Storage.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Visible",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-version",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Optional. Specifies the version of the operation to use for this request. For more information, see Versioning for Azure Storage services.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Visible",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-client-request-id",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that\u0027s recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives. For more information, see Monitor Azure Files.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-file-request-intent",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "Required if Authorization header specifies an OAuth token. Acceptable value is backup. This header specifies that the Microsoft.Storage/storageAccounts/fileServices/readFileBackupSemantics/action or Microsoft.Storage/storageAccounts/fileServices/writeFileBackupSemantics/action should be granted if they are included in the RBAC policy assigned to the identity that is authorized using the Authorization header. Available for version 2022-11-02 and later.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    }
+  ],
+  "IsBodyComboEnabled": "false",
+  "SelectedBodyType": "Json",
+  "RawBody": "{\r    \u0022permission\u0022: \u0022\u003CSDDL\u003E\u0022\r}\r",
+  "Body": [
+    {
+      "IsEnabled": false,
+      "Key": "",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Collapsed",
+      "DeleteBodyItemCommand": {},
+      "IsActive": false
+    }
+  ],
+  "Response": {
+    "StatusCode": null,
+    "StatusStyleKey": "MyTextBlockAccentStyle",
+    "Time": null,
+    "Size": null,
+    "Body": null,
+    "Headers": null,
+    "HeadersCount": null,
+    "Visibility": "Collapsed",
+    "BannerVisibility": "Visible",
+    "IsActive": false
+  }
+}

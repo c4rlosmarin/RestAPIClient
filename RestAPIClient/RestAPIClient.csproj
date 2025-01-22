@@ -26,6 +26,50 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Styles\FontIcon.xaml" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\CreateDirectory.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\DeleteDirectory.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\ForceCloseHandles.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\GetDirectoryMetadata.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\GetDirectoryProperties.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\ListDirectoriesAndFiles.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\ListHandles.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\RenameDirectory.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\SetDirectoryMetadata.json" />
+    <None Remove="Templates\FileService\OperationsOnDirectories\SetDirectoryProperties.json" />
+    <None Remove="Templates\FileService\OperationsOnFileService\GetFileServiceProperties.json" />
+    <None Remove="Templates\FileService\OperationsOnFileService\PreflightFileRequest.json" />
+    <None Remove="Templates\FileService\OperationsOnFileService\SetFileServiceProperties.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\CreatePermission.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\CreateShare.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\DeleteShare.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\GetPermission.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\GetShareACL.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\GetShareMetadata.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\GetShareProperties.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\GetShareStats.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\LeaseShare.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\ListShares.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\RestoreShare.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\SetShareACL.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\SetShareMetadata.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\SetShareProperties.json" />
+    <None Remove="Templates\FileService\OperationsOnFileShares\SnapshotShare.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\AbortCopyFile.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\CopyFile.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\CreateFile.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\DeleteFile.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\ForceCloseHandles.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\GetFile.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\GetFileMetadata.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\GetFileProperties.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\LeaseFile.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\ListHandles.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\ListRanges.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\PutRange.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\PutRangeFromURL.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\RenameFile.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\SetFileMetadata.json" />
+    <None Remove="Templates\FileService\OperationsOnFiles\SetFileProperties.json" />
     <None Remove="Templates\ListContainers.json" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\RequestPage.xaml" />
@@ -237,6 +281,138 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\DataLakeStorageGen2\OperationsOnPath\List.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\CreateDirectory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\DeleteDirectory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\ForceCloseHandles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\GetDirectoryMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\GetDirectoryProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\ListDirectoriesAndFiles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\ListHandles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\RenameDirectory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\SetDirectoryMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnDirectories\SetDirectoryProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileService\GetFileServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileService\PreflightFileRequest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileService\SetFileServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\CreatePermission.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\CreateShare.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\DeleteShare.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\GetPermission.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\GetShareACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\GetShareMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\GetShareProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\GetShareStats.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\LeaseShare.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\ListShares.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\RestoreShare.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\SetShareACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\SetShareMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\SetShareProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFileShares\SnapshotShare.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\AbortCopyFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\CopyFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\CreateFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\DeleteFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\ForceCloseHandles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\GetFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\GetFileMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\GetFileProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\LeaseFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\ListHandles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\ListRanges.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\PutRange.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\PutRangeFromURL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\RenameFile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\SetFileMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\SetFileProperties.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
