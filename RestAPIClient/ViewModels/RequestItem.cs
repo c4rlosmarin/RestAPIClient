@@ -21,4 +21,9 @@ public partial class RequestItem : ObservableRecipient
     {
         get; set;
     }
+
+    public override string ToString()
+    {
+        return this.Name;
+    }
 }

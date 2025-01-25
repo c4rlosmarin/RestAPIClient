@@ -16,6 +16,8 @@ public sealed partial class ShellPage : Page
         get;
     }
 
+    List<NavigationViewItem> originalNavigationViewItems;
+
     public ShellPage(ShellViewModel viewModel)
     {
         ViewModel = viewModel;
@@ -32,6 +34,13 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         //App.MainWindow.Activated += MainWindow_Activated;
         //AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+
+        originalNavigationViewItems = new List<NavigationViewItem>();
+        foreach (var item in nviCollections.MenuItems)
+        {
+            if (item is NavigationViewItem navItem)
+                originalNavigationViewItems.Add(navItem);
+        }
     }
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -80,4 +89,66 @@ public sealed partial class ShellPage : Page
 
         args.Handled = result;
     }
+
+    private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            var query = sender.Text.ToLower();
+            if (!string.IsNullOrEmpty(query))
+            {
+                var filteredItems = FilterItems(originalNavigationViewItems, query);
+                nviCollections.MenuItems.Clear();
+                nviCollections.MenuItemsSource = null;
+                nviCollections.MenuItemsSource = filteredItems;
+            }
+            else
+            {
+                var filteredItems = FilterItems(originalNavigationViewItems, "");
+                nviCollections.MenuItems.Clear();
+                nviCollections.MenuItemsSource = null;
+                nviCollections.MenuItemsSource = filteredItems;
+            }
+        }
+    }
+
+    private List<NavigationViewItem> FilterItems(IEnumerable<NavigationViewItem> items, string query)
+    {
+        var filteredItems = new List<NavigationViewItem>();
+        foreach (var item in items)
+        {
+            if (item.Content.ToString().ToLower().Contains(query))
+                filteredItems.Add(CloneNavigationViewItem(item));
+            else if (item.MenuItems.Count > 0)
+            {
+                var filteredSubItems = FilterItems(item.MenuItems.OfType<NavigationViewItem>(), query);
+                if (filteredSubItems.Count > 0)
+                {
+                    var newItem = CloneNavigationViewItem(item);
+                    newItem.MenuItems.Clear();
+                    foreach (var subItem in filteredSubItems)
+                        newItem.MenuItems.Add(subItem);
+                    filteredItems.Add(newItem);
+                }
+            }
+        }
+
+        return filteredItems;
+    }
+
+    private NavigationViewItem CloneNavigationViewItem(NavigationViewItem item)
+    {
+        var newItem = new NavigationViewItem
+        {
+            Content = item.Content,
+            Icon = item.Icon,
+            IsExpanded = true
+        };
+
+        foreach (var subItem in item.MenuItems.OfType<NavigationViewItem>())
+            newItem.MenuItems.Add(CloneNavigationViewItem(subItem));
+
+        return newItem;
+    }
+
 }
