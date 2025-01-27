@@ -109,6 +109,7 @@
 			"Key": "x-ms-copy-action",
 			"IsKeyReadyOnly": "true",
 			"Value": "abort",
+			"IsValueReadyOnly": "true",
 			"Description": "Required",
 			"IsDescriptionReadyOnly": "true",
 			"DeleteButtonVisibility": "Collapsed",

@@ -24,6 +24,11 @@
     <Content Remove="Assets\Azure.png" />
     <Content Remove="Assets\AzureServiceLogos\API-Management-Services.png" />
     <Content Remove="Assets\AzureServiceLogos\Storage-Accounts.png" />
+    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Blob-Block.png" />
+    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Files.png" />
+    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Queue.png" />
+    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Table.png" />
+    <Content Remove="Assets\Icon.ico" />
     <Content Remove="Assets\Icon.png" />
     <Content Remove="Assets\SmallIcon.png" />
     <Content Remove="Assets\StorageAccountLogo.png" />
@@ -31,6 +36,12 @@
   <ItemGroup>
     <None Remove="Assets\AzureServiceLogos\API-Management-Services.png" />
     <None Remove="Assets\AzureServiceLogos\Storage-Accounts.png" />
+    <None Remove="Assets\AzureServiceLogos\Storage-Azure-Blob-Block.png" />
+    <None Remove="Assets\AzureServiceLogos\Storage-Azure-Files.png" />
+    <None Remove="Assets\AzureServiceLogos\Storage-Azure-Queue.png" />
+    <None Remove="Assets\AzureServiceLogos\Storage-Azure-Table.png" />
+    <None Remove="Assets\Icon.png" />
+    <None Remove="Assets\SmallIcon.png" />
     <None Remove="Assets\StorageAccountLogo.png" />
     <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Templates\FileService\OperationsOnDirectories\CreateDirectory.json" />
@@ -145,6 +156,25 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Accounts.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Blob-Block.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Files.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Queue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Table.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Icon.ico" />
+    <EmbeddedResource Include="Assets\Icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\SmallIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobLegalHold.json">

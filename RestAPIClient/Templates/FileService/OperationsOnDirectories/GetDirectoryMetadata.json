@@ -9,7 +9,7 @@
   },
   "IsMethodComboEnabled": "false",
   "URL": {
-    "RawURL": "https://myaccount.file.core.windows.net/myshare/ myparentdirectorypath/mydirectory?restype=directory\u0026comp=metadata",
+    "RawURL": "https://myaccount.file.core.windows.net/myshare/myparentdirectorypath/mydirectory?restype=directory\u0026comp=metadata",
     "Protocol": null,
     "Host": null,
     "Path": null,

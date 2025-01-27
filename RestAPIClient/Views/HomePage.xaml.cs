@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Xml.Linq;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using RestAPIClient.Helpers;
@@ -83,6 +84,8 @@ namespace RestAPIClient.Views
                     var node = FindNavigationViewItemByName((ObservableCollection<NavigationMenuItem>)navigationView.MenuItemsSource, ((TabItem)tabView.SelectedItem).Id, ((TabItem)tabView.SelectedItem).Title);
                     navigationView.SelectedItem = node;
                 }
+                else
+                    navigationView.SelectedItem = null;
             }
         }
 

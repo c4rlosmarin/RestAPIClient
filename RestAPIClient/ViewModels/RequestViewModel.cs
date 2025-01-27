@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
@@ -8,7 +9,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using RestAPIClient.Helpers;
-using RestAPIClient.Models;
 
 namespace RestAPIClient.ViewModels;
 
@@ -173,21 +173,21 @@ public partial class RequestViewModel : ObservableRecipient
             if (requestModel.Parameters is not null)
             {
                 foreach (var parameter in requestModel.Parameters)
-                    Parameters.Add(new ParameterItem(_messenger) { IsEnabled = parameter.IsEnabled, IsEnabledActive = parameter.IsEnabledActive, Key = parameter.Key, Description = parameter.Description, DeleteButtonVisibility = parameter.DeleteButtonVisibility, IsKeyReadyOnly = parameter.IsKeyReadyOnly, IsDescriptionReadyOnly = parameter.IsDescriptionReadyOnly });
+                    Parameters.Add(new ParameterItem(_messenger) { IsEnabled = parameter.IsEnabled, IsEnabledActive = parameter.IsEnabledActive, Key = parameter.Key, Value = parameter.Value, Description = parameter.Description, DeleteButtonVisibility = parameter.DeleteButtonVisibility, IsKeyReadyOnly = parameter.IsKeyReadyOnly, IsValueReadyOnly = parameter.IsValueReadyOnly, IsDescriptionReadyOnly = parameter.IsDescriptionReadyOnly });
             }
 
             Headers = new ObservableCollection<HeaderItem>();
             if (requestModel.Headers is not null)
             {
                 foreach (var header in requestModel.Headers)
-                    Headers.Add(new HeaderItem(_messenger) { IsEnabled = header.IsEnabled, IsEnabledActive = header.IsEnabledActive, Key = header.Key, Description = header.Description, UTCVisibility = header.UTCVisibility, DatePickerButtonVisibility = header.DatePickerButtonVisibility, DeleteButtonVisibility = header.DeleteButtonVisibility, IsKeyReadyOnly = header.IsKeyReadyOnly, IsDescriptionReadyOnly = header.IsDescriptionReadyOnly });
+                    Headers.Add(new HeaderItem(_messenger) { IsEnabled = header.IsEnabled, IsEnabledActive = header.IsEnabledActive, Key = header.Key, Value = header.Value, Description = header.Description, UTCVisibility = header.UTCVisibility, DatePickerButtonVisibility = header.DatePickerButtonVisibility, DeleteButtonVisibility = header.DeleteButtonVisibility, IsKeyReadyOnly = header.IsKeyReadyOnly, IsValueReadyOnly = header.IsValueReadyOnly, IsDescriptionReadyOnly = header.IsDescriptionReadyOnly });
             }
 
             Body = new ObservableCollection<BodyItem>();
             if (requestModel.Body is not null)
             {
                 foreach (var bodyItem in requestModel.Body)
-                    Body.Add(new BodyItem(_messenger) { IsEnabled = bodyItem.IsEnabled, Key = bodyItem.Key, Description = bodyItem.Description, DeleteButtonVisibility = bodyItem.DeleteButtonVisibility, IsKeyReadyOnly = bodyItem.IsKeyReadyOnly, IsDescriptionReadyOnly = bodyItem.IsDescriptionReadyOnly });
+                    Body.Add(new BodyItem(_messenger) { IsEnabled = bodyItem.IsEnabled, Key = bodyItem.Key, Value = bodyItem.Value, Description = bodyItem.Description, DeleteButtonVisibility = bodyItem.DeleteButtonVisibility, IsKeyReadyOnly = bodyItem.IsKeyReadyOnly, IsDescriptionReadyOnly = bodyItem.IsDescriptionReadyOnly });
             }
 
             IsBodyComboEnabled = requestModel.IsBodyComboEnabled;

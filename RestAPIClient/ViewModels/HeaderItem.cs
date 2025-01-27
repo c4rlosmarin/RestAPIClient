@@ -17,6 +17,8 @@ public partial class HeaderItem : ObservableRecipient
     [ObservableProperty]
     public string value;
     [ObservableProperty]
+    public string isValueReadyOnly = "false";
+    [ObservableProperty]
     public string description;
     [ObservableProperty]
     public string isDescriptionReadyOnly;

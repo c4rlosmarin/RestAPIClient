@@ -157,6 +157,8 @@
 		}
 	],
 	"IsBodyComboEnabled": "false",
+	"SelectedBodyType": "None",
+	"RawBody": null,
 	"Body": [],
 	"Response": {
 		"StatusCode": null,

@@ -14,15 +14,27 @@
 
     <Page.Resources>
         <DataTemplate x:Key="NoIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
-            <NavigationViewItem Content="{Binding Content, Mode=TwoWay}" MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" />
+            <NavigationViewItem MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}">
+                <NavigationViewItem.Content>
+                    <TextBlock Text="{Binding Content, Mode=TwoWay}" TextWrapping="Wrap" />
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
         </DataTemplate>
 
         <DataTemplate x:Key="ImageIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
-            <NavigationViewItem Content="{Binding Content, Mode=TwoWay}" MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding ImageIcon, Mode=TwoWay}"/>
+            <NavigationViewItem MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding ImageIcon, Mode=TwoWay}">
+                <NavigationViewItem.Content>
+                    <TextBlock Text="{Binding Content, Mode=TwoWay}" TextWrapping="Wrap" />
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
         </DataTemplate>
 
         <DataTemplate x:Key="FontIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
-            <NavigationViewItem Content="{Binding Content, Mode=TwoWay}" MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding FontIcon, Mode=TwoWay}"/>
+            <NavigationViewItem MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding FontIcon, Mode=TwoWay}">
+                <NavigationViewItem.Content>
+                    <TextBlock Text="{Binding Content, Mode=TwoWay}" TextWrapping="Wrap" />
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
         </DataTemplate>
 
         <local:IconTemplateSelector x:Key="IconTemplateSelector" ImageIconTemplate="{StaticResource ImageIconTemplate}" FontIconTemplate="{StaticResource FontIconTemplate}" NoIconTemplate="{StaticResource NoIconTemplate}" />
@@ -48,6 +60,7 @@
         <NavigationView
             x:Name="NavigationViewControl"
             Canvas.ZIndex="0"
+            Margin="3,0,0,0"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
@@ -58,7 +71,7 @@
             MenuItemsSource="{x:Bind ViewModel.NavigationMenuItems, Mode=OneWay}" FooterMenuItemsSource="{x:Bind ViewModel.NavigationFooterItems, Mode=OneWay}" MenuItemTemplateSelector="{StaticResource IconTemplateSelector}">
 
             <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox x:Name="controlsSearchBox" Margin="-12,0,-12,0" TextChanged="AutoSuggestBox_TextChanged"/>
+                <AutoSuggestBox x:Name="controlsSearchBox" Margin="-12" TextChanged="AutoSuggestBox_TextChanged"/>
             </NavigationView.AutoSuggestBox>
 
             <Grid>
