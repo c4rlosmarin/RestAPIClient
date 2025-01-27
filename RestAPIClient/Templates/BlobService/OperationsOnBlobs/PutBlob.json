@@ -626,7 +626,7 @@
 	],
 	"IsBodyComboEnabled": "true",
 	"SelectedBodyType": "None",
-	"RawBody": null,
+	"RawBody": "Hello World",
 	"Body": [],
 	"Response": {
 		"StatusCode": null,

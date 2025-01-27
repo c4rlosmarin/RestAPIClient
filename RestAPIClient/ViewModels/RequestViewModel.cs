@@ -168,9 +168,28 @@ public partial class RequestViewModel : ObservableRecipient
             SelectedMethod = requestModel.SelectedMethod;
             IsMethodComboEnabled = requestModel.IsMethodComboEnabled;
             TabIconVisibility = requestModel.TabIconVisibility;
-            Parameters = requestModel.Parameters;
-            Headers = requestModel.Headers;
-            Body = requestModel.Body;
+
+            Parameters = new ObservableCollection<ParameterItem>();
+            if (requestModel.Parameters is not null)
+            {
+                foreach (var parameter in requestModel.Parameters)
+                    Parameters.Add(new ParameterItem(_messenger) { IsEnabled = parameter.IsEnabled, IsEnabledActive = parameter.IsEnabledActive, Key = parameter.Key, Description = parameter.Description, DeleteButtonVisibility = parameter.DeleteButtonVisibility, IsKeyReadyOnly = parameter.IsKeyReadyOnly, IsDescriptionReadyOnly = parameter.IsDescriptionReadyOnly });
+            }
+
+            Headers = new ObservableCollection<HeaderItem>();
+            if (requestModel.Headers is not null)
+            {
+                foreach (var header in requestModel.Headers)
+                    Headers.Add(new HeaderItem(_messenger) { IsEnabled = header.IsEnabled, IsEnabledActive = header.IsEnabledActive, Key = header.Key, Description = header.Description, UTCVisibility = header.UTCVisibility, DatePickerButtonVisibility = header.DatePickerButtonVisibility, DeleteButtonVisibility = header.DeleteButtonVisibility, IsKeyReadyOnly = header.IsKeyReadyOnly, IsDescriptionReadyOnly = header.IsDescriptionReadyOnly });
+            }
+
+            Body = new ObservableCollection<BodyItem>();
+            if (requestModel.Body is not null)
+            {
+                foreach (var bodyItem in requestModel.Body)
+                    Body.Add(new BodyItem(_messenger) { IsEnabled = bodyItem.IsEnabled, Key = bodyItem.Key, Description = bodyItem.Description, DeleteButtonVisibility = bodyItem.DeleteButtonVisibility, IsKeyReadyOnly = bodyItem.IsKeyReadyOnly, IsDescriptionReadyOnly = bodyItem.IsDescriptionReadyOnly });
+            }
+
             IsBodyComboEnabled = requestModel.IsBodyComboEnabled;
             SelectedBodyType = requestModel.SelectedBodyType;
             RawBody = requestModel.RawBody;
