@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="RestAPIClient.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RestAPIClient.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:RestAPIClient.ViewModels"
+    NavigationCacheMode="Required"
+    mc:Ignorable="d"
+    >
+
+    <Grid x:Name="ContentArea" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.Resources>
+                <DataTemplate x:Name="TabViewItemHeaderTemplate" x:DataType="viewmodels:TabItem">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" ColumnDefinitions="Auto,Auto">
+                            <FontIcon Grid.Column="0" Tag="newRequestIcon" Margin="0,-2" Glyph="&#xe915;" Style="{ThemeResource MyFontIconStyle}" Visibility="{x:Bind EditingIconVisibility, Mode=TwoWay}"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind Method, Mode=TwoWay}" Foreground="{x:Bind Foreground, Mode=TwoWay}" />
+                        </Grid>
+                        <TextBlock Text="{x:Bind Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2"/>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind Title, Mode=TwoWay}"/>
+                        </ToolTipService.ToolTip>
+                    </Grid>
+                </DataTemplate>
+            </Grid.Resources>
+
+            <TabView x:Name="tabView" IsAddTabButtonVisible="True" TabItemsSource="{x:Bind TabsViewModel.Tabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{x:Bind TabsViewModel.SelectedTabItem, Mode=TwoWay}" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" SelectionChanged="tabView_SelectionChanged"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <TabView.TabItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:TabItem">
+                        <TabViewItem HeaderTemplate="{StaticResource TabViewItemHeaderTemplate}"/>
+                    </DataTemplate>
+                </TabView.TabItemTemplate>
+            </TabView>
+
+        </Grid>
+    </Grid>
+</Page>

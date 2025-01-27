@@ -1,0 +1,16 @@
+{
+	"RequestId": "9cc6eb22-c1d3-4ee0-b076-b4c58d4feb17",
+	"IsExistingRequest": true,
+	"Tag": "9cc6eb22-c1d3-4ee0-b076-b4c58d4feb17|GET",
+	"method": "GET",
+	"Method": null,
+	"Margin": {
+		"Left": -20,
+		"Top": 0,
+		"Right": 0,
+		"Bottom": 0
+	},
+	"Content": "Get Blob Service Stats",
+	"Name": "Get Blob Service Stats",
+	"IsActive": true
+}

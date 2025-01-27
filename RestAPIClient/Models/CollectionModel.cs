@@ -15,7 +15,6 @@ public partial class CollectionModel : ObservableRecipient
     public ImageIcon icon;
     [ObservableProperty]
     public Thickness margin;
-    public string PageName;
 
     public override string ToString()
     {

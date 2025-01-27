@@ -7,7 +7,26 @@
     xmlns:helpers="using:RestAPIClient.Helpers"
     xmlns:behaviors="using:RestAPIClient.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    Loaded="OnLoaded">
+    Loaded="OnLoaded"
+    xmlns:viewmodels="using:RestAPIClient.ViewModels"
+    xmlns:local="using:RestAPIClient.Views"
+    >
+
+    <Page.Resources>
+        <DataTemplate x:Key="NoIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
+            <NavigationViewItem Content="{Binding Content, Mode=TwoWay}" MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="ImageIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
+            <NavigationViewItem Content="{Binding Content, Mode=TwoWay}" MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding ImageIcon, Mode=TwoWay}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="FontIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
+            <NavigationViewItem Content="{Binding Content, Mode=TwoWay}" MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding FontIcon, Mode=TwoWay}"/>
+        </DataTemplate>
+
+        <local:IconTemplateSelector x:Key="IconTemplateSelector" ImageIconTemplate="{StaticResource ImageIconTemplate}" FontIconTemplate="{StaticResource FontIconTemplate}" NoIconTemplate="{StaticResource NoIconTemplate}" />
+    </Page.Resources>
 
     <Grid>
         <Grid x:Name="AppTitleBar"
@@ -35,87 +54,13 @@
             IsSettingsVisible="True"
             ExpandedModeThresholdWidth="1280"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
-            AlwaysShowHeader="False"
-            >
+            AlwaysShowHeader="False" SelectionChanged="NavigationViewControl_SelectionChanged"
+            MenuItemsSource="{x:Bind ViewModel.NavigationMenuItems, Mode=OneWay}" FooterMenuItemsSource="{x:Bind ViewModel.NavigationFooterItems, Mode=OneWay}" MenuItemTemplateSelector="{StaticResource IconTemplateSelector}">
 
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox x:Name="controlsSearchBox" Margin="-12,0,-12,0" TextChanged="AutoSuggestBox_TextChanged"/>
             </NavigationView.AutoSuggestBox>
 
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="nviCollections" x:Uid="Shell_Collections" helpers:NavigationHelper.NavigateTo="RestAPIClient.ViewModels.CollectionsViewModel" IsExpanded="True" IsSelected="False">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe8a4;"/>
-                    </NavigationViewItem.Icon>
-
-                    <NavigationViewItem.MenuItems>
-                        <NavigationViewItem Content="Azure Templates">
-                            <NavigationViewItem.Icon>
-                                <ImageIcon Source="ms-appx:///Assets/Azure.png"/>
-                            </NavigationViewItem.Icon>
-
-                            <NavigationViewItem.MenuItems>
-                                <NavigationViewItem Content="Storage Services">
-                                    <NavigationViewItem.Icon>
-                                        <ImageIcon Source="ms-appx:///Assets/AzureServiceLogos/Storage-Accounts.png"/>
-                                    </NavigationViewItem.Icon>
-
-                                    <NavigationViewItem.MenuItems>
-                                        <NavigationViewItem Content="Blob Service REST API" helpers:NavigationHelper.NavigateTo="RestAPIClient.ViewModels.CollectionsViewModel"/>
-                                        <NavigationViewItem Content="Queue Service REST API" helpers:NavigationHelper.NavigateTo="RestAPIClient.ViewModels.CollectionsViewModel"/>
-                                        <NavigationViewItem Content="Table Service REST API" helpers:NavigationHelper.NavigateTo="RestAPIClient.ViewModels.CollectionsViewModel"/>
-                                        <NavigationViewItem Content="File Service REST API" helpers:NavigationHelper.NavigateTo="RestAPIClient.ViewModels.CollectionsViewModel"/>
-                                    </NavigationViewItem.MenuItems>
-
-                                </NavigationViewItem>
-
-                                <NavigationViewItem Content="API Management">
-                                    <NavigationViewItem.Icon>
-                                        <ImageIcon Source="ms-appx:///Assets/AzureServiceLogos/API-Management-Services.png"/>
-                                    </NavigationViewItem.Icon>
-                                </NavigationViewItem>
-                            </NavigationViewItem.MenuItems>
-
-                        </NavigationViewItem>
-                    </NavigationViewItem.MenuItems>
-
-                </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Environments" helpers:NavigationHelper.NavigateTo="RestAPIClient.ViewModels.EnvironmentsViewModel">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe909;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
-
-            <NavigationView.FooterMenuItems>
-                <NavigationViewItem x:Uid="Shell_About" helpers:NavigationHelper.NavigateTo="RestAPIClient.ViewModels.AboutViewModel">
-                    <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe946;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
-            </NavigationView.FooterMenuItems>
-
-            <NavigationView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock
-                            Text="{Binding}"
-                            Style="{ThemeResource TitleTextBlockStyle}" />
-                    </Grid>
-                </DataTemplate>
-            </NavigationView.HeaderTemplate>
-            <i:Interaction.Behaviors>
-                <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
-                    <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="{Binding}" Style="{ThemeResource TitleTextBlockStyle2}" />
-                            </Grid>
-                        </DataTemplate>
-                    </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
-                </behaviors:NavigationViewHeaderBehavior>
-            </i:Interaction.Behaviors>
-            
             <Grid>
                 <Frame x:Name="NavigationFrame" Margin="0,10,25,0"/>
             </Grid>

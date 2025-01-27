@@ -1,0 +1,16 @@
+{
+  "RequestId": "e192945c-7d70-49c6-8e50-521a2f7f01c2",
+  "IsExistingRequest": true,
+  "Tag": "e192945c-7d70-49c6-8e50-521a2f7f01c2|PUT",
+  "method": "PUT",
+  "Method": null,
+  "Margin": {
+    "Left": -20,
+    "Top": 0,
+    "Right": 0,
+    "Bottom": 0
+  },
+  "Content": "Set Blob Service Properties",
+  "Name": "Set Blob Service Properties",
+  "IsActive": true
+}

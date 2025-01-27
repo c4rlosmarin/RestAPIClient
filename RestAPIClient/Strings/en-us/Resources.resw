@@ -165,4 +165,7 @@
   <data name="Settings_AboutContact.Text" xml:space="preserve">
     <value>Please contact Carlos Marin at camarin@microsoft.com for additional information.</value>
   </data>
+  <data name="Shell_StorageServices.BlobServiceRESTAPI.BlobServiceOperation" xml:space="preserve">
+    <value>Collections</value>
+  </data>
 </root>

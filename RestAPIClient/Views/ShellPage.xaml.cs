@@ -8,15 +8,11 @@ using Windows.System;
 
 namespace RestAPIClient.Views;
 
-// TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
 public sealed partial class ShellPage : Page
 {
-    public ShellViewModel ViewModel
-    {
-        get;
-    }
+    public ShellViewModel ViewModel { get; }
 
-    List<NavigationViewItem> originalNavigationViewItems;
+    #region << Constructor >>
 
     public ShellPage(ShellViewModel viewModel)
     {
@@ -26,7 +22,6 @@ public sealed partial class ShellPage : Page
         ViewModel.NavigationService.Frame = NavigationFrame;
         ViewModel.NavigationViewService.Initialize(NavigationViewControl);
 
-
         // TODO: Set the title bar icon by updating /Assets/WindowIcon.ico.
         // A custom title bar is required for full window theme and Mica support.
         // https://docs.microsoft.com/windows/apps/develop/title-bar?tabs=winui3#full-customization
@@ -34,14 +29,11 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         //App.MainWindow.Activated += MainWindow_Activated;
         //AppTitleBarText.Text = "AppDisplayName".GetLocalized();
-
-        originalNavigationViewItems = new List<NavigationViewItem>();
-        foreach (var item in nviCollections.MenuItems)
-        {
-            if (item is NavigationViewItem navItem)
-                originalNavigationViewItems.Add(navItem);
-        }
     }
+
+    #endregion
+
+    #region << Events >>
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
@@ -96,59 +88,115 @@ public sealed partial class ShellPage : Page
         {
             var query = sender.Text.ToLower();
             if (!string.IsNullOrEmpty(query))
+                FilterItemsRecursive((IEnumerable<NavigationMenuItem>)NavigationViewControl.MenuItemsSource, query);
+            else
+                FilterItemsRecursive((IEnumerable<NavigationMenuItem>)NavigationViewControl.MenuItemsSource, "");
+        }
+    }
+
+    private bool FilterItemsRecursive(IEnumerable<NavigationMenuItem> items, string query)
+    {
+        string content;
+        bool itemFound = false;
+        foreach (var item in items)
+        {
+            bool foundSubItem = false;
+            if (item.SubMenus is not null && item.SubMenus.Count > 0)
             {
-                var filteredItems = FilterItems(originalNavigationViewItems, query);
-                nviCollections.MenuItems.Clear();
-                nviCollections.MenuItemsSource = null;
-                nviCollections.MenuItemsSource = filteredItems;
+                itemFound = FilterItemsRecursive(item.SubMenus, query);
+                if (itemFound)
+                {
+                    item.Visibility = "Visible";
+                    if (!string.IsNullOrEmpty(query))
+                        item.IsExpanded = true;
+                    else
+                        item.IsExpanded = false;
+                }
+                else
+                {
+                    item.Visibility = "Collapsed";
+                    item.IsExpanded = false;
+                }
             }
             else
             {
-                var filteredItems = FilterItems(originalNavigationViewItems, "");
-                nviCollections.MenuItems.Clear();
-                nviCollections.MenuItemsSource = null;
-                nviCollections.MenuItemsSource = filteredItems;
+                if (string.IsNullOrEmpty(query) || item.Content.ToLower().Contains(query))
+                {
+                    item.Visibility = "Visible";
+                    itemFound = true;
+                }
+                else
+                    item.Visibility = "Collapsed";
             }
         }
+        return itemFound;
     }
 
-    private List<NavigationViewItem> FilterItems(IEnumerable<NavigationViewItem> items, string query)
+    private void NavigationViewControl_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        var filteredItems = new List<NavigationViewItem>();
-        foreach (var item in items)
+        NavigationViewControl.SelectionChanged -= NavigationViewControl_SelectionChanged;
+
+        if (args.SelectedItem is NavigationMenuItem selectedItem)
         {
-            if (item.Content.ToString().ToLower().Contains(query))
-                filteredItems.Add(CloneNavigationViewItem(item));
-            else if (item.MenuItems.Count > 0)
+            if (selectedItem.IsRequest)
             {
-                var filteredSubItems = FilterItems(item.MenuItems.OfType<NavigationViewItem>(), query);
-                if (filteredSubItems.Count > 0)
+                if (NavigationFrame.Content is HomePage homePage)
                 {
-                    var newItem = CloneNavigationViewItem(item);
-                    newItem.MenuItems.Clear();
-                    foreach (var subItem in filteredSubItems)
-                        newItem.MenuItems.Add(subItem);
-                    filteredItems.Add(newItem);
+                    if (selectedItem.IsRequest)
+                        homePage.CreateRequestTab(new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, method = selectedItem.Method.Name });
+                }
+                else
+                    NavigationFrame.Navigate(typeof(HomePage), (new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, method = selectedItem.Method.Name }));
+            }
+            else
+            {
+                switch (selectedItem.Content)
+                {
+                    case "About":
+                        NavigationFrame.Navigate(typeof(AboutPage));
+
+                        break;
                 }
             }
         }
-
-        return filteredItems;
+        NavigationViewControl.SelectionChanged += NavigationViewControl_SelectionChanged;
     }
 
-    private NavigationViewItem CloneNavigationViewItem(NavigationViewItem item)
-    {
-        var newItem = new NavigationViewItem
-        {
-            Content = item.Content,
-            Icon = item.Icon,
-            IsExpanded = true
-        };
-
-        foreach (var subItem in item.MenuItems.OfType<NavigationViewItem>())
-            newItem.MenuItems.Add(CloneNavigationViewItem(subItem));
-
-        return newItem;
-    }
-
+    #endregion
 }
+
+#region << Internal Classes >>
+
+public class IconTemplateSelector : DataTemplateSelector
+{
+    public DataTemplate ImageIconTemplate
+    {
+        get; set;
+    }
+    public DataTemplate FontIconTemplate
+    {
+        get; set;
+    }
+
+    public DataTemplate NoIconTemplate
+    {
+        get; set;
+    }
+
+    protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+    {
+        var viewModel = item as NavigationMenuItem;
+        if (viewModel != null)
+        {
+            if (viewModel.ImageIcon is not null)
+                return ImageIconTemplate;
+            else if (viewModel.FontIcon is not null)
+                return FontIconTemplate;
+            else
+                return NoIconTemplate;
+        }
+        return base.SelectTemplateCore(item, container);
+    }
+}
+
+#endregion

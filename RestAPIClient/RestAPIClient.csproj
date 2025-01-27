@@ -79,6 +79,7 @@
     <None Remove="Templates\FileService\OperationsOnFiles\SetFileProperties.json" />
     <None Remove="Templates\ListContainers.json" />
     <None Remove="Views\AboutPage.xaml" />
+    <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\RequestPage.xaml" />
   </ItemGroup>
 
@@ -109,6 +110,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Page Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Styles\FontIcon.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
@@ -431,6 +435,31 @@
     <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\SetFileProperties.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\2.SetBlobServiceProperties.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\1.ListContainers.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\7.GetUserDelegationKey.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\6.GetAccountInformation.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\5.GetBlobServiceStats.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\4.PreflightBlobRequest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\3.GetBlobServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="ViewModels\NavigationMenuItem.cs" />
   </ItemGroup>
 
     <UsingTask TaskName="GenerateAppManifestFromAppx" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">

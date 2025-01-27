@@ -1,0 +1,16 @@
+{
+	"RequestId": "e4e5c062-82a1-4282-a571-19d5acdec6d3",
+	"IsExistingRequest": true,
+	"Tag": "e4e5c062-82a1-4282-a571-19d5acdec6d3|GET",
+	"method": "OPTIONS",
+	"Method": null,
+	"Margin": {
+		"Left": -20,
+		"Top": 0,
+		"Right": 0,
+		"Bottom": 0
+	},
+	"Content": "Preflight Blob Request",
+	"Name": "Preflight Blob Request",
+	"IsActive": true
+}
