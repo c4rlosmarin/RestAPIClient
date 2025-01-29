@@ -21,16 +21,6 @@
     <PackageIcon>Icon.ico</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\Azure.png" />
-    <Content Remove="Assets\AzureServiceLogos\API-Management-Services.png" />
-    <Content Remove="Assets\AzureServiceLogos\Storage-Accounts.png" />
-    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Blob-Block.png" />
-    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Files.png" />
-    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Queue.png" />
-    <Content Remove="Assets\AzureServiceLogos\Storage-Azure-Table.png" />
-    <Content Remove="Assets\Icon.ico" />
-    <Content Remove="Assets\Icon.png" />
-    <Content Remove="Assets\SmallIcon.png" />
     <Content Remove="Assets\StorageAccountLogo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +79,39 @@
     <None Remove="Templates\FileService\OperationsOnFiles\SetFileMetadata.json" />
     <None Remove="Templates\FileService\OperationsOnFiles\SetFileProperties.json" />
     <None Remove="Templates\ListContainers.json" />
+    <None Remove="Templates\QueueService\OperationsOnMessages\ClearMessages.json" />
+    <None Remove="Templates\QueueService\OperationsOnMessages\DeleteMessage.json" />
+    <None Remove="Templates\QueueService\OperationsOnMessages\GetMessages.json" />
+    <None Remove="Templates\QueueService\OperationsOnMessages\PeekMessages.json" />
+    <None Remove="Templates\QueueService\OperationsOnMessages\PutMessage.json" />
+    <None Remove="Templates\QueueService\OperationsOnMessages\UpdateMessage.json" />
+    <None Remove="Templates\QueueService\OperationsOnQueues\CreateQueue.json" />
+    <None Remove="Templates\QueueService\OperationsOnQueues\DeleteQueue.json" />
+    <None Remove="Templates\QueueService\OperationsOnQueues\GetQueueACL.json" />
+    <None Remove="Templates\QueueService\OperationsOnQueues\GetQueueMetadata.json" />
+    <None Remove="Templates\QueueService\OperationsOnQueues\SetQueueACL.json" />
+    <None Remove="Templates\QueueService\OperationsOnQueues\SetQueueMetadata.json" />
+    <None Remove="Templates\QueueService\OperationsOnTheAccount\GetQueueServiceProperties.json" />
+    <None Remove="Templates\QueueService\OperationsOnTheAccount\GetQueueServiceStats.json" />
+    <None Remove="Templates\QueueService\OperationsOnTheAccount\ListQueues.json" />
+    <None Remove="Templates\QueueService\OperationsOnTheAccount\PreflightQueueRequest.json" />
+    <None Remove="Templates\QueueService\OperationsOnTheAccount\SetQueueServiceProperties.json" />
+    <None Remove="Templates\TableService\OperationsOnEntities\DeleteEntity.json" />
+    <None Remove="Templates\TableService\OperationsOnEntities\InsertEntity.json" />
+    <None Remove="Templates\TableService\OperationsOnEntities\InsertOrMergeEntity.json" />
+    <None Remove="Templates\TableService\OperationsOnEntities\InsertOrReplaceEntity.json" />
+    <None Remove="Templates\TableService\OperationsOnEntities\MergeEntity.json" />
+    <None Remove="Templates\TableService\OperationsOnEntities\QueryEntities.json" />
+    <None Remove="Templates\TableService\OperationsOnEntities\UpdateEntity.json" />
+    <None Remove="Templates\TableService\OperationsOnTables\CreateTable.json" />
+    <None Remove="Templates\TableService\OperationsOnTables\DeleteTable.json" />
+    <None Remove="Templates\TableService\OperationsOnTables\GetTableACL.json" />
+    <None Remove="Templates\TableService\OperationsOnTables\QueryTables.json" />
+    <None Remove="Templates\TableService\OperationsOnTables\SetTableACL.json" />
+    <None Remove="Templates\TableService\OperationsOnTheAccount\GetTableServiceProperties.json" />
+    <None Remove="Templates\TableService\OperationsOnTheAccount\GetTableServiceStats.json" />
+    <None Remove="Templates\TableService\OperationsOnTheAccount\PreflightTableRequest.json" />
+    <None Remove="Templates\TableService\OperationsOnTheAccount\SetTableServiceProperties.json" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\RequestPage.xaml" />
@@ -149,34 +172,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Azure.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\AzureServiceLogos\API-Management-Services.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Accounts.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Blob-Block.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Files.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Queue.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\AzureServiceLogos\Storage-Azure-Table.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\Icon.ico" />
-    <EmbeddedResource Include="Assets\Icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\SmallIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Templates\BlobService\OperationsOnBlobs\SetBlobLegalHold.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -465,6 +460,57 @@
     <EmbeddedResource Include="Templates\FileService\OperationsOnFiles\SetFileProperties.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnMessages\ClearMessages.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnMessages\DeleteMessage.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnMessages\GetMessages.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnMessages\PeekMessages.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnMessages\PutMessage.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnMessages\UpdateMessage.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnQueues\CreateQueue.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnQueues\DeleteQueue.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnQueues\GetQueueACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnQueues\GetQueueMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnQueues\SetQueueACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnQueues\SetQueueMetadata.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnTheAccount\GetQueueServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnTheAccount\GetQueueServiceStats.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnTheAccount\ListQueues.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnTheAccount\PreflightQueueRequest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QueueService\OperationsOnTheAccount\SetQueueServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\2.SetBlobServiceProperties.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -486,10 +532,91 @@
     <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\3.GetBlobServiceProperties.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnEntities\DeleteEntity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnEntities\InsertEntity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnEntities\InsertOrMergeEntity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnEntities\InsertOrReplaceEntity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnEntities\MergeEntity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnEntities\QueryEntities.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnEntities\UpdateEntity.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTables\CreateTable.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTables\DeleteTable.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTables\GetTableACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTables\QueryTables.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTables\SetTableACL.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTheAccount\GetTableServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTheAccount\GetTableServiceStats.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTheAccount\PreflightTableRequest.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TableService\OperationsOnTheAccount\SetTableServiceProperties.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   
   <ItemGroup>
     <None Include="ViewModels\NavigationMenuItem.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Update="Assets\Azure.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\AzureServiceLogos\API-Management-Services.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\AzureServiceLogos\Storage-Accounts.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\AzureServiceLogos\Storage-Azure-Blob-Block.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\AzureServiceLogos\Storage-Azure-Files.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\AzureServiceLogos\Storage-Azure-Queue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\AzureServiceLogos\Storage-Azure-Table.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\SmallIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
     <UsingTask TaskName="GenerateAppManifestFromAppx" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">

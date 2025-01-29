@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using RestAPIClient.Helpers;
+using RestAPIClient.Models;
 
 namespace RestAPIClient.ViewModels;
 
@@ -237,8 +238,9 @@ public partial class RequestViewModel : ObservableRecipient
         var getMethod = new MethodsItemViewModel("GET");
         Methods.Add(getMethod);
         Methods.Add(new MethodsItemViewModel("POST"));
-        Methods.Add(new MethodsItemViewModel("PUT"));
+        Methods.Add(new MethodsItemViewModel("PUT"));        
         Methods.Add(new MethodsItemViewModel("PATCH"));
+        Methods.Add(new MethodsItemViewModel("MERGE"));
         Methods.Add(new MethodsItemViewModel("DELETE"));
         Methods.Add(new MethodsItemViewModel("OPTIONS"));
         Methods.Add(new MethodsItemViewModel("HEAD"));
@@ -440,49 +442,48 @@ public partial class RequestViewModel : ObservableRecipient
     [RelayCommand]
     public async Task<string> SendRequestAsync()
     {
-        using HttpClient client = new HttpClient();
-        HttpResponseMessage response = new HttpResponseMessage();
+        //using HttpClient client = new HttpClient();
+        //HttpResponseMessage response = new HttpResponseMessage();
 
-        var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
-        AddRequestHeaders(client);
-        AddRequestBody(request);
-        Response.HeadersCount = "";
-        Stopwatch.Reset();
-        Stopwatch.Start();
-        try
-        {
-            response = await client.SendAsync(request);
-            GetResponseStatusCode(response);
-            await GetResponseMetadata(response);
-            await GetResponseBody(response);
-            GetResponseHeaders(response);
-        }
-        catch (Exception ex)
-        {
-            Response.StatusStyleKey = "MyStatusCodeErrorStyle";
-            Response.StatusCode = ex.Message;
-        }
-        Stopwatch.Stop();
+        //var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
+        //AddRequestHeaders(client);
+        //AddRequestBody(request);
+        //Response.HeadersCount = "";
+        //Stopwatch.Reset();
+        //Stopwatch.Start();
+        //try
+        //{
+        //    response = await client.SendAsync(request);
+        //    GetResponseStatusCode(response);
+        //    await GetResponseMetadata(response);
+        //    await GetResponseBody(response);
+        //    GetResponseHeaders(response);
+        //}
+        //catch (Exception ex)
+        //{
+        //    Response.StatusStyleKey = "MyStatusCodeErrorStyle";
+        //    Response.StatusCode = ex.Message;
+        //}
+        //Stopwatch.Stop();
 
-        Response.BannerVisibility = "Collapsed";
-        Response.Visibility = "Visible";
+        //Response.BannerVisibility = "Collapsed";
+        //Response.Visibility = "Visible";
 
-        //var requestModel = new RequestModel();
-        //requestModel.Name = Name;
-        //requestModel.URL = URL;
-        //requestModel.SelectedMethod = SelectedMethod;
-        //requestModel.IsMethodComboEnabled = "false";
-        //requestModel.TabIconVisibility = "Collapsed";
-        //requestModel.Parameters = Parameters;
-        //requestModel.Headers = Headers;
-        //requestModel.Body = Body;
-        //requestModel.IsBodyComboEnabled = "false";
-        //requestModel.SelectedBodyType = SelectedBodyType;
-        //requestModel.RawBody = RawBody;
+        var requestModel = new RequestModel();
+        requestModel.Name = Name;
+        requestModel.URL = URL;
+        requestModel.SelectedMethod = SelectedMethod;
+        requestModel.IsMethodComboEnabled = "false";
+        requestModel.TabIconVisibility = "Collapsed";
+        requestModel.Parameters = Parameters;
+        requestModel.Headers = Headers;
+        requestModel.Body = Body;
+        requestModel.IsBodyComboEnabled = "false";
+        requestModel.SelectedBodyType = SelectedBodyType;
+        requestModel.RawBody = RawBody;
 
-        //string jsonString = JsonSerializer.Serialize(requestModel);
-        //Debug.WriteLine(jsonString);
-
+        string jsonString = JsonSerializer.Serialize(requestModel);
+        Debug.WriteLine(jsonString);
         return Response.Body;
     }
 

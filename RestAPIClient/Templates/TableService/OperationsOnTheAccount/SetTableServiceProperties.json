@@ -1,0 +1,143 @@
+{
+  "RequestId": null,
+  "Name": "Set Table Service Properties",
+  "TabIconVisibility": "Collapsed",
+  "SelectedMethod": {
+    "Name": "PUT",
+    "Foreground": "#FF8C00",
+    "IsActive": false
+  },
+  "IsMethodComboEnabled": "false",
+  "URL": {
+    "RawURL": "https://account-name.table.core.windows.net/?restype=service\u0026comp=properties",
+    "Protocol": null,
+    "Host": null,
+    "Path": null,
+    "Variables": null,
+    "IsActive": false
+  },
+  "Parameters": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "restype",
+      "IsKeyReadyOnly": "true",
+      "Value": "service",
+      "IsValueReadyOnly": "true",
+      "Description": "Required. The combination of both query strings (restype and comp) is required to set the properties for the Azure Storage service.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "comp",
+      "IsKeyReadyOnly": "true",
+      "Value": "properties",
+      "IsValueReadyOnly": "true",
+      "Description": "Required. The combination of both query strings (restype and comp) is required to set the properties for the Azure Storage service.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "timeout",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Optional. The timeout parameter is expressed in seconds.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    }
+  ],
+  "Headers": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "Authorization",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Required. Specifies the authorization scheme, storage account name, and signature. For more information, see Authorize requests to Azure Storage.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "x-ms-date",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Required. Specifies the Coordinated Universal Time (UTC) for the request. For more information, see Authorize requests to Azure Storage.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Visible",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-version",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Required for all authorized requests. Specifies the version of the operation to use for this request. For more information, see Versioning for the Azure Storage services.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Visible",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-client-request-id",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that\u0027s recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    }
+  ],
+  "IsBodyComboEnabled": "false",
+  "SelectedBodyType": "Xml",
+  "RawBody": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E  \r\u003CStorageServiceProperties\u003E  \r    \u003CLogging\u003E  \r        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r        \u003CDelete\u003Etrue|false\u003C/Delete\u003E  \r        \u003CRead\u003Etrue|false\u003C/Read\u003E  \r        \u003CWrite\u003Etrue|false\u003C/Write\u003E  \r        \u003CRetentionPolicy\u003E  \r            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r        \u003C/RetentionPolicy\u003E  \r    \u003C/Logging\u003E  \r    \u003CHourMetrics\u003E  \r        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r        \u003CIncludeAPIs\u003Etrue|false\u003C/IncludeAPIs\u003E  \r        \u003CRetentionPolicy\u003E  \r            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r        \u003C/RetentionPolicy\u003E  \r    \u003C/HourMetrics\u003E  \r    \u003CMinuteMetrics\u003E  \r        \u003CVersion\u003Eversion-number\u003C/Version\u003E  \r        \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r        \u003CIncludeAPIs\u003Etrue|false\u003C/IncludeAPIs\u003E  \r        \u003CRetentionPolicy\u003E  \r            \u003CEnabled\u003Etrue|false\u003C/Enabled\u003E  \r            \u003CDays\u003Enumber-of-days\u003C/Days\u003E  \r        \u003C/RetentionPolicy\u003E  \r    \u003C/MinuteMetrics\u003E  \r    \u003CCors\u003E  \r        \u003CCorsRule\u003E  \r            \u003CAllowedOrigins\u003Ecomma-separated-list-of-allowed-origins\u003C/AllowedOrigins\u003E  \r            \u003CAllowedMethods\u003Ecomma-separated-list-of-HTTP-verb\u003C/AllowedMethods\u003E  \r            \u003CMaxAgeInSeconds\u003Emax-caching-age-in-seconds\u003C/MaxAgeInSeconds\u003E  \r            \u003CExposedHeaders\u003Ecomma-separated-list-of-response-headers\u003C/ExposedHeaders\u003E  \r            \u003CAllowedHeaders\u003E comma-separated-list-of-request-headers \u003C/AllowedHeaders\u003E  \r        \u003C/CorsRule\u003E  \r    \u003C/Cors\u003E  \r\u003C/StorageServiceProperties\u003E\r",
+  "Body":null,
+  "Response": {
+    "StatusCode": null,
+    "StatusStyleKey": "MyTextBlockAccentStyle",
+    "Time": null,
+    "Size": null,
+    "Body": null,
+    "Headers": null,
+    "HeadersCount": null,
+    "Visibility": "Collapsed",
+    "BannerVisibility": "Visible",
+    "IsActive": false
+  }
+}

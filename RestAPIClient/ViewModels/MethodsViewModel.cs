@@ -24,6 +24,9 @@ public partial class MethodsItemViewModel : ObservableRecipient
             case "PUT":
                 Foreground = ForegroundColorHelper.PUT;
                 break;
+            case "MERGE":
+                Foreground = ForegroundColorHelper.MERGE;
+                break;
             case "PATCH":
                 Foreground = ForegroundColorHelper.PATCH;
                 break;

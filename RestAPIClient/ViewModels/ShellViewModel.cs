@@ -109,7 +109,7 @@ public partial class ShellViewModel : ObservableRecipient
             new NavigationMenuItem() { RequestId = "27400b89-4193-4804-9c97-8fc98bd4ec73",Name = "Blob Batch",Content = "Blob Batch", Method = new MethodsItemViewModel("POST"), Margin = new(-20, 0, 0, 0), IsRequest=true },
             new NavigationMenuItem() { RequestId = "965b3e05-3adc-4413-ba39-cf82ab6e26db",Name = "Set Blob Immutability Policy",Content = "Set Blob Immutability Policy", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
             new NavigationMenuItem() { RequestId = "7e7c8aba-d49d-4de2-bb62-d1507cf00030",Name = "Delete Blob Immutability Policy",Content = "Delete Blob Immutability Policy", Method = new MethodsItemViewModel("DELETE"), Margin = new(-20, 0, 0, 0), IsRequest=true },
-            new NavigationMenuItem() { RequestId = "2548c991-90c9-4159-98a8-c6d076787b01",Name = "Set Blob Legal Hold",Content = "Set Blob Legal Hold", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "2548c991-90c9-4159-98a8-c6d076787b01",Name = "Set Blob Legal Hold",Content = "Set Blob Legal Hold", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true }
         ];
         restApiMenuItem.SubMenus.Add(categoryMenuItem);
 
@@ -117,9 +117,83 @@ public partial class ShellViewModel : ObservableRecipient
         restApiMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
         serviceMenuItem.SubMenus.Add(restApiMenuItem);
 
+        categoryMenuItem = new NavigationMenuItem() { Content = "Operations on the Account (Queue Service)", Margin = new(-20, 0, 0, 0) };
+        categoryMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
+        categoryMenuItem.SubMenus =
+        [
+            new NavigationMenuItem() { RequestId = "40059afb-187a-4fee-ac88-66e95c1bfdd7",Name = "List Queues",Content = "List Queues", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "98fe8758-72fa-44cb-b9b5-e515162fc972",Name = "Set Queue Service Properties",Content = "Set Queue Service Properties", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "027f0ce7-3a93-4e8c-ba1e-7451a15e658d",Name = "Get Queue Service Properties",Content = "Get Queue Service Properties", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "279c3bfe-2a3c-47e0-81bb-007e5a6d2dd5",Name = "Preflight Queue Request",Content = "Preflight Queue Request", Method = new MethodsItemViewModel("OPTIONS"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "f386215a-fc2a-4f88-ba26-e12fe970c39e",Name = "Get Queue Service Stats",Content = "Get Queue Service Stats", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true }        ];
+        restApiMenuItem.SubMenus.Add(categoryMenuItem);
+
+        categoryMenuItem = new NavigationMenuItem() { Content = "Operations on Queues", Margin = new(-20, 0, 0, 0) };
+        categoryMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
+        categoryMenuItem.SubMenus =
+        [
+            new NavigationMenuItem() { RequestId = "80aece03-d070-4c05-8de3-0ca847cbade8",Name = "Create Queue",Content = "Create Queue", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "9b780a7a-a31d-4b79-a45b-9a31788effc5",Name = "Delete Queue",Content = "Delete Queue", Method = new MethodsItemViewModel("DELETE"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "ffece7ea-ab8e-42f5-ae95-78966ea06c2d",Name = "Get Queue Metadata",Content = "Get Queue Metadata", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "aa7c031e-10a3-4182-bdc7-abd10d8565a8",Name = "Set Queue Metadata",Content = "Set Queue Metadata", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "931fcb2f-184c-4398-abfa-d8fc8223690a",Name = "Get Queue ACL",Content = "Get Queue ACL", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "675b45bd-3aed-484d-8930-6a3f7d1c8645",Name = "Set Queue ACL",Content = "Set Queue ACL", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true }
+        ];
+        restApiMenuItem.SubMenus.Add(categoryMenuItem);
+
+        categoryMenuItem = new NavigationMenuItem() { Content = "Operations on Messages", Margin = new(-20, 0, 0, 0) };
+        categoryMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
+        categoryMenuItem.SubMenus =
+        [
+            new NavigationMenuItem() { RequestId = "fcb835d4-b764-45c4-93c3-be2fc3c13096",Name = "Put Message",Content = "Put Message", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "d690b5ea-04c0-4a14-843a-5f5c2b80edb9",Name = "Get Messages",Content = "Get Messages", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "58b52aaa-674f-4346-af9a-c0279869cd52",Name = "Peek Messages",Content = "Peek Messages", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "3c8aa12b-0e0d-478d-868c-0c14a05ba465",Name = "Delete Message",Content = "Delete Message", Method = new MethodsItemViewModel("DELETE"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "77846541-5bd7-489c-aa06-4ebb7aa30ec3",Name = "Clear Messages",Content = "Clear Messages", Method = new MethodsItemViewModel("DELETE"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "23037207-f969-4ac4-af83-8e1bb957dff4",Name = "Update Message",Content = "Update Message", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true }
+        ];
+        restApiMenuItem.SubMenus.Add(categoryMenuItem);
+
         restApiMenuItem = new NavigationMenuItem() { Content = "Table Service REST API", ImageIcon = new ImageIcon { Source = new BitmapImage(new Uri("ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Table.png")) }, Margin = new(-20, 0, 0, 0) };
         restApiMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
         serviceMenuItem.SubMenus.Add(restApiMenuItem);
+
+        categoryMenuItem = new NavigationMenuItem() { Content = "Operations on the Account (Table Service)", Margin = new(-20, 0, 0, 0) };
+        categoryMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
+        categoryMenuItem.SubMenus =
+        [
+            new NavigationMenuItem() { RequestId = "06b8cdc5-77f8-4922-aca0-ab1ee578cd81",Name = "Set Table Service Properties",Content = "Set Table Service Properties", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "70e2c40c-2f34-4e8d-b896-a655bebe345f",Name = "Get Table Service Properties",Content = "Get Table Service Properties", Method = new MethodsItemViewModel("get"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "6f2cba8a-4a34-4503-a42c-1d0304c83bf6",Name = "Preflight Table Request",Content = "Preflight Table Request", Method = new MethodsItemViewModel("OPTIONS"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "02d1bed7-aba2-4b6d-9895-46909219b064",Name = "Get Table Service Stats",Content = "Get Table Service Stats", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true }
+        ];
+        restApiMenuItem.SubMenus.Add(categoryMenuItem);
+
+        categoryMenuItem = new NavigationMenuItem() { Content = "Operations on Tables", Margin = new(-20, 0, 0, 0) };
+        categoryMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
+        categoryMenuItem.SubMenus =
+        [
+            new NavigationMenuItem() { RequestId = "7956fedd-b747-472a-a4da-9d05dbe47c3e",Name = "Query Tables",Content = "Query Tables", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "a436a46c-2e0b-4247-96a0-ab4d77c21089",Name = "Create Table",Content = "Create Table", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "e235ad9a-443b-447b-917d-ffc8afac34ad",Name = "Delete Table",Content = "Delete Table", Method = new MethodsItemViewModel("DELETE"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "35094808-c0d0-447f-834c-fcbb3ac763a3",Name = "Get Table ACL",Content = "Get Table ACL", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "6cb7516c-3eb4-4ae7-8dbf-04426fc6a16e",Name = "Set Table ACL",Content = "Set Table ACL", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true }
+        ];
+        restApiMenuItem.SubMenus.Add(categoryMenuItem);
+
+        categoryMenuItem = new NavigationMenuItem() { Content = "Operations on Entities", Margin = new(-20, 0, 0, 0) };
+        categoryMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();
+        categoryMenuItem.SubMenus =
+        [
+            new NavigationMenuItem() { RequestId = "60de20cd-274f-4d84-b50e-92233bc3ae57",Name = "Query Entities",Content = "Query Entities", Method = new MethodsItemViewModel("GET"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "7b95547a-e08c-4d7e-b673-6067023d06bf",Name = "Insert Entity",Content = "Insert Entity", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "c9f5c60a-fdb9-4688-ab81-9d02085b2eb3",Name = "Update Entity",Content = "Update Entity", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "f810ebdb-67d5-4038-942d-7abf6a457442",Name = "Merge Entity",Content = "Merge Entity", Method = new MethodsItemViewModel("MERGE"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "e606e471-754b-4306-978b-8042d9690ea2",Name = "Delete Entity",Content = "Delete Entity", Method = new MethodsItemViewModel("DELETE"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "86a144b6-976e-4d19-a74d-e2220175c131",Name = "Insert Or Replace Entity",Content = "Insert Or Replace Entity", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true },
+            new NavigationMenuItem() { RequestId = "cf2e2dc3-a646-46b1-b0c8-59e100cc733c",Name = "Insert Or Merge Entity",Content = "Insert Or Merge Entity", Method = new MethodsItemViewModel("PUT"), Margin = new(-20, 0, 0, 0), IsRequest=true }
+        ];
+        restApiMenuItem.SubMenus.Add(categoryMenuItem);
 
         restApiMenuItem = new NavigationMenuItem() { Content = "File Service REST API", ImageIcon = new ImageIcon { Source = new BitmapImage(new Uri("ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Files.png")) }, Margin = new(-20, 0, 0, 0) };
         restApiMenuItem.SubMenus = new ObservableCollection<NavigationMenuItem>();

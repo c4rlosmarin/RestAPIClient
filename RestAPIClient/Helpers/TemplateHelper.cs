@@ -217,6 +217,74 @@ public class TemplateHelper
                 return GetTemplate("FileService.OperationsOnFiles.LeaseFile");
             case "1bab907a-a65f-46b9-a28d-3632089dd7f2":
                 return GetTemplate("FileService.OperationsOnFiles.RenameFile");
+            case "40059afb-187a-4fee-ac88-66e95c1bfdd7":
+                return GetTemplate("QueueService.OperationsOnTheAccount.ListQueues");
+            case "98fe8758-72fa-44cb-b9b5-e515162fc972":
+                return GetTemplate("QueueService.OperationsOnTheAccount.SetQueueServiceProperties");
+            case "027f0ce7-3a93-4e8c-ba1e-7451a15e658d":
+                return GetTemplate("QueueService.OperationsOnTheAccount.GetQueueServiceProperties");
+            case "279c3bfe-2a3c-47e0-81bb-007e5a6d2dd5":
+                return GetTemplate("QueueService.OperationsOnTheAccount.PreflightQueueRequest");
+            case "f386215a-fc2a-4f88-ba26-e12fe970c39e":
+                return GetTemplate("QueueService.OperationsOnTheAccount.GetQueueServiceStats");
+            case "80aece03-d070-4c05-8de3-0ca847cbade8":
+                return GetTemplate("QueueService.OperationsOnQueues.CreateQueue");
+            case "9b780a7a-a31d-4b79-a45b-9a31788effc5":
+                return GetTemplate("QueueService.OperationsOnQueues.DeleteQueue");
+            case "ffece7ea-ab8e-42f5-ae95-78966ea06c2d":
+                return GetTemplate("QueueService.OperationsOnQueues.GetQueueMetadata");
+            case "aa7c031e-10a3-4182-bdc7-abd10d8565a8":
+                return GetTemplate("QueueService.OperationsOnQueues.SetQueueMetadata");
+            case "931fcb2f-184c-4398-abfa-d8fc8223690a":
+                return GetTemplate("QueueService.OperationsOnQueues.GetQueueACL");
+            case "675b45bd-3aed-484d-8930-6a3f7d1c8645":
+                return GetTemplate("QueueService.OperationsOnQueues.SetQueueACL");
+            case "fcb835d4-b764-45c4-93c3-be2fc3c13096":
+                return GetTemplate("QueueService.OperationsOnMessages.PutMessage");
+            case "d690b5ea-04c0-4a14-843a-5f5c2b80edb9":
+                return GetTemplate("QueueService.OperationsOnMessages.GetMessages");
+            case "58b52aaa-674f-4346-af9a-c0279869cd52":
+                return GetTemplate("QueueService.OperationsOnMessages.PeekMessages");
+            case "3c8aa12b-0e0d-478d-868c-0c14a05ba465":
+                return GetTemplate("QueueService.OperationsOnMessages.DeleteMessage");
+            case "77846541-5bd7-489c-aa06-4ebb7aa30ec3":
+                return GetTemplate("QueueService.OperationsOnMessages.ClearMessages");
+            case "23037207-f969-4ac4-af83-8e1bb957dff4":
+                return GetTemplate("QueueService.OperationsOnMessages.UpdateMessage");
+
+            case "06b8cdc5-77f8-4922-aca0-ab1ee578cd81":
+                return GetTemplate("TableService.OperationsOnTheAccount.SetTableServiceProperties");
+            case "70e2c40c-2f34-4e8d-b896-a655bebe345f":
+                return GetTemplate("TableService.OperationsOnTheAccount.GetTableServiceProperties");
+            case "6f2cba8a-4a34-4503-a42c-1d0304c83bf6":
+                return GetTemplate("TableService.OperationsOnTheAccount.PreflightTableRequest");
+            case "02d1bed7-aba2-4b6d-9895-46909219b064":
+                return GetTemplate("TableService.OperationsOnTheAccount.GetTableServiceStats");
+            case "7956fedd-b747-472a-a4da-9d05dbe47c3e":
+                return GetTemplate("TableService.OperationsOnTables.QueryTables");
+            case "a436a46c-2e0b-4247-96a0-ab4d77c21089":
+                return GetTemplate("TableService.OperationsOnTables.CreateTable");
+            case "e235ad9a-443b-447b-917d-ffc8afac34ad":
+                return GetTemplate("TableService.OperationsOnTables.DeleteTable");
+            case "35094808-c0d0-447f-834c-fcbb3ac763a3":
+                return GetTemplate("TableService.OperationsOnTables.GetTableACL");
+            case "6cb7516c-3eb4-4ae7-8dbf-04426fc6a16e":
+                return GetTemplate("TableService.OperationsOnTables.SetTableACL");
+            case "60de20cd-274f-4d84-b50e-92233bc3ae57":
+                return GetTemplate("TableService.OperationsOnEntities.QueryEntities");
+            case "7b95547a-e08c-4d7e-b673-6067023d06bf":
+                return GetTemplate("TableService.OperationsOnEntities.InsertEntity");
+            case "c9f5c60a-fdb9-4688-ab81-9d02085b2eb3":
+                return GetTemplate("TableService.OperationsOnEntities.UpdateEntity");
+            case "f810ebdb-67d5-4038-942d-7abf6a457442":
+                return GetTemplate("TableService.OperationsOnEntities.MergeEntity");
+            case "e606e471-754b-4306-978b-8042d9690ea2":
+                return GetTemplate("TableService.OperationsOnEntities.DeleteEntity");
+            case "86a144b6-976e-4d19-a74d-e2220175c131":
+                return GetTemplate("TableService.OperationsOnEntities.InsertOrReplaceEntity");
+            case "cf2e2dc3-a646-46b1-b0c8-59e100cc733c":
+                return GetTemplate("TableService.OperationsOnEntities.InsertOrMergeEntity");
+
             default:
                 return null;
 

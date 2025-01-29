@@ -1,0 +1,143 @@
+{
+  "RequestId": null,
+  "Name": "Set Queue ACL",
+  "TabIconVisibility": "Collapsed",
+  "SelectedMethod": {
+    "Name": "PUT",
+    "Foreground": "#FF8C00",
+    "IsActive": false
+  },
+  "IsMethodComboEnabled": "false",
+  "URL": {
+    "RawURL": "https://myaccount.queue.core.windows.net/myqueue?comp=acl",
+    "Protocol": null,
+    "Host": null,
+    "Path": null,
+    "Variables": null,
+    "IsActive": false
+  },
+  "Parameters": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "comp",
+      "IsKeyReadyOnly": "true",
+      "Value": "acl",
+      "IsValueReadyOnly": "true",
+      "Description": "Required",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "timeout",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Optional. The timeout parameter is expressed in seconds. For more information, see Set time-outs for Queue service operations.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    }
+  ],
+  "Headers": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "Authorization",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Required. Specifies the authorization scheme, account name, and signature. For more information, see Authorize requests to Azure Storage.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "x-ms-date",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Required. Specifies the Coordinated Universal Time (UTC) for the request. For more information, see Authorize requests to Azure Storage.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Visible",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-version",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Optional. Specifies the version of the operation to use for this request. For more information, see Versioning for the Azure Storage services.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Visible",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    },
+    {
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
+      "Key": "x-ms-client-request-id",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "IsValueReadyOnly": "false",
+      "Description": "Optional. Provides a client-generated, opaque value with a 1-kibibyte (KiB) character limit that\u0027s recorded in the logs when logging is configured. We highly recommend that you use this header to correlate client-side activities with requests that the server receives. For more information, see Monitor Azure Queue Storage.",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "UTCVisibility": "Collapsed",
+      "DatePickerButtonVisibility": "Collapsed",
+      "HideDatePickerButtonVisibility": "Collapsed",
+      "DateTextboxVisibility": "Visible",
+      "DatePickerVisibility": "Collapsed",
+      "IsActive": false
+    }
+  ],
+  "IsBodyComboEnabled": "false",
+  "SelectedBodyType": "Xml",
+  "RawBody": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E  \r\u003CSignedIdentifiers\u003E  \r  \u003CSignedIdentifier\u003E   \r    \u003CId\u003Eunique-64-character-value\u003C/Id\u003E  \r    \u003CAccessPolicy\u003E  \r      \u003CStart\u003Estart-time\u003C/Start\u003E  \r      \u003CExpiry\u003Eexpiry-time\u003C/Expiry\u003E  \r      \u003CPermission\u003Eabbreviated-permission-list\u003C/Permission\u003E  \r    \u003C/AccessPolicy\u003E  \r  \u003C/SignedIdentifier\u003E  \r\u003C/SignedIdentifiers\u003E\r",
+  "Body": [
+    {
+      "IsEnabled": false,
+      "Key": "",
+      "IsKeyReadyOnly": "true",
+      "Value": "",
+      "Description": "",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Collapsed",
+      "DeleteBodyItemCommand": {},
+      "IsActive": false
+    }
+  ],
+  "Response": {
+    "StatusCode": null,
+    "StatusStyleKey": "MyTextBlockAccentStyle",
+    "Time": null,
+    "Size": null,
+    "Body": null,
+    "Headers": null,
+    "HeadersCount": null,
+    "Visibility": "Collapsed",
+    "BannerVisibility": "Visible",
+    "IsActive": false
+  }
+}
