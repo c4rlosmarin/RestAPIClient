@@ -146,7 +146,7 @@ public sealed partial class ShellPage : Page
                         homePage.CreateRequestTab(new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, method = selectedItem.Method.Name });
                 }
                 else
-                    NavigationFrame.Navigate(typeof(HomePage), (new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, method = selectedItem.Method.Name }));
+                    NavigationFrame.Navigate(typeof(HomePage), (new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, method = selectedItem.Method.Name, AzureRESTApi = selectedItem.AzureRESTApi }));
             }
             else
             {

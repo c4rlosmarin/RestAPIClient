@@ -30,6 +30,8 @@ public partial class NavigationMenuItem : ObservableRecipient
 		get; set;
 	}
 
+    public AzureRESTApi AzureRESTApi { get; set; }
+
 	public bool IsRequest
 	{
 		get; set;
@@ -40,4 +42,9 @@ public partial class NavigationMenuItem : ObservableRecipient
 		get; set;
 	}
 
+}
+
+public enum AzureRESTApi
+{
+    StorageServices
 }

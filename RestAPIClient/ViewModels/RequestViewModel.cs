@@ -160,7 +160,7 @@ public partial class RequestViewModel : ObservableRecipient
     {
         DeleteColumnVisibility = "Collapsed";
         var templateHelper = new TemplateHelper();
-        var requestModel = templateHelper.GetExistingRequestFromTemplate(request.RequestId);
+        var requestModel = templateHelper.GetExistingRequestFromTemplate(request.AzureRESTApi, request.RequestId);
 
         if (requestModel is not null)
         {
