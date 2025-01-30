@@ -12,10 +12,8 @@ public partial class RequestItem : ObservableRecipient
     [ObservableProperty]
     public string? content;
 
-    public AzureRESTApi AzureRESTApi { get; set; }
+    public string Method { get; set; }
 
-    public string method { get; set; }
-
-    public MethodsItemViewModel Method { get; set; }
+    public AzureService AzureService { get; set; }
 
 }

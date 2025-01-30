@@ -54,7 +54,7 @@ namespace RestAPIClient.Views
                     }
                 }
 
-                newTabItem = new TabItem() { Id = request.RequestId, Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.method, Foreground = ColorHelper.CreateSolidColorBrushFromHex(ForegroundColorHelper.GetColorByMethod(request.method)) };
+                newTabItem = new TabItem() { Id = request.RequestId, Title = request.Name, EditingIconVisibility = "Collapsed", Method = request.Method, Foreground = ColorHelper.CreateSolidColorBrushFromHex(ForegroundColorHelper.GetColorByMethod(request.Method)) };
                 TabsViewModel.Tabs.Add(newTabItem);
                 frame.Navigate(typeof(RequestPage), request);
             }

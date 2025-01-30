@@ -32,7 +32,7 @@ public partial class NavigationMenuItem : ObservableRecipient
         get; set;
     }
 
-    public AzureRESTApi AzureRESTApi
+    public AzureService AzureRESTApi
     {
         get; set;
     }
@@ -47,7 +47,7 @@ public partial class NavigationMenuItem : ObservableRecipient
     }
 }
 
-public enum AzureRESTApi
+public enum AzureService
 {
     StorageServices
 }

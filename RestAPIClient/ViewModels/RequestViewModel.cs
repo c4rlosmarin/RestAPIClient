@@ -160,7 +160,7 @@ public partial class RequestViewModel : ObservableRecipient
     {
         DeleteColumnVisibility = "Collapsed";
         var templateHelper = new TemplateHelper();
-        var requestModel = templateHelper.GetExistingRequestFromTemplate(request.AzureRESTApi, request.RequestId);
+        var requestModel = templateHelper.GetExistingRequestFromTemplate(request.RequestId, request.AzureService);
 
         if (requestModel is not null)
         {
@@ -442,48 +442,48 @@ public partial class RequestViewModel : ObservableRecipient
     [RelayCommand]
     public async Task<string> SendRequestAsync()
     {
-        //using HttpClient client = new HttpClient();
-        //HttpResponseMessage response = new HttpResponseMessage();
+        using HttpClient client = new HttpClient();
+        HttpResponseMessage response = new HttpResponseMessage();
 
-        //var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
-        //AddRequestHeaders(client);
-        //AddRequestBody(request);
-        //Response.HeadersCount = "";
-        //Stopwatch.Reset();
-        //Stopwatch.Start();
-        //try
-        //{
-        //    response = await client.SendAsync(request);
-        //    GetResponseStatusCode(response);
-        //    await GetResponseMetadata(response);
-        //    await GetResponseBody(response);
-        //    GetResponseHeaders(response);
-        //}
-        //catch (Exception ex)
-        //{
-        //    Response.StatusStyleKey = "MyStatusCodeErrorStyle";
-        //    Response.StatusCode = ex.Message;
-        //}
-        //Stopwatch.Stop();
+        var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
+        AddRequestHeaders(client);
+        AddRequestBody(request);
+        Response.HeadersCount = "";
+        Stopwatch.Reset();
+        Stopwatch.Start();
+        try
+        {
+            response = await client.SendAsync(request);
+            GetResponseStatusCode(response);
+            await GetResponseMetadata(response);
+            await GetResponseBody(response);
+            GetResponseHeaders(response);
+        }
+        catch (Exception ex)
+        {
+            Response.StatusStyleKey = "MyStatusCodeErrorStyle";
+            Response.StatusCode = ex.Message;
+        }
+        Stopwatch.Stop();
 
-        //Response.BannerVisibility = "Collapsed";
-        //Response.Visibility = "Visible";
+        Response.BannerVisibility = "Collapsed";
+        Response.Visibility = "Visible";
 
-        var requestModel = new RequestModel();
-        requestModel.Name = Name;
-        requestModel.URL = URL;
-        requestModel.SelectedMethod = SelectedMethod;
-        requestModel.IsMethodComboEnabled = "false";
-        requestModel.TabIconVisibility = "Collapsed";
-        requestModel.Parameters = Parameters;
-        requestModel.Headers = Headers;
-        requestModel.Body = Body;
-        requestModel.IsBodyComboEnabled = "false";
-        requestModel.SelectedBodyType = SelectedBodyType;
-        requestModel.RawBody = RawBody;
+        //var requestModel = new RequestModel();
+        //requestModel.Name = Name;
+        //requestModel.URL = URL;
+        //requestModel.SelectedMethod = SelectedMethod;
+        //requestModel.IsMethodComboEnabled = "false";
+        //requestModel.TabIconVisibility = "Collapsed";
+        //requestModel.Parameters = Parameters;
+        //requestModel.Headers = Headers;
+        //requestModel.Body = Body;
+        //requestModel.IsBodyComboEnabled = "false";
+        //requestModel.SelectedBodyType = SelectedBodyType;
+        //requestModel.RawBody = RawBody;
 
-        string jsonString = JsonSerializer.Serialize(requestModel);
-        Debug.WriteLine(jsonString);
+        //string jsonString = JsonSerializer.Serialize(requestModel);
+        //Debug.WriteLine(jsonString);
         return Response.Body;
     }
 

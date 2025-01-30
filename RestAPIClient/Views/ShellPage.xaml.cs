@@ -143,10 +143,10 @@ public sealed partial class ShellPage : Page
                 if (NavigationFrame.Content is HomePage homePage)
                 {
                     if (selectedItem.IsRequest)
-                        homePage.CreateRequestTab(new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, method = selectedItem.Method });
+                        homePage.CreateRequestTab(new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, Method = selectedItem.Method });
                 }
                 else
-                    NavigationFrame.Navigate(typeof(HomePage), (new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, method = selectedItem.Method, AzureRESTApi = selectedItem.AzureRESTApi }));
+                    NavigationFrame.Navigate(typeof(HomePage), (new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, Method = selectedItem.Method, AzureService = selectedItem.AzureRESTApi }));
             }
             else
             {

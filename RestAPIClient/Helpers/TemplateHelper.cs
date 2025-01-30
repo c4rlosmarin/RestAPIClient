@@ -8,9 +8,9 @@ namespace RestAPIClient.Helpers;
 
 public class TemplateHelper
 {
-    public RequestModel GetExistingRequestFromTemplate(AzureRESTApi AzureRESTApi, string RequestId)
+    public RequestModel GetExistingRequestFromTemplate(string RequestId, AzureService azureService)
     {
-        var resourcePath = "RestAPIClient.Templates." + AzureRESTApi;
+        var resourcePath = "RestAPIClient.Templates." + azureService;
         var assembly = Assembly.GetExecutingAssembly();
         string[] allResources = assembly.GetManifestResourceNames();
 
