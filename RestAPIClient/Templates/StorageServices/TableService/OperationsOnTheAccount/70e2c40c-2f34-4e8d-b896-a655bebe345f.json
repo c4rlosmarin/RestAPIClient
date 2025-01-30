@@ -3,7 +3,7 @@
   "Name": "Get Table Service Properties",
   "TabIconVisibility": "Collapsed",
   "SelectedMethod": {
-    "Name": "PUT",
+    "Name": "GET",
     "Foreground": "#FF8C00",
     "IsActive": false
   },

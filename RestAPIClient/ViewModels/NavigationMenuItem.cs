@@ -8,9 +8,9 @@ public partial class NavigationMenuItem : ObservableRecipient
 {
     [ObservableProperty]
     public string name;
-	[ObservableProperty]
-	public string content;
-	[ObservableProperty]
+    [ObservableProperty]
+    public string content;
+    [ObservableProperty]
     public string description;
     [ObservableProperty]
     public ImageIcon imageIcon;
@@ -21,27 +21,30 @@ public partial class NavigationMenuItem : ObservableRecipient
     [ObservableProperty]
     public string visibility;
     [ObservableProperty]
-    public Thickness margin = new(0,0,0,0);
-	[ObservableProperty]
-	public ObservableCollection<NavigationMenuItem> subMenus;
+    public string method;
+    [ObservableProperty]
+    public Thickness margin = new(-20, 0, 0, 0);
+    [ObservableProperty]
+    public ObservableCollection<NavigationMenuItem> subMenus;
 
-	public string RequestId
-	{
-		get; set;
-	}
+    public string RequestId
+    {
+        get; set;
+    }
 
-    public AzureRESTApi AzureRESTApi { get; set; }
+    public AzureRESTApi AzureRESTApi
+    {
+        get; set;
+    }
 
-	public bool IsRequest
-	{
-		get; set;
-	}
-
-	public MethodsItemViewModel Method
-	{
-		get; set;
-	}
-
+    public bool IsRequest
+    {
+        get; set;
+    }
+    public NavigationMenuItem()
+    {
+        IsRequest = true;
+    }
 }
 
 public enum AzureRESTApi

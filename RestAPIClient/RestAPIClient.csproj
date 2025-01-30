@@ -95,6 +95,9 @@
   </ItemGroup>
   
   <ItemGroup>
+    <EmbeddedResource Include="Templates\Shell\NavigationMenuItems\StorageServices.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\2548c991-90c9-4159-98a8-c6d076787b01.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -432,27 +435,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\StorageServices\QueueService\OperationsOnTheAccount\98fe8758-72fa-44cb-b9b5-e515162fc972.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\2.SetBlobServiceProperties.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\1.ListContainers.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\7.GetUserDelegationKey.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\6.GetAccountInformation.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\5.GetBlobServiceStats.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\4.PreflightBlobRequest.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Shell\BlobService\OperationsOnTheAccount\3.GetBlobServiceProperties.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\StorageServices\TableService\OperationsOnEntities\e606e471-754b-4306-978b-8042d9690ea2.json">

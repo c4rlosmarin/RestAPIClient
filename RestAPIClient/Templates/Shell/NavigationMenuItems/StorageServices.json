@@ -1,0 +1,835 @@
+{
+  "Storage Services": [
+    {
+      "Name": "Storage Services",
+      "Content": "Storage Services",
+      "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Accounts.png",
+      "IsRequest": false,
+      "Blob Service REST API": [
+        {
+          "Name": "Blob Service REST API",
+          "Content": "Blob Service REST API",
+          "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Blob-Block.png",
+          "IsRequest": false,
+          "Operations on the Account": {
+            "Name": "Operations on the Account",
+            "Content": "Operations on the Account",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "975b53b7-f48f-4682-8434-893f5a324278",
+                "Name": "List Containers",
+                "Content": "List Containers",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "e192945c-7d70-49c6-8e50-521a2f7f01c2",
+                "Name": "Set Blob Service Properties",
+                "Content": "Set Blob Service Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "be60e8b4-7cd1-4f83-a9cb-4a3b92303b94",
+                "Name": "Get Blob Service Properties",
+                "Content": "Get Blob Service Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "e4e5c062-82a1-4282-a571-19d5acdec6d3",
+                "Name": "Preflight Blob Request",
+                "Content": "Preflight Blob Request",
+                "Method": "OPTIONS"
+              },
+              {
+                "RequestId": "9cc6eb22-c1d3-4ee0-b076-b4c58d4feb17",
+                "Name": "Get Blob Service Stats",
+                "Content": "Get Blob Service Stats",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "30e6c366-35d0-47e5-9a5c-def2ee2cfe31",
+                "Name": "Get Account Information",
+                "Content": "Get Account Information",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "53d9941c-dcc4-48b8-a717-24064108ecda",
+                "Name": "Get User Delegation Key",
+                "Content": "Get User Delegation Key",
+                "Method": "POST"
+              }
+            ]
+          },
+          "Operations on Containers": {
+            "Name": "Operations on Containers",
+            "Content": "Operations on Containers",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "042368e5-65ec-4a73-8462-86b65be8c353",
+                "Name": "Create Container",
+                "Content": "Create Container",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "18fd3171-d359-4e1e-bd48-44ea44ee842c",
+                "Name": "Get Container Properties",
+                "Content": "Get Container Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "2117dd4c-e41f-4c15-b5c3-2b266ca3c225",
+                "Name": "Get Container Metadata",
+                "Content": "Get Container Metadata",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "78f4583c-ced5-4b21-98a6-e82690abd782",
+                "Name": "Set Container Metadata",
+                "Content": "Set Container Metadata",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "4944ad75-ad15-4ae2-bfd7-79d8051c427c",
+                "Name": "Get Container ACL",
+                "Content": "Get Container ACL",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "9f93eb42-cc6b-414e-8156-c39828f8d2d3",
+                "Name": "Set Container ACL",
+                "Content": "Set Container ACL",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "7661e957-a0ba-4188-a53d-4decd8672dac",
+                "Name": "Delete Container",
+                "Content": "Delete Container",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "7a2948eb-9751-4f53-b7cc-272284108344",
+                "Name": "Lease Container",
+                "Content": "Lease Container",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "76dbc6cf-f1ba-49af-ac15-b0447114d933",
+                "Name": "Restore Container",
+                "Content": "Restore Container",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "a8bd3fb3-f339-464f-97fe-3e6d8c94c18e",
+                "Name": "List Blobs",
+                "Content": "List Blobs",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "5a0ff8b0-02f2-4d62-be05-aa2f2f83cd92",
+                "Name": "Find Blobs by Tags in Container",
+                "Content": "Find Blobs by Tags in Container",
+                "Method": "GET"
+              }
+            ]
+          },
+          "Operations on Blobs": {
+            "Name": "Operations on Blobs",
+            "Content": "Operations on Blobs",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "1fd54291-9b89-4348-8f08-85ecce5114ae",
+                "Name": "Put Blob",
+                "Content": "Put Blob",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "acbdfae5-c66b-44ea-8d89-6b5ff4b27e8e",
+                "Name": "Put Blob From URL",
+                "Content": "Put Blob From URL",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "18e8d3cf-77b7-471c-b868-782f49afdaf5",
+                "Name": "Get Blob",
+                "Content": "Get Blob",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "a4d7a27b-670d-4ad4-8168-f81db1a9a0dd",
+                "Name": "Get Blob Properties",
+                "Content": "Get Blob Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "186bbfdd-abcb-4003-9efe-6504986bcff5",
+                "Name": "Set Blob Properties",
+                "Content": "Set Blob Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "d3a570a7-c5bc-4a20-ac53-29d8631e8445",
+                "Name": "Get Blob Metadata",
+                "Content": "Get Blob Metadata",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "1a971155-adfa-47eb-b739-5aa04551e13c",
+                "Name": "Set Blob Metadata",
+                "Content": "Set Blob Metadata",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "d992088f-86b7-4268-a697-a1e7ec719fb4",
+                "Name": "Get Blob Tags",
+                "Content": "Get Blob Tags",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "b2dde2c7-86ec-4667-a5db-8c75118f175a",
+                "Name": "Set Blob Tags",
+                "Content": "Set Blob Tags",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "a1bcea4c-3c36-40ba-b133-b841d6a5bf06",
+                "Name": "Find Blobs by Tags",
+                "Content": "Find Blobs by Tags",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "061c4c88-981e-482f-bbd8-356f3594484c",
+                "Name": "Lease Blob",
+                "Content": "Lease Blob",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "bf386510-9394-4720-8769-b712a6ea08fb",
+                "Name": "Snapshot Blob",
+                "Content": "Snapshot Blob",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "8f5e0e97-744c-4218-bdd3-8f45ea545e95",
+                "Name": "Copy Blob",
+                "Content": "Copy Blob",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "9487af8f-941f-40c0-8671-98e8a461d0ad",
+                "Name": "Copy Blob From URL",
+                "Content": "Copy Blob From URL",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "ba127e8f-faee-4c97-9a5f-908e3f5b3a2c",
+                "Name": "Abort Copy Blob",
+                "Content": "Abort Copy Blob",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "faee6c9b-b52c-4ccd-844d-1425f2b81663",
+                "Name": "Delete Blob",
+                "Content": "Delete Blob",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "799b6e8b-3aab-4521-9507-2fec5b7e894a",
+                "Name": "Undelete Blob",
+                "Content": "Undelete Blob",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "16744da0-054b-4fea-baee-2a8c0e4ee36f",
+                "Name": "Set Blob Tier",
+                "Content": "Set Blob Tier",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "27400b89-4193-4804-9c97-8fc98bd4ec73",
+                "Name": "Blob Batch",
+                "Content": "Blob Batch",
+                "Method": "POST"
+              },
+              {
+                "RequestId": "965b3e05-3adc-4413-ba39-cf82ab6e26db",
+                "Name": "Set Blob Immutability Policy",
+                "Content": "Set Blob Immutability Policy",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "7e7c8aba-d49d-4de2-bb62-d1507cf00030",
+                "Name": "Delete Blob Immutability Policy",
+                "Content": "Delete Blob Immutability Policy",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "2548c991-90c9-4159-98a8-c6d076787b01",
+                "Name": "Set Blob Legal Hold",
+                "Content": "Set Blob Legal Hold",
+                "Method": "PUT"
+              }
+            ]
+          }
+        }
+      ],
+      "Queue Service REST API": [
+        {
+          "Name": "Queue Service REST API",
+          "Content": "Queue Service REST API",
+          "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Queue.png",
+          "IsRequest": false,
+          "Operations on the Account": {
+            "Name": "Operations on the Account",
+            "Content": "Operations on the Account",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "40059afb-187a-4fee-ac88-66e95c1bfdd7",
+                "Name": "List Queues",
+                "Content": "List Queues",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "98fe8758-72fa-44cb-b9b5-e515162fc972",
+                "Name": "Set Queue Service Properties",
+                "Content": "Set Queue Service Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "027f0ce7-3a93-4e8c-ba1e-7451a15e658d",
+                "Name": "Get Queue Service Properties",
+                "Content": "Get Queue Service Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "279c3bfe-2a3c-47e0-81bb-007e5a6d2dd5",
+                "Name": "Preflight Queue Request",
+                "Content": "Preflight Queue Request",
+                "Method": "OPTIONS"
+              },
+              {
+                "RequestId": "f386215a-fc2a-4f88-ba26-e12fe970c39e",
+                "Name": "Get Queue Service Stats",
+                "Content": "Get Queue Service Stats",
+                "Method": "GET"
+              }
+            ]
+          },
+          "Operations on Queues": {
+            "Name": "Operations on Queues",
+            "Content": "Operations on Queues",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "80aece03-d070-4c05-8de3-0ca847cbade8",
+                "Name": "Create Queue",
+                "Content": "Create Queue",
+                "Method": "put"
+              },
+              {
+                "RequestId": "9b780a7a-a31d-4b79-a45b-9a31788effc5",
+                "Name": "Delete Queue",
+                "Content": "Delete Queue",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "ffece7ea-ab8e-42f5-ae95-78966ea06c2d",
+                "Name": "Get Queue Metadata",
+                "Content": "Get Queue Metadata",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "aa7c031e-10a3-4182-bdc7-abd10d8565a8",
+                "Name": "Set Queue Metadata",
+                "Content": "Set Queue Metadata",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "931fcb2f-184c-4398-abfa-d8fc8223690a",
+                "Name": "Get Queue ACL",
+                "Content": "Get Queue ACL",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "675b45bd-3aed-484d-8930-6a3f7d1c8645",
+                "Name": "Set Queue ACL",
+                "Content": "Set Queue ACL",
+                "Method": "PUT"
+              }
+            ]
+          },
+          "Operations on Messages": {
+            "Name": "Operations on Messages",
+            "Content": "Operations on Messages",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "fcb835d4-b764-45c4-93c3-be2fc3c13096",
+                "Name": "Put Message",
+                "Content": "Put Message",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "d690b5ea-04c0-4a14-843a-5f5c2b80edb9",
+                "Name": "Get Messages",
+                "Content": "Get Messages",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "58b52aaa-674f-4346-af9a-c0279869cd52",
+                "Name": "Peek Messages",
+                "Content": "Peek Messages",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "3c8aa12b-0e0d-478d-868c-0c14a05ba465",
+                "Name": "Delete Message",
+                "Content": "Delete Message",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "77846541-5bd7-489c-aa06-4ebb7aa30ec3",
+                "Name": "Clear Messages",
+                "Content": "Clear Messages",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "23037207-f969-4ac4-af83-8e1bb957dff4",
+                "Name": "Update Message",
+                "Content": "Update Message",
+                "Method": "PUT"
+              }
+            ]
+          }
+        }
+      ],
+      "Table Service REST API": [
+        {
+          "Name": "Table Service REST API",
+          "Content": "Table Service REST API",
+          "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Table.png",
+          "IsRequest": false,
+          "Operations on the Account": {
+            "Name": "Operations on the Account",
+            "Content": "Operations on the Account",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "06b8cdc5-77f8-4922-aca0-ab1ee578cd81",
+                "Name": "Set Table Service Properties",
+                "Content": "Set Table Service Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "70e2c40c-2f34-4e8d-b896-a655bebe345f",
+                "Name": "Get Table Service Properties",
+                "Content": "Get Table Service Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "6f2cba8a-4a34-4503-a42c-1d0304c83bf6",
+                "Name": "Preflight Table Request",
+                "Content": "Preflight Table Request",
+                "Method": "OPTIONS"
+              },
+              {
+                "RequestId": "02d1bed7-aba2-4b6d-9895-46909219b064",
+                "Name": "Get Table Service Stats",
+                "Content": "Get Table Service Stats",
+                "Method": "GET"
+              }
+            ]
+          },
+          "Operations on Tables": {
+            "Name": "Operations on Tables",
+            "Content": "Operations on Tables",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "7956fedd-b747-472a-a4da-9d05dbe47c3e",
+                "Name": "Query Tables",
+                "Content": "Query Tables",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "a436a46c-2e0b-4247-96a0-ab4d77c21089",
+                "Name": "Create Table",
+                "Content": "Create Table",
+                "Method": "POST"
+              },
+              {
+                "RequestId": "e235ad9a-443b-447b-917d-ffc8afac34ad",
+                "Name": "Delete Table",
+                "Content": "Delete Table",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "35094808-c0d0-447f-834c-fcbb3ac763a3",
+                "Name": "Get Table ACL",
+                "Content": "Get Table ACL",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "6cb7516c-3eb4-4ae7-8dbf-04426fc6a16e",
+                "Name": "Set Table ACL",
+                "Content": "Set Table ACL",
+                "Method": "PUT"
+              }
+            ]
+          },
+          "Operations on Entities": {
+            "Name": "Operations on Entities",
+            "Content": "Operations on Entities",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "60de20cd-274f-4d84-b50e-92233bc3ae57",
+                "Name": "Query Entities",
+                "Content": "Query Entities",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "7b95547a-e08c-4d7e-b673-6067023d06bf",
+                "Name": "Insert Entity",
+                "Content": "Insert Entity",
+                "Method": "POST"
+              },
+              {
+                "RequestId": "c9f5c60a-fdb9-4688-ab81-9d02085b2eb3",
+                "Name": "Update Entity",
+                "Content": "Update Entity",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "f810ebdb-67d5-4038-942d-7abf6a457442",
+                "Name": "Merge Entity",
+                "Content": "Merge Entity",
+                "Method": "MERGE"
+              },
+              {
+                "RequestId": "e606e471-754b-4306-978b-8042d9690ea2",
+                "Name": "Delete Entity",
+                "Content": "Delete Entity",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "86a144b6-976e-4d19-a74d-e2220175c131",
+                "Name": "Insert Or Replace Entity",
+                "Content": "Insert Or Replace Entity",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "cf2e2dc3-a646-46b1-b0c8-59e100cc733c",
+                "Name": "Insert Or Merge Entity",
+                "Content": "Insert Or Merge Entity",
+                "Method": "MERGE"
+              }
+            ]
+          }
+        }
+      ],
+      "File Service REST API": [
+        {
+          "Name": "File Service REST API",
+          "Content": "File Service REST API",
+          "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Files.png",
+          "IsRequest": false,
+          "Operations on the FileService": {
+            "Name": "Operations on the FileService",
+            "Content": "Operations on the FileService",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "fda74fd0-e408-4c6d-894d-4e5dba70afe5",
+                "Name": "Get File Service Properties",
+                "Content": "Get File Service Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "d75480b6-7625-4c80-9252-519df187629d",
+                "Name": "Set File Service Properties",
+                "Content": "Set File Service Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "7345d46d-1656-4b01-b859-abed3c8346a9",
+                "Name": "Preflight File Request",
+                "Content": "Preflight File Request",
+                "Method": "OPTIONS"
+              }
+            ]
+          },
+          "Operations on FileShares": {
+            "Name": "Operations on FileShares",
+            "Content": "Operations on FileShares",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "3efdeb4d-15ad-499a-8116-1f6609c6f74b",
+                "Name": "List Shares",
+                "Content": "List Shares",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "b83808d0-c15f-498e-b783-4e18aff7e7a4",
+                "Name": "Create Share",
+                "Content": "Create Share",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "d36d37f4-084a-444c-8412-461a2bea7033",
+                "Name": "Snapshot Share",
+                "Content": "Snapshot Share",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "1632ab9f-de7e-4d89-af34-3aa083581c65",
+                "Name": "Get Share Properties",
+                "Content": "Get Share Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "84390458-9e19-4bcf-8fd0-0170dc37ce58",
+                "Name": "Set Share Properties",
+                "Content": "Set Share Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "d5628fe9-a983-4f2e-89ae-b1a9582e504b",
+                "Name": "Get Share Metadata",
+                "Content": "Get Share Metadata",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "b93b91c6-c4f4-407d-9e94-caa2a0660027",
+                "Name": "Set Share Metadata",
+                "Content": "Set Share Metadata",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "79f1c6f1-3acd-463b-ae75-099464837801",
+                "Name": "Delete Share",
+                "Content": "Delete Share",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "5a6d906f-e182-4664-8289-785bc64967a3",
+                "Name": "Restore Share",
+                "Content": "Restore Share",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "040789bc-8f8e-4f6b-9c22-60197ddac6e0",
+                "Name": "Get Share ACL",
+                "Content": "Get Share ACL",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "63a6d979-b9b6-4cf3-9d96-185cc8812455",
+                "Name": "Set Share ACL",
+                "Content": "Set Share ACL",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "c1a70342-0109-4f6c-b631-d0733566fcc0",
+                "Name": "Get Share Stats",
+                "Content": "Get Share Stats",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "82917fc6-6b51-4a71-a907-dfca8ba1f693",
+                "Name": "Create Permission",
+                "Content": "Create Permission",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "c2127ec5-d23e-43ee-beff-9cdc1bd84ffb",
+                "Name": "Get Permission",
+                "Content": "Get Permission",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "03a0cfd5-e1cd-4c36-b4c3-5219c861279f",
+                "Name": "Lease Share",
+                "Content": "Lease Share",
+                "Method": "PUT"
+              }
+            ]
+          },
+          "Operations on Directories": {
+            "Name": "Operations on Directories",
+            "Content": "Operations on Directories",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "ba6350a8-fbff-43c1-9b99-ae853d24ccd2",
+                "Name": "List Directories and Files",
+                "Content": "List Directories and Files",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "bc5299e9-3ffa-4c5d-8178-0c3f79bff3fa",
+                "Name": "Create Directory",
+                "Content": "Create Directory",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "40f31006-5af9-44a3-a4cc-10f6cef0b17f",
+                "Name": "Get Directory Properties",
+                "Content": "Get Directory Properties",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "0fe35b2c-71ec-4143-a315-374a1d16a827",
+                "Name": "Set Directory Properties",
+                "Content": "Set Directory Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "c56eb257-eca8-4aea-a49e-46c849b4ca62",
+                "Name": "Delete Directory",
+                "Content": "Delete Directory",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "a0f4328a-5214-42ce-a392-4e7efed6935f",
+                "Name": "Get Directory Metadata",
+                "Content": "Get Directory Metadata",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "cc472edb-7716-4a07-8455-da69c28d1bd0",
+                "Name": "Set Directory Metadata",
+                "Content": "Set Directory Metadata",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "0e46e182-febf-460b-a163-99fb63e730c7",
+                "Name": "List Handles",
+                "Content": "List Handles",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "56d9ebf2-5f34-4a4e-8740-b6ff2dcb056d",
+                "Name": "Force Close Handles",
+                "Content": "Force Close Handles",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "300e7812-c622-414f-a08b-f6ebd7eadb09",
+                "Name": "Rename Directory",
+                "Content": "Rename Directory",
+                "Method": "PUT"
+              }
+            ]
+          },
+          "Operations on Files": {
+            "Name": "Operations on Files",
+            "Content": "Operations Files",
+            "IsRequest": false,
+            "Operations": [
+              {
+                "RequestId": "7b03ae8e-a105-4dd7-8200-76edbbed397c",
+                "Name": "Create File",
+                "Content": "Create File",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "1e0e7b2b-3640-4af0-85d1-ccdbd6b22083",
+                "Name": "Get File",
+                "Content": "Get File",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "4b957a6b-5332-490e-be78-e6e7714701dc",
+                "Name": "Get File Properties",
+                "Content": "Get File Properties",
+                "Method": "HEAD"
+              },
+              {
+                "RequestId": "6b03738c-96b4-4379-85f4-e6a974e0f9a3",
+                "Name": "Set File Properties",
+                "Content": "Set File Properties",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "6434ecbe-9c13-4c61-a213-c445eaed11a5",
+                "Name": "Put Range",
+                "Content": "Put Range",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "0f174895-4faf-454b-b5f9-87d4f4926b75",
+                "Name": "Put Range From URL",
+                "Content": "Put Range From URL",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "eb89bc63-19cc-4d4f-8b66-7879ec7d5327",
+                "Name": "List Ranges",
+                "Content": "List Ranges",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "15f4e2c0-7449-47c4-829d-2b41ec006117",
+                "Name": "Get File Metadata",
+                "Content": "Get File Metadata",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "79a5c844-c46e-4539-91da-9e1561da664c",
+                "Name": "Set File Metadata",
+                "Content": "Set File Metadata",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "cba8f8e1-e38b-47fe-9021-db1069ec200e",
+                "Name": "Delete File",
+                "Content": "Delete File",
+                "Method": "DELETE"
+              },
+              {
+                "RequestId": "2fb2b290-5d68-4a8a-a2b6-883677bb0d89",
+                "Name": "Copy File",
+                "Content": "Copy File",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "9c15a57f-a065-41ac-b5b6-0059d22e856f",
+                "Name": "Abort Copy File",
+                "Content": "Abort Copy File",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "b9b979dd-1b10-4692-9e5c-c4b90b0df736",
+                "Name": "List Handles",
+                "Content": "List Handles",
+                "Method": "GET"
+              },
+              {
+                "RequestId": "15c0a083-2a2f-4cf8-8fdc-4dbca6175923",
+                "Name": "Force Close Handles",
+                "Content": "Force Close Handles",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "56d542e5-82e5-495e-8e23-cf1b365e0153",
+                "Name": "Lease File",
+                "Content": "Lease File",
+                "Method": "PUT"
+              },
+              {
+                "RequestId": "1bab907a-a65f-46b9-a28d-3632089dd7f2",
+                "Name": "Rename File",
+                "Content": "Rename File",
+                "Method": "PUT"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
