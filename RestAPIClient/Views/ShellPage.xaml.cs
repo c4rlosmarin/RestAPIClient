@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System.Diagnostics.Eventing.Reader;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using RestAPIClient.Contracts.Services;
@@ -96,25 +97,33 @@ public sealed partial class ShellPage : Page
 
     private bool FilterItemsRecursive(IEnumerable<NavigationMenuItem> items, string query)
     {
-        string content;
         bool itemFound = false;
+        bool foundSubItem;
         foreach (var item in items)
         {
-            bool foundSubItem = false;
+            foundSubItem = false;
+            bool flag = false;
+
             if (item.SubMenus is not null && item.SubMenus.Count > 0)
             {
-                itemFound = FilterItemsRecursive(item.SubMenus, query);
-                if (itemFound)
+                foundSubItem = FilterItemsRecursive(item.SubMenus, query);
+                if (foundSubItem)
                 {
                     item.Visibility = "Visible";
                     if (!string.IsNullOrEmpty(query))
-                        item.IsExpanded = true;
+                    {
+                        item.IsExpanded = true;                        
+                        itemFound = true;
+                    }
                     else
                         item.IsExpanded = false;
                 }
                 else
                 {
-                    item.Visibility = "Collapsed";
+                    if (!string.IsNullOrEmpty(query))
+                        item.Visibility = "Collapsed";
+                    else
+                        item.Visibility = "Visible";
                     item.IsExpanded = false;
                 }
             }
@@ -123,11 +132,12 @@ public sealed partial class ShellPage : Page
                 if (string.IsNullOrEmpty(query) || item.Content.ToLower().Contains(query))
                 {
                     item.Visibility = "Visible";
-                    itemFound = true;
+                    flag = true;
                 }
                 else
                     item.Visibility = "Collapsed";
             }
+            itemFound = itemFound || flag;
         }
         return itemFound;
     }
