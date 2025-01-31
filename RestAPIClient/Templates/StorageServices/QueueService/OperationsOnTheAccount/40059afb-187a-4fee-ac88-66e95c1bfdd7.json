@@ -19,7 +19,7 @@
   "Parameters": [
     {
       "IsEnabled": true,
-      "IsEnabledActive": "true",
+      "IsEnabledActive": "false",
       "Key": "comp",
       "IsKeyReadyOnly": "true",
       "Value": "list",
@@ -31,7 +31,7 @@
     },
     {
       "IsEnabled": false,
-      "IsEnabledActive": "false",
+      "IsEnabledActive": "true",
       "Key": "prefix",
       "IsKeyReadyOnly": "true",
       "Value": "",

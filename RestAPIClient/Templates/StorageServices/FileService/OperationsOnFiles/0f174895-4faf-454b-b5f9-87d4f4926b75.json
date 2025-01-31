@@ -129,6 +129,7 @@
       "Key": "x-ms-write",
       "IsKeyReadyOnly": "true",
       "Value": "update",
+      "IsValueReadyOnly": "true",
       "Description": "Required. You must specify only update. The request fails if it\u0027s called with clear. The update value writes the bytes that are specified by the request body into the specified ranges.",
       "IsDescriptionReadyOnly": "true",
       "DeleteButtonVisibility": "Visible",

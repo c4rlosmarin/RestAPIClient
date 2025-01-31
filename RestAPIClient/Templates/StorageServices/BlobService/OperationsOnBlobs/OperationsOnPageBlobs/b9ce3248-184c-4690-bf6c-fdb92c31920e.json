@@ -9,7 +9,7 @@
   },
   "IsMethodComboEnabled": "false",
   "URL": {
-    "RawURL": "http://127.0.0.1:10000/devstoreaccount1/mycontainer/myblob?comp=pagelist",
+    "RawURL": "http://myaccount.blob.core.windows.net/mycontainer/myblob?comp=pagelist",
     "Protocol": null,
     "Host": null,
     "Path": null,

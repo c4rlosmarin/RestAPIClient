@@ -163,8 +163,8 @@
       "IsActive": false
     },
     {
-      "IsEnabled": false,
-      "IsEnabledActive": "true",
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
       "Key": "x-ms-copy-source",
       "IsKeyReadyOnly": "true",
       "Value": "",

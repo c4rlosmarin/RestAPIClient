@@ -44,7 +44,7 @@
 	],
 	"Headers": [
 		{
-			"IsEnabled": true,
+			"IsEnabled": false,
 			"IsEnabledActive": "true",
 			"Key": "Authorization",
 			"IsKeyReadyOnly": "true",

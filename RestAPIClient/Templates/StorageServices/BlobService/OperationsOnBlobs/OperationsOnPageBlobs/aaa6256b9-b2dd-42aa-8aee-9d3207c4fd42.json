@@ -163,7 +163,7 @@
       "IsActive": false
     },
     {
-      "IsEnabled": true,
+      "IsEnabled": false,
       "IsEnabledActive": "true",
       "Key": "x-ms-page-write",
       "IsKeyReadyOnly": "true",

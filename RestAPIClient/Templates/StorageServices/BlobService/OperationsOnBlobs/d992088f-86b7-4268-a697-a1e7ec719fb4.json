@@ -68,7 +68,7 @@
 	],
 	"Headers": [
 		{
-			"IsEnabled": true,
+			"IsEnabled": false,
 			"IsEnabledActive": "true",
 			"Key": "Authorization",
 			"IsKeyReadyOnly": "true",
@@ -100,7 +100,7 @@
 			"IsActive": false
 		},
 		{
-			"IsEnabled": true,
+			"IsEnabled": false,
 			"IsEnabledActive": "true",
 			"Key": "x-ms-version",
 			"IsKeyReadyOnly": "true",
@@ -116,8 +116,8 @@
 			"IsActive": false
 		},
 		{
-			"IsEnabled": true,
-			"IsEnabledActive": "false",
+			"IsEnabled": false,
+			"IsEnabledActive": "true",
 			"Key": "x-ms-lease-id",
 			"IsKeyReadyOnly": "true",
 			"Value": null,

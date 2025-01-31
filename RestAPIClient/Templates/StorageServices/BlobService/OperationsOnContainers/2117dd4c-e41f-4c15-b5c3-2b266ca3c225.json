@@ -57,8 +57,8 @@
 	"Headers": [
 		{
 			"IsEnabled": true,
-			"IsEnabledActive": "true",
-			"Key": "Optional",
+			"IsEnabledActive": "false",
+			"Key": "Authorization",
 			"IsKeyReadyOnly": "true",
 			"Value": null,
 			"Description": "Required. Specifies the authorization scheme, account name, and signature",
@@ -88,7 +88,7 @@
 			"IsActive": false
 		},
 		{
-			"IsEnabled": true,
+			"IsEnabled": false,
 			"IsEnabledActive": "true",
 			"Key": "x-ms-version",
 			"IsKeyReadyOnly": "true",
