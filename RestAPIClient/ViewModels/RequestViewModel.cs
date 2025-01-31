@@ -238,7 +238,7 @@ public partial class RequestViewModel : ObservableRecipient
         var getMethod = new MethodsItemViewModel("GET");
         Methods.Add(getMethod);
         Methods.Add(new MethodsItemViewModel("POST"));
-        Methods.Add(new MethodsItemViewModel("PUT"));        
+        Methods.Add(new MethodsItemViewModel("PUT"));
         Methods.Add(new MethodsItemViewModel("PATCH"));
         Methods.Add(new MethodsItemViewModel("MERGE"));
         Methods.Add(new MethodsItemViewModel("DELETE"));
@@ -442,6 +442,8 @@ public partial class RequestViewModel : ObservableRecipient
     [RelayCommand]
     public async Task<string> SendRequestAsync()
     {
+        //SerializeRequest();
+
         using HttpClient client = new HttpClient();
         HttpResponseMessage response = new HttpResponseMessage();
 
@@ -469,22 +471,89 @@ public partial class RequestViewModel : ObservableRecipient
         Response.BannerVisibility = "Collapsed";
         Response.Visibility = "Visible";
 
-        //var requestModel = new RequestModel();
-        //requestModel.Name = Name;
-        //requestModel.URL = URL;
-        //requestModel.SelectedMethod = SelectedMethod;
-        //requestModel.IsMethodComboEnabled = "false";
-        //requestModel.TabIconVisibility = "Collapsed";
-        //requestModel.Parameters = Parameters;
-        //requestModel.Headers = Headers;
-        //requestModel.Body = Body;
-        //requestModel.IsBodyComboEnabled = "false";
-        //requestModel.SelectedBodyType = SelectedBodyType;
-        //requestModel.RawBody = RawBody;
-
-        //string jsonString = JsonSerializer.Serialize(requestModel);
-        //Debug.WriteLine(jsonString);
         return Response.Body;
+    }
+
+    private void SerializeRequest()
+    {
+        var requestModel = new RequestModel();
+        requestModel.Name = Name;
+        requestModel.URL = URL;
+        requestModel.SelectedMethod = SelectedMethod;
+        requestModel.IsMethodComboEnabled = "false";
+        requestModel.TabIconVisibility = "Collapsed";
+        requestModel.Parameters = Parameters;
+        requestModel.Headers = Headers;
+        requestModel.Body = Body;
+        requestModel.IsBodyComboEnabled = "false";
+        requestModel.SelectedBodyType = SelectedBodyType;
+        requestModel.RawBody = RawBody;
+
+
+        if (requestModel.Parameters is not null)
+        {
+            requestModel.Parameters.RemoveAt(requestModel.Parameters.Count - 1);
+            for (var i = 0; i <= requestModel.Parameters.Count - 1; i++)
+            {
+                requestModel.Parameters[i].PropertyChanged -= Parameter_PropertyChanged;
+                requestModel.Parameters[i].IsKeyReadyOnly = "true";
+                requestModel.Parameters[i].IsDescriptionReadyOnly = "true";
+
+                if (requestModel.Parameters[i].IsEnabled && !string.IsNullOrEmpty(requestModel.Parameters[i].Value))
+                {
+                    requestModel.Parameters[i].IsEnabledActive = "false";
+                    requestModel.Parameters[i].IsValueReadyOnly = "true";
+                }
+
+                requestModel.Parameters[i].PropertyChanged += Parameter_PropertyChanged;
+            }
+        }
+
+        if (requestModel.Headers is not null)
+        {
+            requestModel.Headers.RemoveAt(requestModel.Headers.Count - 1);
+            for (var i = 0; i <= requestModel.Headers.Count - 1; i++)
+            {
+                requestModel.Headers[i].PropertyChanged -= Header_PropertyChanged;
+                requestModel.Headers[i].IsKeyReadyOnly = "true";
+                requestModel.Headers[i].IsDescriptionReadyOnly = "true";
+
+                if (requestModel.Headers[i].IsEnabled)
+                    requestModel.Headers[i].IsEnabledActive = "false";
+
+                if (!string.IsNullOrEmpty(requestModel.Headers[i].Value))
+                    requestModel.Headers[i].IsValueReadyOnly = "true";
+
+                requestModel.Headers[i].PropertyChanged += Header_PropertyChanged;
+            }
+        }
+
+        if (requestModel.Body is not null)
+        {
+            if (requestModel.Body.Count > 0)
+            {
+                requestModel.Body.RemoveAt(requestModel.Body.Count - 1);
+                for (var i = 0; i <= requestModel.Body.Count - 1; i++)
+                {
+                    requestModel.Body[i].PropertyChanged -= BodyItem_PropertyChanged;
+                    requestModel.Body[i].IsKeyReadyOnly = "true";
+                    requestModel.Body[i].IsDescriptionReadyOnly = "true";
+                    requestModel.Body[i].PropertyChanged += BodyItem_PropertyChanged;
+                }
+            }
+            else
+                requestModel.Body = null;
+        }
+
+        requestModel.Response = new ResponseViewModel();
+        string jsonString = JsonSerializer.Serialize(requestModel);
+        Debug.WriteLine(string.Empty);
+        Debug.WriteLine(jsonString);
+
+        AddNewParameter();
+        AddNewHeader();
+        AddNewBodyItem();
+
     }
 
     public string BeautifyXml(string xml)

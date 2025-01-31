@@ -1,0 +1,49 @@
+{
+  "Name": "Append Blob Seal",
+  "TabIconVisibility": "Collapsed",
+  "SelectedMethod": {
+    "Name": "PUT",
+    "Foreground": "#FF8C00",
+    "IsActive": false
+  },
+  "IsMethodComboEnabled": "false",
+  "URL": {
+    "RawURL": "https://myaccount.blob.core.windows.net/mycontainer/myblob?comp=seal",
+    "Protocol": null,
+    "Host": null,
+    "Path": null,
+    "Variables": null,
+    "IsActive": false
+  },
+  "Parameters": [
+    {
+      "IsEnabled": true,
+      "IsEnabledActive": "false",
+      "Key": "comp",
+      "IsKeyReadyOnly": "true",
+      "Value": "seal",
+      "IsValueReadyOnly": "true",
+      "Description": "Required",
+      "IsDescriptionReadyOnly": "true",
+      "DeleteButtonVisibility": "Visible",
+      "IsActive": false
+    }
+  ],
+  "Headers": null,
+  "IsBodyComboEnabled": "false",
+  "SelectedBodyType": "None",
+  "RawBody": null,
+  "Body": null,
+  "Response": {
+    "StatusCode": null,
+    "StatusStyleKey": "MyTextBlockAccentStyle",
+    "Time": null,
+    "Size": null,
+    "Body": null,
+    "Headers": null,
+    "HeadersCount": null,
+    "Visibility": "Collapsed",
+    "BannerVisibility": "Visible",
+    "IsActive": false
+  }
+}

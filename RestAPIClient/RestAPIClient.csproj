@@ -35,6 +35,19 @@
     <None Remove="Assets\StorageAccountLogo.png" />
     <None Remove="Styles\FontIcon.xaml" />
     <None Remove="Templates\ListContainers.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnAppendBlobs\0d9ef4c9-50f6-40ec-b539-9f4802e2fed7.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnAppendBlobs\70aa943a-15e0-424c-9bbb-2c2fee0d1d4f.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnAppendBlobs\cc12876d-667b-4740-8b62-98ada086a53b.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlobsInHierarchicalNamespaces\f925f4b6-3933-4681-ae81-54e8f64309c4.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\20986788-0bd6-4497-a576-9abdf9069f7e.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\4a3b3d2e-e770-41a9-b710-02fbc6de5974.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\6d41e128-c089-44b5-b13f-ceed781206fb.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\728c2ee8-c08f-4862-a293-7c54e81eee7c.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\a6ea4151-2503-42d1-bd8a-e8fd917e8102.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\709ace22-edbf-4181-b19c-545145d74606.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\aaa6256b9-b2dd-42aa-8aee-9d3207c4fd42.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\b9ce3248-184c-4690-bf6c-fdb92c31920e.json" />
+    <None Remove="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\cb13f77b-cae8-42d0-9744-2f704ba10a81.json" />
     <None Remove="Views\AboutPage.xaml" />
     <None Remove="Views\HomePage.xaml" />
     <None Remove="Views\RequestPage.xaml" />
@@ -159,6 +172,45 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\acbdfae5-c66b-44ea-8d89-6b5ff4b27e8e.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnAppendBlobs\0d9ef4c9-50f6-40ec-b539-9f4802e2fed7.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnAppendBlobs\70aa943a-15e0-424c-9bbb-2c2fee0d1d4f.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnAppendBlobs\cc12876d-667b-4740-8b62-98ada086a53b.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlobsInHierarchicalNamespaces\f925f4b6-3933-4681-ae81-54e8f64309c4.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\20986788-0bd6-4497-a576-9abdf9069f7e.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\4a3b3d2e-e770-41a9-b710-02fbc6de5974.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\6d41e128-c089-44b5-b13f-ceed781206fb.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\728c2ee8-c08f-4862-a293-7c54e81eee7c.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnBlockBlobs\a6ea4151-2503-42d1-bd8a-e8fd917e8102.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\709ace22-edbf-4181-b19c-545145d74606.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\aaa6256b9-b2dd-42aa-8aee-9d3207c4fd42.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\b9ce3248-184c-4690-bf6c-fdb92c31920e.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnBlobs\OperationsOnPageBlobs\cb13f77b-cae8-42d0-9744-2f704ba10a81.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\StorageServices\BlobService\OperationsOnContainers\5a0ff8b0-02f2-4d62-be05-aa2f2f83cd92.json">

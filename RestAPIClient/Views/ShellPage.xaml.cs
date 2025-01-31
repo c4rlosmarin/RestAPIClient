@@ -152,7 +152,6 @@ public sealed partial class ShellPage : Page
             {
                 if (NavigationFrame.Content is HomePage homePage)
                 {
-                    if (selectedItem.IsRequest)
                         homePage.CreateRequestTab(new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, Method = selectedItem.Method });
                 }
                 else
