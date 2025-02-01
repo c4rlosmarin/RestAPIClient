@@ -12,34 +12,6 @@
     xmlns:local="using:RestAPIClient.Views"
     >
 
-    <Page.Resources>
-        <DataTemplate x:Key="NoIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
-            <NavigationViewItem MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}">
-                <NavigationViewItem.Content>
-                    <TextBlock Text="{Binding Content, Mode=TwoWay}" TextWrapping="Wrap" />
-                </NavigationViewItem.Content>
-            </NavigationViewItem>
-        </DataTemplate>
-
-        <DataTemplate x:Key="ImageIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
-            <NavigationViewItem MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding ImageIcon, Mode=TwoWay}">
-                <NavigationViewItem.Content>
-                    <TextBlock Text="{Binding Content, Mode=TwoWay}" TextWrapping="Wrap" />
-                </NavigationViewItem.Content>
-            </NavigationViewItem>
-        </DataTemplate>
-
-        <DataTemplate x:Key="FontIconTemplate" x:DataType="viewmodels:NavigationMenuItem">
-            <NavigationViewItem MenuItemsSource="{Binding SubMenus, Mode=TwoWay}" Visibility="{Binding Visibility, Mode=TwoWay}" IsExpanded="{Binding IsExpanded, Mode=TwoWay}" Margin="{Binding Margin, Mode=TwoWay}" Icon="{Binding FontIcon, Mode=TwoWay}">
-                <NavigationViewItem.Content>
-                    <TextBlock Text="{Binding Content, Mode=TwoWay}" TextWrapping="Wrap" />
-                </NavigationViewItem.Content>
-            </NavigationViewItem>
-        </DataTemplate>
-
-        <local:IconTemplateSelector x:Key="IconTemplateSelector" ImageIconTemplate="{StaticResource ImageIconTemplate}" FontIconTemplate="{StaticResource FontIconTemplate}" NoIconTemplate="{StaticResource NoIconTemplate}" />
-    </Page.Resources>
-
     <Grid>
         <Grid x:Name="AppTitleBar"
               Canvas.ZIndex="1"
@@ -68,7 +40,7 @@
             ExpandedModeThresholdWidth="1280"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             AlwaysShowHeader="False" SelectionChanged="NavigationViewControl_SelectionChanged"
-            MenuItemsSource="{x:Bind ViewModel.NavigationMenuItems, Mode=OneWay}" FooterMenuItemsSource="{x:Bind ViewModel.NavigationFooterItems, Mode=OneWay}" MenuItemTemplateSelector="{StaticResource IconTemplateSelector}">
+            MenuItemsSource="{x:Bind ViewModel.NavigationMenuItems, Mode=OneWay}" FooterMenuItemsSource="{x:Bind ViewModel.NavigationFooterItems, Mode=OneWay}">
 
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox x:Name="controlsSearchBox" Margin="-12" TextChanged="AutoSuggestBox_TextChanged"/>

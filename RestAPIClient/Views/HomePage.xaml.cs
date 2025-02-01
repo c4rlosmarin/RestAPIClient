@@ -33,7 +33,7 @@ namespace RestAPIClient.Views
         {
             //TODO: Implementar el estilo y texto del tabViewItem de forma dinámica
             Frame frame = new Frame();
-            TabItem newTabItem;            
+            TabItem newTabItem;
 
             if (request == null)
             {
@@ -81,7 +81,7 @@ namespace RestAPIClient.Views
                 var navigationView = parentPage.FindName("NavigationViewControl") as NavigationView;
                 if (tabView.SelectedItem != null)
                 {
-                    var node = FindNavigationViewItemByName((ObservableCollection<NavigationMenuItem>)navigationView.MenuItemsSource, ((TabItem)tabView.SelectedItem).Id, ((TabItem)tabView.SelectedItem).Title);
+                    var node = FindNavigationViewItemByName((ObservableCollection<NavigationViewItem>)navigationView.MenuItemsSource, ((TabItem)tabView.SelectedItem).Id, ((TabItem)tabView.SelectedItem).Title);
                     navigationView.SelectedItem = node;
                 }
                 else
@@ -89,11 +89,11 @@ namespace RestAPIClient.Views
             }
         }
 
-        private NavigationMenuItem FindNavigationViewItemByName(ObservableCollection<NavigationMenuItem> navigationViewItemsSource, string requestId, string name)
+        private NavigationViewItem FindNavigationViewItemByName(ObservableCollection<NavigationViewItem> navigationViewItemsSource, string requestId, string name)
         {
             foreach (var item in navigationViewItemsSource)
             {
-                var result = FindNavigationViewItemByNameRecursive(item.SubMenus, requestId, name);
+                var result = FindNavigationViewItemByNameRecursive((ObservableCollection<NavigationViewItem>)item.MenuItemsSource, requestId, name);
 
                 if (result != null)
                 {
@@ -103,19 +103,22 @@ namespace RestAPIClient.Views
             return null;
         }
 
-        private NavigationMenuItem FindNavigationViewItemByNameRecursive(ObservableCollection<NavigationMenuItem> navigationViewItems, string requestId, string name)
+        private NavigationViewItem FindNavigationViewItemByNameRecursive(ObservableCollection<NavigationViewItem> navigationViewItems, string requestId, string name)
         {
             if (navigationViewItems == null) return null;
 
             foreach (var item in navigationViewItems)
             {
-                if (item != null && item.Name == name && item.RequestId == requestId)
-                    return item;
+                if ((NavigationViewItemMetadata)item.Tag is not null)
+                {
+                    if (item != null && item.Name == name && ((NavigationViewItemMetadata)item.Tag).RequestId == requestId)
+                        return item;
+                }
             }
 
             foreach (var item in navigationViewItems)
             {
-                var result = FindNavigationViewItemByNameRecursive(item.SubMenus, requestId, name);
+                var result = FindNavigationViewItemByNameRecursive((ObservableCollection<NavigationViewItem>)item.MenuItemsSource, requestId, name);
                 if (result != null)
                 {
                     return result;

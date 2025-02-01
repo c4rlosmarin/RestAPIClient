@@ -4,17 +4,14 @@
       "Name": "Storage Services",
       "Content": "Storage Services",
       "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Accounts.png",
-      "IsRequest": false,
       "Blob Service REST API": [
         {
           "Name": "Blob Service REST API",
           "Content": "Blob Service REST API",
           "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Blob-Block.png",
-          "IsRequest": false,
           "Operations on the Account": {
             "Name": "Operations on the Account",
             "Content": "Operations on the Account",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "975b53b7-f48f-4682-8434-893f5a324278",
@@ -63,7 +60,6 @@
           "Operations on Containers": {
             "Name": "Operations on Containers",
             "Content": "Operations on Containers",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "042368e5-65ec-4a73-8462-86b65be8c353",
@@ -136,7 +132,6 @@
           "Operations on Blobs": {
             "Name": "Operations on Blobs",
             "Content": "Operations on Blobs",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "1fd54291-9b89-4348-8f08-85ecce5114ae",
@@ -274,7 +269,6 @@
             "Operations on Block Blobs": {
               "Name": "Operations on Block Blobs",
               "Content": "Operations on Block Blobs",
-              "IsRequest": false,
               "Operations": [
                 {
                   "RequestId": "4a3b3d2e-e770-41a9-b710-02fbc6de5974",
@@ -311,7 +305,6 @@
             "Operations on Page Blobs": {
               "Name": "Operations on Page Blobs",
               "Content": "Operations on Page Blobs",
-              "IsRequest": false,
               "Operations": [
                 {
                   "RequestId": "aa6256b9-b2dd-42aa-8aee-9d3207c4fd42",
@@ -342,7 +335,6 @@
             "Operations on Append Blobs": {
               "Name": "Operations on Append Blobs",
               "Content": "Operations on Append Blobs",
-              "IsRequest": false,
               "Operations": [
                 {
                   "RequestId": "0d9ef4c9-50f6-40ec-b539-9f4802e2fed7",
@@ -367,7 +359,6 @@
             "Operations on blobs in hierarchical namespaces": {
               "Name": "Operations on blobs in hierarchical namespaces",
               "Content": "Operations on blobs in hierarchical namespaces",
-              "IsRequest": false,
               "Operations": [
                 {
                   "RequestId": "f925f4b6-3933-4681-ae81-54e8f64309c4",
@@ -385,11 +376,9 @@
           "Name": "Queue Service REST API",
           "Content": "Queue Service REST API",
           "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Queue.png",
-          "IsRequest": false,
           "Operations on the Account": {
             "Name": "Operations on the Account",
             "Content": "Operations on the Account",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "40059afb-187a-4fee-ac88-66e95c1bfdd7",
@@ -426,7 +415,6 @@
           "Operations on Queues": {
             "Name": "Operations on Queues",
             "Content": "Operations on Queues",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "80aece03-d070-4c05-8de3-0ca847cbade8",
@@ -469,7 +457,6 @@
           "Operations on Messages": {
             "Name": "Operations on Messages",
             "Content": "Operations on Messages",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "fcb835d4-b764-45c4-93c3-be2fc3c13096",
@@ -516,11 +503,9 @@
           "Name": "Table Service REST API",
           "Content": "Table Service REST API",
           "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Table.png",
-          "IsRequest": false,
           "Operations on the Account": {
             "Name": "Operations on the Account",
             "Content": "Operations on the Account",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "06b8cdc5-77f8-4922-aca0-ab1ee578cd81",
@@ -551,7 +536,6 @@
           "Operations on Tables": {
             "Name": "Operations on Tables",
             "Content": "Operations on Tables",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "7956fedd-b747-472a-a4da-9d05dbe47c3e",
@@ -588,7 +572,6 @@
           "Operations on Entities": {
             "Name": "Operations on Entities",
             "Content": "Operations on Entities",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "60de20cd-274f-4d84-b50e-92233bc3ae57",
@@ -641,11 +624,9 @@
           "Name": "File Service REST API",
           "Content": "File Service REST API",
           "ImageIcon": "ms-appx:///Assets/AzureServiceLogos/Storage-Azure-Files.png",
-          "IsRequest": false,
           "Operations on the FileService": {
             "Name": "Operations on the FileService",
             "Content": "Operations on the FileService",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "fda74fd0-e408-4c6d-894d-4e5dba70afe5",
@@ -670,7 +651,6 @@
           "Operations on FileShares": {
             "Name": "Operations on FileShares",
             "Content": "Operations on FileShares",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "3efdeb4d-15ad-499a-8116-1f6609c6f74b",
@@ -767,7 +747,6 @@
           "Operations on Directories": {
             "Name": "Operations on Directories",
             "Content": "Operations on Directories",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "ba6350a8-fbff-43c1-9b99-ae853d24ccd2",
@@ -834,7 +813,6 @@
           "Operations on Files": {
             "Name": "Operations on Files",
             "Content": "Operations Files",
-            "IsRequest": false,
             "Operations": [
               {
                 "RequestId": "7b03ae8e-a105-4dd7-8200-76edbbed397c",

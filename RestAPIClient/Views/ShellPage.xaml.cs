@@ -1,7 +1,11 @@
-﻿using System.Diagnostics.Eventing.Reader;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using RestAPIClient.Contracts.Services;
 using RestAPIClient.Helpers;
 using RestAPIClient.ViewModels;
@@ -11,7 +15,10 @@ namespace RestAPIClient.Views;
 
 public sealed partial class ShellPage : Page
 {
-    public ShellViewModel ViewModel { get; }
+    public ShellViewModel ViewModel
+    {
+        get;
+    }
 
     #region << Constructor >>
 
@@ -30,6 +37,12 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         //App.MainWindow.Activated += MainWindow_Activated;
         //AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+
+        //var aboutIcon = new FontIcon { Glyph = "\uE946", FontFamily = new FontFamily("Segoe MDL2 Assets") };
+        //var aboutFooterItem = new NavigationViewItem() { Content = "About", Icon = aboutIcon };
+        //aboutFooterItem.Icon = aboutIcon;
+
+        //NavigationViewControl.FooterMenuItems.Add(aboutFooterItem);
     }
 
     #endregion
@@ -89,30 +102,30 @@ public sealed partial class ShellPage : Page
         {
             var query = sender.Text.ToLower();
             if (!string.IsNullOrEmpty(query))
-                FilterItemsRecursive((IEnumerable<NavigationMenuItem>)NavigationViewControl.MenuItemsSource, query);
+                FilterItemsRecursive((ObservableCollection<NavigationViewItem>)NavigationViewControl.MenuItemsSource, query);
             else
-                FilterItemsRecursive((IEnumerable<NavigationMenuItem>)NavigationViewControl.MenuItemsSource, "");
+                FilterItemsRecursive((ObservableCollection<NavigationViewItem>)NavigationViewControl.MenuItemsSource, "");
         }
     }
 
-    private bool FilterItemsRecursive(IEnumerable<NavigationMenuItem> items, string query)
+    private bool FilterItemsRecursive(ObservableCollection<NavigationViewItem> navigationViewItem, string query)
     {
         bool itemFound = false;
         bool foundSubItem;
-        foreach (var item in items)
+        foreach (var item in navigationViewItem)
         {
             foundSubItem = false;
             bool flag = false;
 
-            if (item.SubMenus is not null && item.SubMenus.Count > 0)
+            if (item.MenuItemsSource is not null && ((ObservableCollection<NavigationViewItem>)item.MenuItemsSource).Count > 0)
             {
-                foundSubItem = FilterItemsRecursive(item.SubMenus, query);
+                foundSubItem = FilterItemsRecursive((ObservableCollection<NavigationViewItem>)item.MenuItemsSource, query);
                 if (foundSubItem)
                 {
-                    item.Visibility = "Visible";
+                    item.Visibility = Visibility.Visible;
                     if (!string.IsNullOrEmpty(query))
                     {
-                        item.IsExpanded = true;                        
+                        item.IsExpanded = true;
                         itemFound = true;
                     }
                     else
@@ -121,21 +134,27 @@ public sealed partial class ShellPage : Page
                 else
                 {
                     if (!string.IsNullOrEmpty(query))
-                        item.Visibility = "Collapsed";
+                        item.Visibility = Visibility.Collapsed;
                     else
-                        item.Visibility = "Visible";
+                        item.Visibility = Visibility.Visible;
                     item.IsExpanded = false;
                 }
             }
             else
             {
-                if (string.IsNullOrEmpty(query) || item.Content.ToLower().Contains(query))
+                string content = "";
+                if (item.Content is TextBlock)
+                    content = ((TextBlock)item.Content).Text;
+                else if (item.Content is TextBox)
+                    content = ((TextBox)item.Content).Text;
+
+                if (string.IsNullOrEmpty(query) || content.ToLower().Contains(query))
                 {
-                    item.Visibility = "Visible";
+                    item.Visibility = Visibility.Visible;
                     flag = true;
                 }
                 else
-                    item.Visibility = "Collapsed";
+                    item.Visibility = Visibility.Collapsed;
             }
             itemFound = itemFound || flag;
         }
@@ -146,16 +165,21 @@ public sealed partial class ShellPage : Page
     {
         NavigationViewControl.SelectionChanged -= NavigationViewControl_SelectionChanged;
 
-        if (args.SelectedItem is NavigationMenuItem selectedItem)
+        if (args.SelectedItem is NavigationViewItem selectedItem)
         {
-            if (selectedItem.IsRequest)
+            if (selectedItem.Tag is not null && selectedItem.Tag.ToString() != "Settings")
             {
-                if (NavigationFrame.Content is HomePage homePage)
+                var navigationviewItemMetadata = (NavigationViewItemMetadata)selectedItem.Tag;
+                if (navigationviewItemMetadata.RequestId is not null)
                 {
-                        homePage.CreateRequestTab(new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, Method = selectedItem.Method });
+                    var content = (TextBlock)selectedItem.Content;
+                    if (NavigationFrame.Content is HomePage homePage)
+                    {
+                        homePage.CreateRequestTab(new RequestItem() { RequestId = navigationviewItemMetadata.RequestId, Name = content.Text, Method = navigationviewItemMetadata.Method });
+                    }
+                    else
+                        NavigationFrame.Navigate(typeof(HomePage), (new RequestItem() { RequestId = navigationviewItemMetadata.RequestId, Name = content.Text, Method = navigationviewItemMetadata.Method, AzureService = navigationviewItemMetadata.AzureService }));
                 }
-                else
-                    NavigationFrame.Navigate(typeof(HomePage), (new RequestItem() { RequestId = selectedItem.RequestId, Name = selectedItem.Content, Method = selectedItem.Method, AzureService = selectedItem.AzureRESTApi }));
             }
             else
             {
@@ -173,39 +197,3 @@ public sealed partial class ShellPage : Page
 
     #endregion
 }
-
-#region << Internal Classes >>
-
-public class IconTemplateSelector : DataTemplateSelector
-{
-    public DataTemplate ImageIconTemplate
-    {
-        get; set;
-    }
-    public DataTemplate FontIconTemplate
-    {
-        get; set;
-    }
-
-    public DataTemplate NoIconTemplate
-    {
-        get; set;
-    }
-
-    protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
-    {
-        var viewModel = item as NavigationMenuItem;
-        if (viewModel != null)
-        {
-            if (viewModel.ImageIcon is not null)
-                return ImageIconTemplate;
-            else if (viewModel.FontIcon is not null)
-                return FontIconTemplate;
-            else
-                return NoIconTemplate;
-        }
-        return base.SelectTemplateCore(item, container);
-    }
-}
-
-#endregion

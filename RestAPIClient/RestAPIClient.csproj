@@ -540,10 +540,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="ViewModels\NavigationMenuItem.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <Content Update="Assets\Azure.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
