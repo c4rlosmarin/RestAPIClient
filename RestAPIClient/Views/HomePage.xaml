@@ -34,6 +34,9 @@
                 </DataTemplate>
             </Grid.Resources>
 
+            <!--About the close button ctrl+F4 tooltip:
+            https://github.com/microsoft/terminal/issues/10109-->
+            
             <TabView x:Name="tabView" IsAddTabButtonVisible="True" TabItemsSource="{x:Bind TabsViewModel.Tabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{x:Bind TabsViewModel.SelectedTabItem, Mode=TwoWay}" AddTabButtonClick="tabView_AddTabButtonClick" TabCloseRequested="tabView_TabCloseRequested" SelectionChanged="tabView_SelectionChanged"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <TabView.TabItemTemplate>
                     <DataTemplate x:DataType="viewmodels:TabItem">

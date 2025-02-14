@@ -185,9 +185,11 @@ public sealed partial class ShellPage : Page
             {
                 switch (selectedItem.Content)
                 {
+                    case "Environments":
+                        NavigationFrame.Navigate(typeof(EnvironmentsPage));
+                        break;
                     case "About":
                         NavigationFrame.Navigate(typeof(AboutPage));
-
                         break;
                 }
             }

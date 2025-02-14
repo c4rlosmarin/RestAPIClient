@@ -6,9 +6,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="using:RestAPIClient.Helpers"
     xmlns:xaml="using:Microsoft.UI.Xaml"
-    mc:Ignorable="d"
     NavigationCacheMode="Required"
-    >
+    mc:Ignorable="d">
+    
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
