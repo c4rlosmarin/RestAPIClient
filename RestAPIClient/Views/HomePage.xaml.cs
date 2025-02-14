@@ -35,6 +35,8 @@ namespace RestAPIClient.Views
             Frame frame = new Frame();
             TabItem newTabItem;
 
+            tabView.SelectionChanged -= tabView_SelectionChanged;
+
             if (request == null)
             {
                 newTabItem = new TabItem() { Title = "Untitled request", EditingIconVisibility = "Visible", Method = "GET", Foreground = ColorHelper.CreateSolidColorBrushFromHex(ForegroundColorHelper.GET) };
@@ -47,7 +49,6 @@ namespace RestAPIClient.Views
                 {
                     if (item.Id == request.RequestId)
                     {
-                        tabView.SelectionChanged -= tabView_SelectionChanged;
                         TabsViewModel.SelectedTabItem = item;
                         tabView.SelectionChanged += tabView_SelectionChanged;
                         return;
@@ -58,8 +59,6 @@ namespace RestAPIClient.Views
                 TabsViewModel.Tabs.Add(newTabItem);
                 frame.Navigate(typeof(RequestPage), request);
             }
-
-            tabView.SelectionChanged -= tabView_SelectionChanged;
 
             TabsViewModel.SelectedTabItem = newTabItem;
 
@@ -142,11 +141,7 @@ namespace RestAPIClient.Views
 
         private void tabView_AddTabButtonClick(TabView sender, object args)
         {
-            tabView.SelectionChanged -= tabView_SelectionChanged;
-
             CreateRequestTab(null);
-
-            tabView.SelectionChanged += tabView_SelectionChanged;
         }
 
         private void tabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
