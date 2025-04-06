@@ -83,9 +83,9 @@ public partial class RequestViewModel : ObservableRecipient
                     case Command.GetDateTimeInUTC:
                         message.HeaderItem.Value = DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss 'GMT'");
                         break;
-                    case Command.RefreshParameters:
-                        RefreshParameters();
-                        break;
+                        //case Command.RefreshParameters:
+                        //    RefreshParameters();
+                        //    break;
                 }
             });
 
@@ -165,7 +165,8 @@ public partial class RequestViewModel : ObservableRecipient
         if (requestModel is not null)
         {
             Name = requestModel.Name;
-            URL = requestModel.URL;
+            //URL = requestModel.URL;
+            URL = new URL(_messenger) { RawURL = requestModel.URL.RawURL };
             SelectedMethod = requestModel.SelectedMethod;
             IsMethodComboEnabled = requestModel.IsMethodComboEnabled;
             TabIconVisibility = requestModel.TabIconVisibility;
@@ -447,14 +448,15 @@ public partial class RequestViewModel : ObservableRecipient
         using HttpClient client = new HttpClient();
         HttpResponseMessage response = new HttpResponseMessage();
 
-        var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
-        AddRequestHeaders(client);
-        AddRequestBody(request);
-        Response.HeadersCount = "";
-        Stopwatch.Reset();
-        Stopwatch.Start();
         try
         {
+            var request = new HttpRequestMessage(new HttpMethod(SelectedMethod.Name), URL.RawURL);
+            AddRequestHeaders(client);
+            AddRequestBody(request);
+            Response.HeadersCount = "";
+            Stopwatch.Reset();
+            Stopwatch.Start();
+
             response = await client.SendAsync(request);
             GetResponseStatusCode(response);
             await GetResponseMetadata(response);

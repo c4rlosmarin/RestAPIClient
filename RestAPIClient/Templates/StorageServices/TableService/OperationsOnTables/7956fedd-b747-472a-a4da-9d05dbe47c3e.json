@@ -19,8 +19,8 @@
   "Parameters": null,
   "Headers": [
     {
-      "IsEnabled": true,
-      "IsEnabledActive": "false",
+      "IsEnabled": false,
+      "IsEnabledActive": "true",
       "Key": "Authorization",
       "IsKeyReadyOnly": "true",
       "Value": "",

@@ -106,7 +106,7 @@
                     <controls:DataGridTemplateColumn Header="" Width="30">
                         <controls:DataGridTemplateColumn.CellTemplate>
                             <DataTemplate x:DataType="viewmodels:ParameterItem">
-                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{x:Bind isEnabledActive}"  Margin="5,0,5,0" IsThreeState="False"/>
+                                <CheckBox IsChecked="{x:Bind IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{x:Bind IsEnabledActive}"  Margin="5,0,5,0" IsThreeState="False"/>
                             </DataTemplate>
                         </controls:DataGridTemplateColumn.CellTemplate>
                     </controls:DataGridTemplateColumn>
